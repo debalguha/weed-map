@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<var-def name="webpage">
+		<html-to-xml>
+			<http url="#URL#"></http>
+		</html-to-xml>
+	</var-def>	
+	<!-- <var-def name="webpage">
+		<html-to-xml>
+			<file action="read" path="c:\tmp\weedmap-data.txt"/>	
+		</html-to-xml>
+	</var-def>	 -->
+	<var-def name="name">
+		<xpath expression="//div[@class='company-details']/h1/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="website">
+		<xpath expression="//div[@id='sidebar']//div[@class='span3'][text()='WEBSITE']/following-sibling::div/a/@href">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="email">
+		<xpath expression="//div[@id='sidebar']//div[@class='span3'][text()='EMAIL']/following-sibling::div/a/substring-after(@href, ':')">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="facebook">
+		<xpath expression="//div[@id='sidebar']//div[@class='span3'][text()='SOCIAL']/following-sibling::div//a[@class='badge-services badge-facebook']/@href">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="twitter">
+		<xpath expression="//div[@id='sidebar']//div[@class='span3'][text()='SOCIAL']/following-sibling::div//a[@class='badge-services badge-twitter']/@href">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="instagram">
+		<xpath expression="//div[@id='sidebar']//div[@class='span3'][text()='SOCIAL']/following-sibling::div//a[@class='badge-services badge-instagram']/@href">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="handicap">
+		<xpath expression="//div[@id='sidebar']//div[@class='badge-services badge-access']/@title">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="security">
+		<xpath expression="//div[@id='sidebar']//div[@class='badge-services badge-security']/@title">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>		
+	<var-def name="creditcard">
+		<xpath expression="//div[@id='sidebar']//div[@class='badge-services badge-takescc']/@title">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="adult">
+		<xpath expression="//div[@id='sidebar']//div[@class='badge-services badge-18plus']/@title">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="photos">
+		<xpath expression="//div[@id='sidebar']//div[@class='badge-services badge-weedphotos']/@title">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="delivery">
+		<xpath expression="//div[@id='sidebar']//div[@class='badge-services badge-isdelivery']/@title">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="labTested">
+		<xpath expression="//div[@id='sidebar']//div[@class='badge-services badge-sclabs']/@title">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>							
+	<var-def name="street">
+		<xpath expression="//div[@id='company-header']//div[@itemprop='address']/span[@itemprop='streetAddress']/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="city">
+		<xpath expression="//div[@id='company-header']//div[@itemprop='address']/span[@itemprop='addressLocality']/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>		
+	<var-def name="state">
+		<xpath expression="//div[@id='company-header']//div[@itemprop='address']/span[@itemprop='addressRegion']/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="zip">
+		<xpath expression="//div[@id='company-header']//div[@itemprop='address']/span[@itemprop='postalCode']/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="phone">
+		<xpath expression="//div[@id='company-header']//span[@itemprop='telephone']/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="sunOpen">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='SUNDAY']/following-sibling::div//span[1]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="sunClose">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='SUNDAY']/following-sibling::div//span[2]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
+	<var-def name="monOpen">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='MONDAY']/following-sibling::div//span[1]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="monClose">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='MONDAY']/following-sibling::div//span[2]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="tueOpen">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='TUESDAY']/following-sibling::div//span[1]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="tueClose">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='TUESDAY']/following-sibling::div//span[2]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="wedOpen">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='WEDNESDAY']/following-sibling::div//span[1]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="wedClose">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='WEDNESDAY']/following-sibling::div//span[2]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="thuOpen">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='THURSDAY']/following-sibling::div//span[1]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="thuClose">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='THURSDAY']/following-sibling::div//span[2]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="friOpen">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='FRIDAY']/following-sibling::div//span[1]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="friClose">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='FRIDAY']/following-sibling::div//span[2]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="satOpen">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='SATURDAY']/following-sibling::div//span[1]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="satClose">
+		<xpath expression="//div[@id='sidebar']//span[@itemid='#store']//div[@class='span3'][text()='SATURDAY']/following-sibling::div//span[2]/text()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="menu-items">
+		<xpath expression="//div[@id='menu_item_globals']/@data-items">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>		
+	<var-def name="menu-items-category">
+		<xpath expression="//div[@id='wm_globals']/@data-menu-item-categories">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+	<var-def name="menu-items-alt">
+		<xpath expression="//div[@class='menu_item']/@data-json">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>												
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<var-def name="webpage">
+		<html-to-xml>
+			<http url="#URL#"></http>
+		</html-to-xml>
+	</var-def>
+	<!-- <var-def name="urls_old">
+		<xpath expression="//table[@class='rest-results sticky-enabled']/tbody//div[@class='rest-name']/span/node()">
+			<var name="webpage"/>
+		</xpath>
+	</var-def> -->		
+	<var-def name="urls">
+		<xpath expression="//div[@class='row']/ul/li/a/@href">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+</config>
