@@ -2,11 +2,11 @@ package org.progressivelifestyle.weedmaps.scraper;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.logging.Log;
@@ -121,9 +121,8 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 					menuItemCategoryMap = buildMenuItemCategoryMap(scraper.getContext().getVar("menu-items-category").toString());
 			}
 		}
-		Collection<MenuItem> menuItemsCollection = parseJsonsIntoMenuItems(scraper.getContext().getVar("menu-items-alt").toArray());
+		Set<MenuItem> menuItemsCollection = parseJsonsIntoMenuItems(scraper.getContext().getVar("menu-items-alt").toArray());
 		logger.info("Menu Items retrieved: "+menuItemsCollection.size());
-		//Map<String, Collection<MenuItem>> menuItems = convertIntoMap(menuItemsColection, menuItemCategoryMap);
 		Long dispensaryId = new Long(-1);
 		try {
 			dispensaryId = menuItemsCollection.iterator().next().getDispensaryId();
@@ -131,7 +130,7 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 			throw e;
 		}
 		DispensaryObject dispensary = new DispensaryObject(dispensaryId, name, phone, email, website, new Address(street, null, city, state, zip), 
-				facebook, twitter, instagram, creditCard, handicap, security, photos, labTested, adult, delivery, sunOpen, sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
+				facebook, twitter, instagram, creditCard, handicap, security, photos, labTested, adult, delivery, sunOpen, sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen, friClose, satOpen, satClose, urlToScrape);
 		dispensary.setMenuItems(menuItemsCollection);
 		return dispensary;
 	}
@@ -146,8 +145,8 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 		return catgoryMapMaster;
 	}
 
-	private Collection<MenuItem> parseJsonsIntoMenuItems(Object[] jsons) throws JsonParseException, JsonMappingException, IOException {
-		Collection<MenuItem> menuItems = new ArrayList<MenuItem>();
+	private Set<MenuItem> parseJsonsIntoMenuItems(Object[] jsons) throws JsonParseException, JsonMappingException, IOException {
+		Set<MenuItem> menuItems = new HashSet<MenuItem>();
 		for(Object json : jsons)
 			menuItems.add(mapper.readValue(json.toString(), MenuItem.class));
 		return menuItems;

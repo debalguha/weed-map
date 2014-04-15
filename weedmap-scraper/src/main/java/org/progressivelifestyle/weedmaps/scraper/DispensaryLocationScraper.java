@@ -1,8 +1,10 @@
 package org.progressivelifestyle.weedmaps.scraper;
 
 import java.io.StringReader;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.logging.Log;
@@ -44,7 +46,11 @@ public class DispensaryLocationScraper extends BaseScraper implements Callable<S
 		scraper.execute();
 		logger.info("Scrapping execution Ended! Start extracting the variables.");
 		Object []locationURLs = scraper.getContext().getVar("urls").toArray();
-		Set<String> retSet = new HashSet<String>();
+		Set<String> retSet = new TreeSet<String>(new Comparator<String>() {
+			public int compare(String o1, String o2) {
+				return o1.compareTo(o2);
+			}
+		});
 		for(Object locationUrl : locationURLs)
 			retSet.add(prefixURL.concat(locationUrl.toString()));
 		return retSet;

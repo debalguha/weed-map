@@ -8,9 +8,10 @@ import org.codehaus.jackson.annotate.JsonAnyGetter;
 import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class MenuItem {
+public class MenuItem implements Comparable<MenuItem>{
 	private String name;
-	@JsonProperty("id")
+	private long id;
+	@JsonProperty("dispensary_id")
 	private Long dispensaryId;
 	@JsonProperty("menu_item_category_id")
 	private Long menuItemCategoryId;
@@ -34,6 +35,8 @@ public class MenuItem {
 	private boolean approvedByAdmin; 
 	@JsonProperty("body")
 	private String description;
+	@JsonProperty("strain_id")
+	private String strainId;
 	private String categoryName;
 	
 	private Collection<Picture> pictures;
@@ -143,6 +146,87 @@ public class MenuItem {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getStrainId() {
+		return strainId;
+	}
+	public void setStrainId(String strainId) {
+		this.strainId = strainId;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public int compareTo(MenuItem o) {
+		return this.name.compareTo(o.name);
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((menuItemCategoryId == null) ? 0 : menuItemCategoryId.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((pictures == null) ? 0 : pictures.hashCode());
+		result = prime * result + priceEighth;
+		result = prime * result + priceGram;
+		result = prime * result + priceHalfGram;
+		result = prime * result + priceHalfOunce;
+		result = prime * result + priceOunce;
+		result = prime * result + priceQuarter;
+		result = prime * result + priceUnit;
+		result = prime * result + ((strainId == null) ? 0 : strainId.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MenuItem other = (MenuItem) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id != other.id)
+			return false;
+		if (menuItemCategoryId == null) {
+			if (other.menuItemCategoryId != null)
+				return false;
+		} else if (!menuItemCategoryId.equals(other.menuItemCategoryId))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (priceEighth != other.priceEighth)
+			return false;
+		if (priceGram != other.priceGram)
+			return false;
+		if (priceHalfGram != other.priceHalfGram)
+			return false;
+		if (priceHalfOunce != other.priceHalfOunce)
+			return false;
+		if (priceOunce != other.priceOunce)
+			return false;
+		if (priceQuarter != other.priceQuarter)
+			return false;
+		if (priceUnit != other.priceUnit)
+			return false;
+		if (strainId == null) {
+			if (other.strainId != null)
+				return false;
+		} else if (!strainId.equals(other.strainId))
+			return false;
+		return true;
 	}
 	
 	

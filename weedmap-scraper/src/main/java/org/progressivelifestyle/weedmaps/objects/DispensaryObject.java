@@ -1,9 +1,9 @@
 package org.progressivelifestyle.weedmaps.objects;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-public class DispensaryObject {
+public class DispensaryObject implements Dispensary{
 	private final Long dispensaryId;
 	private final String name;
 	private final String phone;
@@ -34,13 +34,14 @@ public class DispensaryObject {
 	private final String fridayClose;
 	private final String saturdayOpen;
 	private final String saturdayClose;
+	private final String dispensaryURL;
 	
 	//private Map<String, Collection<MenuItem>> menuItems;
-	private Collection<MenuItem> menuItems;
+	private Set<MenuItem> menuItems;
 
 	public DispensaryObject(Long dispensaryId,String name, String phone, String email, String website, Address address, String facebookURL, String twitterURL, String instagramURL, boolean creditCardSupport, boolean handicapSupport, boolean securityGuardSupport, boolean photoAvailable,
 			boolean labTested, boolean forAdult, boolean deliverySupport, String sundayOpen, String sundayClose, String mondayOpen, String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen,
-			String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose) {
+			String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose, String dispensaryURL) {
 		super();
 		this.dispensaryId = dispensaryId;
 		this.name = name;
@@ -72,8 +73,9 @@ public class DispensaryObject {
 		this.fridayClose = fridayClose;
 		this.saturdayOpen = saturdayOpen;
 		this.saturdayClose = saturdayClose;
+		this.dispensaryURL = dispensaryURL;
 		//this.menuItems = new HashMap<String, Collection<MenuItem>>();
-		this.menuItems = new ArrayList<MenuItem>();
+		this.menuItems = new HashSet<MenuItem>();
 	}
 
 	public String getName() {
@@ -200,6 +202,32 @@ public class DispensaryObject {
 		return result;
 	}
 
+
+	public Set<MenuItem> getMenuItems() {
+		return menuItems;
+	}
+
+	public void setMenuItems(Set<MenuItem> menuItems) {
+		this.menuItems = menuItems;
+	}
+
+	public int compareTo(Dispensary o) {
+		return this.name.compareTo(o.getName());
+	}
+
+	public String getDispensaryURL() {
+		return dispensaryURL;
+	}
+
+	@Override
+	public String toString() {
+		return "DispensaryObject [dispensaryURL=" + dispensaryURL + "]";
+	}
+
+	public Long getDispensaryId() {
+		return dispensaryId;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -209,20 +237,138 @@ public class DispensaryObject {
 		if (getClass() != obj.getClass())
 			return false;
 		DispensaryObject other = (DispensaryObject) obj;
-		if (dispensaryId == null) {
-			if (other.dispensaryId != null)
+		if (!dispensaryId.equals(other.dispensaryId))
+			return false;
+		if (address == null) {
+			if (other.address != null)
 				return false;
-		} else if (!dispensaryId.equals(other.dispensaryId))
+		} else if (!address.equals(other.address))
+			return false;
+		if (creditCardSupport != other.creditCardSupport)
+			return false;
+		if (deliverySupport != other.deliverySupport)
+			return false;
+		if (dispensaryURL == null) {
+			if (other.dispensaryURL != null)
+				return false;
+		} else if (!dispensaryURL.equals(other.dispensaryURL))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (facebookURL == null) {
+			if (other.facebookURL != null)
+				return false;
+		} else if (!facebookURL.equals(other.facebookURL))
+			return false;
+		if (forAdult != other.forAdult)
+			return false;
+		if (fridayClose == null) {
+			if (other.fridayClose != null)
+				return false;
+		} else if (!fridayClose.equals(other.fridayClose))
+			return false;
+		if (fridayOpen == null) {
+			if (other.fridayOpen != null)
+				return false;
+		} else if (!fridayOpen.equals(other.fridayOpen))
+			return false;
+		if (handicapSupport != other.handicapSupport)
+			return false;
+		if (instagramURL == null) {
+			if (other.instagramURL != null)
+				return false;
+		} else if (!instagramURL.equals(other.instagramURL))
+			return false;
+		if (labTested != other.labTested)
+			return false;
+		if (mondayClose == null) {
+			if (other.mondayClose != null)
+				return false;
+		} else if (!mondayClose.equals(other.mondayClose))
+			return false;
+		if (mondayOpen == null) {
+			if (other.mondayOpen != null)
+				return false;
+		} else if (!mondayOpen.equals(other.mondayOpen))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (phone == null) {
+			if (other.phone != null)
+				return false;
+		} else if (!phone.equals(other.phone))
+			return false;
+		if (photoAvailable != other.photoAvailable)
+			return false;
+		if (saturdayClose == null) {
+			if (other.saturdayClose != null)
+				return false;
+		} else if (!saturdayClose.equals(other.saturdayClose))
+			return false;
+		if (saturdayOpen == null) {
+			if (other.saturdayOpen != null)
+				return false;
+		} else if (!saturdayOpen.equals(other.saturdayOpen))
+			return false;
+		if (securityGuardSupport != other.securityGuardSupport)
+			return false;
+		if (sundayClose == null) {
+			if (other.sundayClose != null)
+				return false;
+		} else if (!sundayClose.equals(other.sundayClose))
+			return false;
+		if (sundayOpen == null) {
+			if (other.sundayOpen != null)
+				return false;
+		} else if (!sundayOpen.equals(other.sundayOpen))
+			return false;
+		if (thursdayClose == null) {
+			if (other.thursdayClose != null)
+				return false;
+		} else if (!thursdayClose.equals(other.thursdayClose))
+			return false;
+		if (thursdayOpen == null) {
+			if (other.thursdayOpen != null)
+				return false;
+		} else if (!thursdayOpen.equals(other.thursdayOpen))
+			return false;
+		if (tuesdayClose == null) {
+			if (other.tuesdayClose != null)
+				return false;
+		} else if (!tuesdayClose.equals(other.tuesdayClose))
+			return false;
+		if (tuesdayOpen == null) {
+			if (other.tuesdayOpen != null)
+				return false;
+		} else if (!tuesdayOpen.equals(other.tuesdayOpen))
+			return false;
+		if (twitterURL == null) {
+			if (other.twitterURL != null)
+				return false;
+		} else if (!twitterURL.equals(other.twitterURL))
+			return false;
+		if (website == null) {
+			if (other.website != null)
+				return false;
+		} else if (!website.equals(other.website))
+			return false;
+		if (wednesdayClose == null) {
+			if (other.wednesdayClose != null)
+				return false;
+		} else if (!wednesdayClose.equals(other.wednesdayClose))
+			return false;
+		if (wednesdayOpen == null) {
+			if (other.wednesdayOpen != null)
+				return false;
+		} else if (!wednesdayOpen.equals(other.wednesdayOpen))
 			return false;
 		return true;
-	}
-
-	public Collection<MenuItem> getMenuItems() {
-		return menuItems;
-	}
-
-	public void setMenuItems(Collection<MenuItem> menuItems) {
-		this.menuItems = menuItems;
 	}
 	
 }

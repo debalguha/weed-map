@@ -8,7 +8,8 @@ import java.io.InputStreamReader;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
-import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
+import org.progressivelifestyle.weedmaps.objects.Dispensary;
+import org.progressivelifestyle.weedmaps.objects.MenuItem;
 
 public class DispensaryDetailScraperTest {
 	@Test
@@ -16,7 +17,11 @@ public class DispensaryDetailScraperTest {
 		//BufferedReader reader = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("dispensary-info-scraper.xml")));
 		String scraperConfigContent = DispensaryDetailScraperTest.readFile("dispensary-info-scraper.xml");
 		DispensaryDetailScraper scraper = new DispensaryDetailScraper(null, scraperConfigContent);
-		DispensaryObject dispensary = scraper.scrapeDispensaryDetailsWithMenuItem("https://weedmaps.com/dispensaries/washington/washington-state/green-piece?c=dispensaries");
+		Dispensary dispensary = scraper.scrapeDispensaryDetailsWithMenuItem("https://weedmaps.com/dispensaries/california/downtown-la/harmony-herbal-caregivers-lab-tested-meds?c=search");
+		for(MenuItem menuItem : dispensary.getMenuItems()){
+			if(menuItem.getName().equals("Vape Pen WHITE DIESEL"))
+				System.out.println("##.."+menuItem.getMenuItemCategoryId());
+		}
 		assertEquals(192, dispensary.getMenuItems().size());
 		assertEquals("greenpiece@comcast.net", dispensary.getEmail());
 		assertEquals("", dispensary.getInstagramURL());
@@ -24,7 +29,7 @@ public class DispensaryDetailScraperTest {
 		new ObjectMapper().writeValue(System.out, dispensary);
 	}
 	
-	private static String readFile(String fileName) throws Exception {
+	public static String readFile(String fileName) throws Exception {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(DispensaryDetailScraperTest.class.getClassLoader().getResourceAsStream(fileName)));
 		String line = "";
 		StringBuilder builder = new StringBuilder();

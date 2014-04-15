@@ -44,6 +44,7 @@ public class TestJsonMapping {
 		assertNotNull(menuItem);
 		assertEquals(new Long(3883759), menuItem.getDispensaryId());
 		assertEquals(1, menuItem.getPictures().size());
+		assertEquals("95", menuItem.getStrainId());
 		Assert.assertEquals(new Long(407840), menuItem.getPictures().iterator().next().getPictureId());
 	}
 }

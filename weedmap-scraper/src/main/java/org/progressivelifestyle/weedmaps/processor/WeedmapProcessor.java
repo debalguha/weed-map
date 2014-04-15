@@ -3,8 +3,10 @@ package org.progressivelifestyle.weedmaps.processor;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
@@ -17,18 +19,21 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.progressivelifestyle.weedmaps.objects.Dispensary;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryDetailScraper;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryLocationScraper;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryScraper;
-import org.progressivelifestyle.weedmaps.writer.SpreadsheetWriter;
+import org.progressivelifestyle.weedmaps.writer.SpreadsheetWorker;
 
 public class WeedmapProcessor {
 	private CompletionService<Set<String>> locationService;
 	private CompletionService<DispensaryObject> dispensaryDetailService;
 	private Executor locationExecutor = new ThreadPoolExecutor(10, 20, Long.MAX_VALUE, TimeUnit.NANOSECONDS, new LinkedBlockingQueue<Runnable>());
 	private Executor dispensaryDetailExecutor = new ThreadPoolExecutor(10, 20, Long.MAX_VALUE, TimeUnit.NANOSECONDS, new LinkedBlockingQueue<Runnable>());
+	private Executor spreadSheetWriterExecutor = new ThreadPoolExecutor(10, 20, Long.MAX_VALUE, TimeUnit.NANOSECONDS, new LinkedBlockingQueue<Runnable>());
 	private static final Log logger = LogFactory.getLog(WeedmapProcessor.class);
+	private WeedmapScraperCache cache;
 	public WeedmapProcessor(){
 		locationService = new ExecutorCompletionService<Set<String>>(locationExecutor);
 		dispensaryDetailService = new ExecutorCompletionService<DispensaryObject>(dispensaryDetailExecutor);
@@ -38,7 +43,10 @@ public class WeedmapProcessor {
 		new WeedmapProcessor().initScraping();
 	}
 	public void initScraping() throws Exception{
+		logger.info("Begining to cache all present data in google doc");
+		cacheAllObjectsFromSpreasheet();
 		logger.info("Begining scraping");
+		((ThreadPoolExecutor)spreadSheetWriterExecutor).prestartAllCoreThreads();
 		String dispensaryBaseScraperConfig = WeedmapProcessor.readFile("dispensary-base-scraper.xml");
 		String dispensaryLocationScraperConfig = WeedmapProcessor.readFile("dispensary-location-scraper.xml");
 		String dispensaryDetaisScraperConfig = WeedmapProcessor.readFile("dispensary-info-scraper.xml");
@@ -49,22 +57,49 @@ public class WeedmapProcessor {
 		logger.info("URLs obtained from level one scraping. Size "+urlOfDispensaryLocations.size());
 		Set<String> urlOfDispensaries = scrapeForDispensaryURLs(urlOfDispensaryLocations,dispensaryLocationScraperConfig );
 		logger.info("Dispensaries obtained "+urlOfDispensaries.size());
-		Set<DispensaryObject> dispensaries = scrapeDispensaryDetailsForDispensaries(urlOfDispensaries, dispensaryDetaisScraperConfig);
+		SerializationUtil.serializeToDisk(urlOfDispensaries);
+		Set<Dispensary> dispensaries = scrapeDispensaryDetailsForDispensaries(urlOfDispensaries, dispensaryDetaisScraperConfig);
 		logger.info("Dispensary objects created "+dispensaries.size());
-		SpreadsheetWriter.writeSpreadSheet("C:/logs/WeedsMapDB.xls", dispensaries);
+		//SpreadsheetWriter.writeSpreadSheet("C:/logs/WeedsMapDB.xls", dispensaries);
+		SpreadsheetWorker.removeDispensariesAndMenuItemsFromSpreadsheet("instant420", WeedmapScraperCache.getDispensaryCache());
 	}
-	
-	private Set<DispensaryObject> scrapeDispensaryDetailsForDispensaries(Set<String> urlOfDispensaries, String dispensaryDetaisScraperConfig) throws InterruptedException, ExecutionException {
-		Set<DispensaryObject> dispensaries = new HashSet<DispensaryObject>();
-		List<Future<DispensaryObject>> dispensaryFutList = new ArrayList<Future<DispensaryObject>>(); 
-		for(String dispensaryURL : urlOfDispensaries) 
-			dispensaryFutList.add(dispensaryDetailService.submit(new DispensaryDetailScraper(null, dispensaryDetaisScraperConfig, dispensaryURL)));
+
+	private void cacheAllObjectsFromSpreasheet() throws Exception {
+		cache = WeedmapScraperCache.getInstance(SpreadsheetWorker.readSpreadsheetFromGoogleDrive("instant420"));
+	}
+
+	private Set<Dispensary> scrapeDispensaryDetailsForDispensaries(Set<String> urlOfDispensaries, String dispensaryDetaisScraperConfig) throws Exception {
+		final Set<Dispensary> dispensaries = new HashSet<Dispensary>();
+		Map<Future<DispensaryObject>, String> dispensaryFutMap = new HashMap<Future<DispensaryObject>, String>();
+		for(String dispensaryURL : urlOfDispensaries){
+				dispensaryFutMap.put(dispensaryDetailService.submit(new DispensaryDetailScraper(null, dispensaryDetaisScraperConfig, dispensaryURL)), dispensaryURL);
+		}
 		DispensaryObject obj = null;
-		for(Future<DispensaryObject> aFuture : dispensaryFutList){
+		for(Future<DispensaryObject> aFuture : dispensaryFutMap.keySet()){
 			try {
 				obj = aFuture.get();
 				if(obj!=null){
 					dispensaries.add(obj);
+					if(dispensaries.size()>10){
+						Set<Dispensary> dispensariesToWorkWith = new HashSet<Dispensary>();
+						dispensariesToWorkWith.addAll(dispensaries);
+						dispensaries.clear();
+						final Set<Dispensary> dispensariesToBeAdded = cache.findNewlyAddedDispensaries(dispensariesToWorkWith);
+						//final Set<Dispensary> dispensariesToBeRemoved = cache.findDispensariesNoLongerAvailable(dispensariesToWorkWith);
+						final Set<Dispensary> dispensariesToBeUpdated = cache.findUpdatedDispensaries(dispensariesToWorkWith);
+						spreadSheetWriterExecutor.execute(new Runnable(){
+							public void run() {
+								try {
+									SpreadsheetWorker.addDispensariesToSpreadsheetInGoogleDrive("instant420", dispensariesToBeAdded);
+									//SpreadsheetWorker.removeDispensariesAndMenuItemsFromSpreadsheet("instant420", dispensariesToBeRemoved);
+									SpreadsheetWorker.updateDispensariesAndMenuItemsInSpreadsheet("instant420", dispensariesToBeUpdated);
+								} catch (Exception e) {
+									logger.error("Failed to upload dispensaries!!"+dispensaries);
+									e.printStackTrace();
+								}
+							}
+						});
+					}
 					System.out.println(obj.getName());
 				}				
 			} catch (Exception e) {
