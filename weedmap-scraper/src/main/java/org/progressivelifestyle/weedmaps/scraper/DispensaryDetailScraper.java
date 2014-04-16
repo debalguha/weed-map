@@ -76,7 +76,7 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 				}catch(Exception ee){
 					logger.error("Error in retry!!");
 				}
-				Thread.sleep(2000);
+				Thread.sleep(5000);
 			}
 			if(!success)
 				throw (e);

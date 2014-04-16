@@ -19,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
 import org.progressivelifestyle.weedmaps.objects.Address;
 import org.progressivelifestyle.weedmaps.objects.ChangeIndicatingDispensaryObject;
 import org.progressivelifestyle.weedmaps.objects.Dispensary;
@@ -37,6 +38,11 @@ import com.google.gdata.data.spreadsheet.WorksheetEntry;
 import com.google.gdata.util.ServiceException;
 
 public class SpreadsheetWorker {
+	public static DispensaryEntity convertDispensaryIntoPersistenceObject(Dispensary dispensary){
+		DispensaryEntity dispensaryEntity = new DispensaryEntity();
+		dispensaryEntity.setCity(dispensary.getAddress().getCity());
+		dispensaryEntity.
+	}
 	public static void updateDispensariesAndMenuItemsInSpreadsheet(String spreadsheetName, Collection<Dispensary> dispensaries) throws Exception{
 	    SpreadsheetService service = new SpreadsheetService(spreadsheetName);
 	    WorksheetEntry[] worksheetEntries = assignStoresheetAndMenusheet(spreadsheetName, service);

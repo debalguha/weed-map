@@ -3,10 +3,13 @@ package org.progressivelifestyle.weedmaps.processor;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
@@ -17,6 +20,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.logging.Log;
@@ -60,6 +64,7 @@ public class WeedmapProcessor {
 		Set<String> urlOfDispensaryLocations = levelOneScraper.findURLOfDispensaries("https://weedmaps.com/");
 		logger.info("URLs obtained from level one scraping. Size "+urlOfDispensaryLocations.size());
 		Set<String> urlOfDispensaries = scrapeForDispensaryURLs(urlOfDispensaryLocations,dispensaryLocationScraperConfig );
+		//List<String> urlOfDispensaries = FileUtils.readLines(new File("C:/logs/URLList.txt"));
 		logger.info("Dispensaries obtained "+urlOfDispensaries.size());
 		SerializationUtil.serializeToDisk(urlOfDispensaries);
 		Set<Dispensary> dispensaries = scrapeDispensaryDetailsForDispensaries(urlOfDispensaries, dispensaryDetaisScraperConfig);
@@ -72,55 +77,67 @@ public class WeedmapProcessor {
 		cache = WeedmapScraperCache.getInstance(SpreadsheetWorker.readSpreadsheetFromGoogleDrive("instant420"));
 	}
 
-	private Set<Dispensary> scrapeDispensaryDetailsForDispensaries(Set<String> urlOfDispensaries, String dispensaryDetaisScraperConfig) throws Exception {
+	private Set<Dispensary> scrapeDispensaryDetailsForDispensaries(Collection<String> urlOfDispensaries, String dispensaryDetaisScraperConfig) throws Exception {
 		final Set<Dispensary> dispensaries = new HashSet<Dispensary>();
 		Map<Future<DispensaryObject>, String> dispensaryFutMap = new HashMap<Future<DispensaryObject>, String>();
 		for(String dispensaryURL : urlOfDispensaries){
 				dispensaryFutMap.put(dispensaryDetailService.submit(new DispensaryDetailScraper(null, dispensaryDetaisScraperConfig, dispensaryURL)), dispensaryURL);
 		}
 		DispensaryObject obj = null;
-		for(Future<DispensaryObject> aFuture : dispensaryFutMap.keySet()){
-			try {
-				obj = aFuture.get();
-				if(obj!=null){
-					dispensaries.add(obj);
-					if(dispensaries.size()>4){
-						final Set<Dispensary> dispensariesToWorkWith = new HashSet<Dispensary>();
-						dispensariesToWorkWith.addAll(dispensaries);
-						dispensaries.clear();
-						final Set<Dispensary> dispensariesToBeAdded = cache.findNewlyAddedDispensaries(dispensariesToWorkWith);
-						//final Set<Dispensary> dispensariesToBeRemoved = cache.findDispensariesNoLongerAvailable(dispensariesToWorkWith);
-						final Set<Dispensary> dispensariesToBeUpdated = cache.findUpdatedDispensaries(dispensariesToWorkWith);
-						while(submittedTasks.intValue()>4){
-							try {
-								Thread.sleep(5000);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-							logger.warn("Going to wait as activie count is "+submittedTasks.intValue());
-						}
-						logger.info("Submitting task "+dispensariesToWorkWith.size());
-						spreadSheetWriterExecutor.execute(new Runnable(){
-							public void run() {
-								submittedTasks.incrementAndGet();
+		while(!dispensaryFutMap.isEmpty()){
+			Iterator<Entry<Future<DispensaryObject>, String>> iterator = dispensaryFutMap.entrySet().iterator();
+			while(iterator.hasNext()){
+				Entry<Future<DispensaryObject>, String> entry = iterator.next();
+				try {
+					obj = entry.getKey().get(1000, TimeUnit.SECONDS);
+				} catch (TimeoutException e) {
+					continue;
+				}
+				try {
+					logger.info("Task response got from future");
+					if(obj!=null){
+						dispensaries.add(obj);
+						//final Set<Dispensary> dispensariesToBeAdded = new HashSet<Dispensary>(1);
+						//dispensariesToBeAdded.add(obj);
+						//SpreadsheetWorker.addDispensariesToSpreadsheetInGoogleDrive("instant420", dispensariesToBeAdded);
+						if(dispensaries.size()>10){
+							final Set<Dispensary> dispensariesToWorkWith = new HashSet<Dispensary>();
+							dispensariesToWorkWith.addAll(dispensaries);
+							dispensaries.clear();
+							final Set<Dispensary> dispensariesToBeAdded = cache.findNewlyAddedDispensaries(dispensariesToWorkWith);
+							//final Set<Dispensary> dispensariesToBeRemoved = cache.findDispensariesNoLongerAvailable(dispensariesToWorkWith);
+							final Set<Dispensary> dispensariesToBeUpdated = cache.findUpdatedDispensaries(dispensariesToWorkWith);
+							while(submittedTasks.intValue()>4){
 								try {
-									logger.info("Proceeding to write into google spreadsheet.");
-									logger.info("Dispensaries to be added:: "+dispensariesToBeAdded.size()+", updated:: "+dispensariesToBeUpdated.size());
-									SpreadsheetWorker.addDispensariesToSpreadsheetInGoogleDrive("instant420", dispensariesToBeAdded);
-									//SpreadsheetWorker.removeDispensariesAndMenuItemsFromSpreadsheet("instant420", dispensariesToBeRemoved);
-									SpreadsheetWorker.updateDispensariesAndMenuItemsInSpreadsheet("instant420", dispensariesToBeUpdated);
-									logger.info("Written to google spreadsheet.");
+									Thread.sleep(5000);
 								} catch (Exception e) {
-									logger.error("Failed to upload dispensaries!!"+dispensariesToWorkWith, e);
+									e.printStackTrace();
 								}
-								submittedTasks.decrementAndGet();
+								logger.warn("Going to wait as activie count is "+submittedTasks.intValue());
 							}
-						});
-					}
-					System.out.println(obj.getName());
-				}				
-			} catch (Exception e) {
-				e.printStackTrace();
+							logger.info("Submitting task "+dispensariesToWorkWith.size());
+							spreadSheetWriterExecutor.execute(new Runnable(){
+								public void run() {
+									submittedTasks.incrementAndGet();
+									try {
+										logger.info("Proceeding to write into google spreadsheet.");
+										logger.info("Dispensaries to be added:: "+dispensariesToBeAdded.size()+", updated:: "+dispensariesToBeUpdated.size());
+										SpreadsheetWorker.addDispensariesToSpreadsheetInGoogleDrive("instant420", dispensariesToBeAdded);
+										//SpreadsheetWorker.removeDispensariesAndMenuItemsFromSpreadsheet("instant420", dispensariesToBeRemoved);
+										SpreadsheetWorker.updateDispensariesAndMenuItemsInSpreadsheet("instant420", dispensariesToBeUpdated);
+										logger.info("Written to google spreadsheet.");
+									} catch (Exception e) {
+										logger.error("Failed to upload dispensaries!!"+dispensariesToWorkWith, e);
+									}
+									submittedTasks.decrementAndGet();
+								}
+							});
+						}
+						System.out.println(obj.getName());
+					}				
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return dispensaries;
@@ -144,4 +161,6 @@ public class WeedmapProcessor {
 			builder.append(line);
 		return builder.toString();
 	}
+	
+	
 }
