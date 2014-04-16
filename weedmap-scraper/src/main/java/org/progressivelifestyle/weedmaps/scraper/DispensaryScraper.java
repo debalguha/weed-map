@@ -31,8 +31,8 @@ public class DispensaryScraper extends BaseScraper {
 		Set<String> retSet = new HashSet<String>();
 		int counter=0;
 		for(Object locationUrl : locationURLs){
-			if(counter==1)
-				break;
+/*			if(counter==1)
+				break;*/
 			retSet.add(URL.concat(locationUrl.toString()));
 			counter++;
 		}
