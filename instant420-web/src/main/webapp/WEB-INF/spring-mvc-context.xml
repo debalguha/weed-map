@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:ui-app.properties</value>
+			</list>
+		</property>
+	</bean>	
+    <context:component-scan base-package="org.atxgroup.tools"/>
+    <context:component-scan base-package="org.atxgroup.main"/>
+
+    <mvc:annotation-driven/>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+    <mvc:resources mapping="/resources/**" location="/" />
+
+    <mvc:default-servlet-handler/>
+	<util:map id="form-class-map">
+		<entry key="AUSTYNPARTYWEEKEND" value="org.atxgroup.worker.AustynPartyWorker"/>
+		<entry key="COLORADOMUSICPARTY" value="org.atxgroup.worker.ColoradoMusicPartyWorker"/>
+		<entry key="THEGREENROOM" value="org.atxgroup.worker.ItsTheGreenRoomWorker"/>
+		<entry key="THEFADER" value="org.atxgroup.worker.TheFaderWorker"/>
+		<entry key="HEYERVERB" value="org.atxgroup.worker.HeyerVerbWorker"/>
+		<entry key="WINDISHAGENCY" value="org.atxgroup.worker.WindishAgencyWorker"/>
+		<entry key="JUMPSTARTTEXAS" value="org.atxgroup.worker.JumpStartTexasWorker"/>
+		<entry key="AMERICANSONGWRITER" value="org.atxgroup.worker.AmericanSongWriterWorker"/>
+		<entry key="VIBESWORKER" value="org.atxgroup.worker.VibesWorker"/>
+		<entry key="UNIVERSALEX" value="org.atxgroup.worker.UniversalExperienceWorker"/>
+		<entry key="MONTREALPARTYFEAT" value="org.atxgroup.worker.MontrealPartyFeatWorker"/>
+		<entry key="RELIVEAUSTYN" value="org.atxgroup.worker.ReliveAustynWorker"/>
+		<entry key="ELECTRONICSWINDISHAGENCY" value="org.atxgroup.worker.ElectronicsWindishAgencyWorker"/>
+		<entry key="GROWNKIDSRADIO" value="org.atxgroup.worker.GrownKidsRadioWorker"/>
+		<entry key="URBANOUTFITTERS" value="org.atxgroup.worker.UrbanoutfittersWorker"/>
+		<entry key="BROOKLYNCOUNTRYCANTINA" value="org.atxgroup.worker.BrooklynCountryCantinaWorker"/>
+		<entry key="THENAKEDGRAPEMUSIC" value="org.atxgroup.worker.TheNakedGrapeMusicWorker"/>
+	</util:map>
+	<util:map id="form-proxy-map">
+	</util:map>	
+	<bean id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+		<constructor-arg index="1" value="${solr.server.url}"/>
+	</bean>
+</beans>
