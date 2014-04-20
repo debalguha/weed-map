@@ -2,13 +2,17 @@ package org.progressivelifestyle.weedmaps.objects;
 
 import java.util.Set;
 
-public class ChangeIndicatingDispensaryObject implements Dispensary{
+import org.progressivelifestyle.weedmap.persistence.domain.Dispensary;
+import org.progressivelifestyle.weedmap.persistence.domain.Menu;
+
+public class ChangeIndicatingDispensaryObject extends DispensaryObject implements Dispensary{
 	private final Dispensary actualDispensary;
 	private Set<MenuItem> menuItemsToBeAdded;
 	private Set<MenuItem> menuItemsToBeRemoved;
 	private Set<MenuItem> menuItemstobeUpdated;
 	private boolean  changeInDispensary;
 	public ChangeIndicatingDispensaryObject(Dispensary actualDispensary) {
+		super();
 		this.actualDispensary = actualDispensary;
 	}
 	public int compareTo(Dispensary o) {
@@ -27,7 +31,7 @@ public class ChangeIndicatingDispensaryObject implements Dispensary{
 		return actualDispensary.getWebsite();
 	}
 	public Address getAddress() {
-		return actualDispensary.getAddress();
+		return ((DispensaryObject)actualDispensary).getAddress();
 	}
 	public String getFacebookURL() {
 		return actualDispensary.getFacebookURL();
@@ -101,8 +105,8 @@ public class ChangeIndicatingDispensaryObject implements Dispensary{
 	public String getSaturdayClose() {
 		return actualDispensary.getSaturdayClose();
 	}
-	public Set<MenuItem> getMenuItems() {
-		return actualDispensary.getMenuItems();
+	public Set<Menu> getMenuItems() {
+		return ((DispensaryObject)actualDispensary).getMenuItems();
 	}
 	public String getDispensaryURL() {
 		return actualDispensary.getDispensaryURL();

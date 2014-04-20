@@ -3,42 +3,46 @@ package org.progressivelifestyle.weedmaps.objects;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DispensaryObject implements Dispensary{
-	private final Long dispensaryId;
-	private final String name;
-	private final String phone;
-	private final String email;
-	private final String website;
-	private final Address address;
-	private final String facebookURL;
-	private final String twitterURL;
-	private final String instagramURL;
-	private final boolean creditCardSupport;
-	private final boolean handicapSupport;
-	private final boolean securityGuardSupport;
-	private final boolean photoAvailable;
-	private final boolean labTested;
-	private final boolean forAdult;
-	private final boolean deliverySupport;
-	private final String sundayOpen;
-	private final String sundayClose;
-	private final String mondayOpen;
-	private final String mondayClose;
-	private final String tuesdayOpen;
-	private final String tuesdayClose;
-	private final String wednesdayOpen;
-	private final String wednesdayClose;
-	private final String thursdayOpen;
-	private final String thursdayClose;
-	private final String fridayOpen;
-	private final String fridayClose;
-	private final String saturdayOpen;
-	private final String saturdayClose;
-	private final String dispensaryURL;
+import org.progressivelifestyle.weedmap.persistence.domain.Menu;
+
+public class DispensaryObject implements org.progressivelifestyle.weedmap.persistence.domain.Dispensary{
+	private  Long dispensaryId;
+	private  String name;
+	private  String phone;
+	private  String email;
+	private  String website;
+	private  Address address;
+	private  String facebookURL;
+	private  String twitterURL;
+	private  String instagramURL;
+	private  boolean creditCardSupport;
+	private  boolean handicapSupport;
+	private  boolean securityGuardSupport;
+	private  boolean photoAvailable;
+	private  boolean labTested;
+	private  boolean forAdult;
+	private  boolean deliverySupport;
+	private  String sundayOpen;
+	private  String sundayClose;
+	private  String mondayOpen;
+	private  String mondayClose;
+	private  String tuesdayOpen;
+	private  String tuesdayClose;
+	private  String wednesdayOpen;
+	private  String wednesdayClose;
+	private  String thursdayOpen;
+	private  String thursdayClose;
+	private  String fridayOpen;
+	private  String fridayClose;
+	private  String saturdayOpen;
+	private  String saturdayClose;
+	private  String dispensaryURL;
 	
 	//private Map<String, Collection<MenuItem>> menuItems;
-	private Set<MenuItem> menuItems;
-
+	private Set<Menu> menuItems;
+	public DispensaryObject(){
+		
+	}
 	public DispensaryObject(Long dispensaryId,String name, String phone, String email, String website, Address address, String facebookURL, String twitterURL, String instagramURL, boolean creditCardSupport, boolean handicapSupport, boolean securityGuardSupport, boolean photoAvailable,
 			boolean labTested, boolean forAdult, boolean deliverySupport, String sundayOpen, String sundayClose, String mondayOpen, String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen,
 			String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose, String dispensaryURL) {
@@ -75,7 +79,7 @@ public class DispensaryObject implements Dispensary{
 		this.saturdayClose = saturdayClose;
 		this.dispensaryURL = dispensaryURL;
 		//this.menuItems = new HashMap<String, Collection<MenuItem>>();
-		this.menuItems = new HashSet<MenuItem>();
+		this.menuItems = new HashSet<Menu>();
 	}
 
 	public String getName() {
@@ -196,22 +200,22 @@ public class DispensaryObject implements Dispensary{
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		 int prime = 31;
 		int result = 1;
 		result = prime * result + ((dispensaryId == null) ? 0 : dispensaryId.hashCode());
 		return result;
 	}
 
 
-	public Set<MenuItem> getMenuItems() {
+	public Set<Menu> getMenuItems() {
 		return menuItems;
 	}
 
-	public void setMenuItems(Set<MenuItem> menuItems) {
+	public void setMenuItems(Set<Menu> menuItems) {
 		this.menuItems = menuItems;
 	}
 
-	public int compareTo(Dispensary o) {
+	public int compareTo(org.progressivelifestyle.weedmap.persistence.domain.Dispensary o) {
 		return this.name.compareTo(o.getName());
 	}
 
@@ -369,6 +373,9 @@ public class DispensaryObject implements Dispensary{
 		} else if (!wednesdayOpen.equals(other.wednesdayOpen))
 			return false;
 		return true;
+	}
+	public void setDispensaryURL(String dispensaryURL) {
+		this.dispensaryURL = dispensaryURL;
 	}
 	
 }

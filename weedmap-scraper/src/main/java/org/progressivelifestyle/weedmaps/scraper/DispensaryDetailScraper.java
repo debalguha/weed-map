@@ -11,9 +11,12 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.progressivelifestyle.weedmap.persistence.domain.Menu;
 import org.progressivelifestyle.weedmaps.objects.Address;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
 import org.progressivelifestyle.weedmaps.objects.MenuItem;
@@ -49,7 +52,9 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 				throw new NullPointerException("Dispensary Object is null!!");
 		} catch (Exception e) {
 			logger.error("Exception while processing "+urlToScrape, e);
-			throw e;
+			DispensaryObject dispensaryObject = new DispensaryObject();
+			dispensaryObject.setDispensaryURL(urlToScrape);
+			return dispensaryObject;
 		}
 		return scrapeDispensaryDetailsWithMenuItem;
 	}
@@ -114,18 +119,19 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 		String friClose = scraper.getContext().getVar("friClose").toString();
 		String satOpen = scraper.getContext().getVar("satOpen").toString();
 		String satClose = scraper.getContext().getVar("satClose").toString();
-		
+		String dataListing = scraper.getContext().getVar("data-listing").toString();
 		if(menuItemCategoryMap == null){
 			synchronized(lockObj){
 				if(menuItemCategoryMap == null)
 					menuItemCategoryMap = buildMenuItemCategoryMap(scraper.getContext().getVar("menu-items-category").toString());
 			}
 		}
-		Set<MenuItem> menuItemsCollection = parseJsonsIntoMenuItems(scraper.getContext().getVar("menu-items-alt").toArray());
+		Set<Menu> menuItemsCollection = parseJsonsIntoMenuItems(scraper.getContext().getVar("menu-items-alt").toArray());
 		logger.info("Menu Items retrieved: "+menuItemsCollection.size());
 		Long dispensaryId = new Long(-1);
 		try {
-			dispensaryId = menuItemsCollection.iterator().next().getDispensaryId();
+			dispensaryId = parseJsonToRetrieveDispensaryId(dataListing);
+			logger.error("DispensaryId:: "+dispensaryId);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -133,6 +139,11 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 				facebook, twitter, instagram, creditCard, handicap, security, photos, labTested, adult, delivery, sunOpen, sunClose, monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen, friClose, satOpen, satClose, urlToScrape);
 		dispensary.setMenuItems(menuItemsCollection);
 		return dispensary;
+	}
+
+	private Long parseJsonToRetrieveDispensaryId(String dataListing) throws JsonProcessingException, IOException {
+		JsonNode jsonNode = mapper.readTree(dataListing);
+		return jsonNode.get("id").getLongValue();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -145,8 +156,8 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 		return catgoryMapMaster;
 	}
 
-	private Set<MenuItem> parseJsonsIntoMenuItems(Object[] jsons) throws JsonParseException, JsonMappingException, IOException {
-		Set<MenuItem> menuItems = new HashSet<MenuItem>();
+	private Set<Menu> parseJsonsIntoMenuItems(Object[] jsons) throws JsonParseException, JsonMappingException, IOException {
+		Set<Menu> menuItems = new HashSet<Menu>();
 		for(Object json : jsons)
 			menuItems.add(mapper.readValue(json.toString(), MenuItem.class));
 		return menuItems;

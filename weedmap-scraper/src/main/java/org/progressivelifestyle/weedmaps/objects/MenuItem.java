@@ -7,8 +7,10 @@ import java.util.Map;
 import org.codehaus.jackson.annotate.JsonAnyGetter;
 import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.progressivelifestyle.weedmap.persistence.domain.BaseEntity;
+import org.progressivelifestyle.weedmap.persistence.domain.Menu;
 
-public class MenuItem implements Comparable<MenuItem>{
+public class MenuItem implements Comparable<MenuItem>, Menu{
 	private String name;
 	private long id;
 	@JsonProperty("dispensary_id")
@@ -153,7 +155,7 @@ public class MenuItem implements Comparable<MenuItem>{
 	public void setStrainId(String strainId) {
 		this.strainId = strainId;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	public void setId(long id) {
@@ -227,6 +229,12 @@ public class MenuItem implements Comparable<MenuItem>{
 		} else if (!strainId.equals(other.strainId))
 			return false;
 		return true;
+	}
+	public void setDispensary(BaseEntity dispensary) {
+		throw new UnsupportedOperationException("This facility makes sense with persistence model.");
+	}
+	public boolean isLogicallyEquals(Menu menu) {
+		throw new UnsupportedOperationException("This operation makes sense for persistence entities.");
 	}
 	
 	

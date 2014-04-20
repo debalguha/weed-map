@@ -1,4 +1,4 @@
-package org.progressivelifestyle.weedmaps.objects;
+package org.progressivelifestyle.weedmap.persistence.domain;
 
 import java.util.Set;
 
@@ -12,7 +12,7 @@ public interface Dispensary extends Comparable<Dispensary>{
 
 	public abstract String getWebsite();
 
-	public abstract Address getAddress();
+	//public abstract Address getAddress();
 
 	public abstract String getFacebookURL();
 
@@ -62,10 +62,12 @@ public interface Dispensary extends Comparable<Dispensary>{
 
 	public abstract String getSaturdayClose();
 
-	public abstract Set<MenuItem> getMenuItems();
+	public abstract Set<Menu> getMenuItems();
 
 	public abstract String getDispensaryURL();
 
 	public abstract Long getDispensaryId();
+	
+	public void setMenuItems(Set<Menu> menus);
 
 }

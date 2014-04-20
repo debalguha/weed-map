@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.progressivelifestyle.weedmaps.objects.Dispensary;
+import org.progressivelifestyle.weedmap.persistence.domain.Dispensary;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryDetailScraper;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryDetailScraperTest;
@@ -23,7 +23,7 @@ public class SpreadsheetWriterTest {
 		List<Dispensary> dispensaries = new ArrayList<Dispensary>();
 		dispensaries.add(dispensary);
 		//SpreadsheetWorker.writeSpreadSheet("C:/logs/test-sheet.xls", dispensaries);
-		SpreadsheetWorker.addDispensariesToSpreadsheetInGoogleDrive("instant420", dispensaries);
+		//SpreadsheetWorker.addDispensariesToSpreadsheetInGoogleDrive("instant420", dispensaries);
 	}
 	
 	@Test

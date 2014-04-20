@@ -1,28 +1,29 @@
 package org.progressivelifestyle.weedmap.persistence.domain;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 
 @Entity
-public class DispensaryEntity implements BaseEntity{
+@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class DispensaryEntity implements BaseEntity, Dispensary{
 	@Id
 	private Long id;
-	@Column(nullable=false)
 	private String name;
-	@Column(nullable=false, unique = true)
 	private String phone;
-	@Column(nullable=false, unique = true)
 	private String email;
 	private String website;
 	private String street;
@@ -59,10 +60,11 @@ public class DispensaryEntity implements BaseEntity{
 	private Date creationDate;
 	private Date lastUpdateDate;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@Cascade(value={CascadeType.ALL})
 	@JoinColumn(name="dispensaryId", referencedColumnName="id")
 	private Set<MenuItemEntity> menuItems;
+	
 	public Long getId() {
 		return id;
 	}
@@ -296,11 +298,19 @@ public class DispensaryEntity implements BaseEntity{
 			return false;
 		return true;
 	}
-	public Set<MenuItemEntity> getMenuItems() {
-		return menuItems;
+	public Set<Menu> getMenuItems() {
+		Set<Menu> menus = new HashSet<Menu>();
+		if(menuItems!=null)
+			menus.addAll(menuItems);
+		return menus;
 	}
-	public void setMenuItems(Set<MenuItemEntity> menuItems) {
-		this.menuItems = menuItems;
+	public void setMenuItems(Set<Menu> menuItems) {
+		Set<MenuItemEntity> menuItemEntitySet = new HashSet<MenuItemEntity>();
+		if(menuItems!=null){
+			for(Menu menu : menuItems)
+				menuItemEntitySet.add((MenuItemEntity)menu);
+		}
+		this.menuItems = menuItemEntitySet;
 	}
 	public Date getCreationDate() {
 		return creationDate;
@@ -313,5 +323,170 @@ public class DispensaryEntity implements BaseEntity{
 	}
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
+	}
+	public int compareTo(Dispensary o) {
+		return this.id.compareTo(o.getDispensaryId());
+	}
+	public Long getDispensaryId() {
+		return getId();
+	}
+	public boolean isLogicallyEquals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DispensaryEntity other = (DispensaryEntity) obj;
+		if (city == null) {
+			if (other.city != null)
+				return false;
+		} else if (!city.equals(other.city))
+			return false;
+		if (creditCardSupport != other.creditCardSupport)
+			return false;
+		if (deliverySupport != other.deliverySupport)
+			return false;
+		if (dispensaryURL == null) {
+			if (other.dispensaryURL != null)
+				return false;
+		} else if (!dispensaryURL.equals(other.dispensaryURL))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (facebookURL == null) {
+			if (other.facebookURL != null)
+				return false;
+		} else if (!facebookURL.equals(other.facebookURL))
+			return false;
+		if (forAdult != other.forAdult)
+			return false;
+		if (fridayClose == null) {
+			if (other.fridayClose != null)
+				return false;
+		} else if (!fridayClose.equals(other.fridayClose))
+			return false;
+		if (fridayOpen == null) {
+			if (other.fridayOpen != null)
+				return false;
+		} else if (!fridayOpen.equals(other.fridayOpen))
+			return false;
+		if (handicapSupport != other.handicapSupport)
+			return false;
+		if (instagramURL == null) {
+			if (other.instagramURL != null)
+				return false;
+		} else if (!instagramURL.equals(other.instagramURL))
+			return false;
+		if (labTested != other.labTested)
+			return false;
+		if (mondayClose == null) {
+			if (other.mondayClose != null)
+				return false;
+		} else if (!mondayClose.equals(other.mondayClose))
+			return false;
+		if (mondayOpen == null) {
+			if (other.mondayOpen != null)
+				return false;
+		} else if (!mondayOpen.equals(other.mondayOpen))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (phone == null) {
+			if (other.phone != null)
+				return false;
+		} else if (!phone.equals(other.phone))
+			return false;
+		if (photoAvailable != other.photoAvailable)
+			return false;
+		if (saturdayClose == null) {
+			if (other.saturdayClose != null)
+				return false;
+		} else if (!saturdayClose.equals(other.saturdayClose))
+			return false;
+		if (saturdayOpen == null) {
+			if (other.saturdayOpen != null)
+				return false;
+		} else if (!saturdayOpen.equals(other.saturdayOpen))
+			return false;
+		if (securityGuardSupport != other.securityGuardSupport)
+			return false;
+		if (state == null) {
+			if (other.state != null)
+				return false;
+		} else if (!state.equals(other.state))
+			return false;
+		if (street == null) {
+			if (other.street != null)
+				return false;
+		} else if (!street.equals(other.street))
+			return false;
+		if (street2 == null) {
+			if (other.street2 != null)
+				return false;
+		} else if (!street2.equals(other.street2))
+			return false;
+		if (sundayClose == null) {
+			if (other.sundayClose != null)
+				return false;
+		} else if (!sundayClose.equals(other.sundayClose))
+			return false;
+		if (sundayOpen == null) {
+			if (other.sundayOpen != null)
+				return false;
+		} else if (!sundayOpen.equals(other.sundayOpen))
+			return false;
+		if (thursdayClose == null) {
+			if (other.thursdayClose != null)
+				return false;
+		} else if (!thursdayClose.equals(other.thursdayClose))
+			return false;
+		if (thursdayOpen == null) {
+			if (other.thursdayOpen != null)
+				return false;
+		} else if (!thursdayOpen.equals(other.thursdayOpen))
+			return false;
+		if (tuesdayClose == null) {
+			if (other.tuesdayClose != null)
+				return false;
+		} else if (!tuesdayClose.equals(other.tuesdayClose))
+			return false;
+		if (tuesdayOpen == null) {
+			if (other.tuesdayOpen != null)
+				return false;
+		} else if (!tuesdayOpen.equals(other.tuesdayOpen))
+			return false;
+		if (twitterURL == null) {
+			if (other.twitterURL != null)
+				return false;
+		} else if (!twitterURL.equals(other.twitterURL))
+			return false;
+		if (website == null) {
+			if (other.website != null)
+				return false;
+		} else if (!website.equals(other.website))
+			return false;
+		if (wednesdayClose == null) {
+			if (other.wednesdayClose != null)
+				return false;
+		} else if (!wednesdayClose.equals(other.wednesdayClose))
+			return false;
+		if (wednesdayOpen == null) {
+			if (other.wednesdayOpen != null)
+				return false;
+		} else if (!wednesdayOpen.equals(other.wednesdayOpen))
+			return false;
+		if (zip == null) {
+			if (other.zip != null)
+				return false;
+		} else if (!zip.equals(other.zip))
+			return false;
+		return true;
 	}
 }

@@ -2,14 +2,17 @@ package org.progressivelifestyle.weedmap.persistence.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class MenuItemEntity implements BaseEntity{
+public class MenuItemEntity implements BaseEntity, Menu{
 	@Id
 	private long id;
 	private String name;
@@ -20,17 +23,22 @@ public class MenuItemEntity implements BaseEntity{
 	private int priceOunce;
 	private int priceQuarter;
 	private int priceUnit;
+	@Lob
+	@Column(columnDefinition="TEXT")
 	private String description;
 	private String strainId;
+	private String pictureURL;
 	
 	private Date creationDate;
 	private Date lastUpdateDate;
 	
 	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="menuItemCategoryId", insertable=false, updatable=false,nullable=false,unique=false)
+	@JoinColumn(name="menuItemCategoryId")
 	private MenuItemCategoryEntity menuItemCategory;
 	
-	public long getId() {
+	@ManyToOne(fetch=FetchType.LAZY)
+	private DispensaryEntity dispensary;
+	public Long getId() {
 		return id;
 	}
 	public void setId(long id) {
@@ -96,7 +104,7 @@ public class MenuItemEntity implements BaseEntity{
 	public void setStrainId(String strainId) {
 		this.strainId = strainId;
 	}
-	@Override
+	/*@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -115,7 +123,7 @@ public class MenuItemEntity implements BaseEntity{
 		if (id != other.id)
 			return false;
 		return true;
-	}
+	}*/
 	public MenuItemCategoryEntity getMenuItemCategory() {
 		return menuItemCategory;
 	}
@@ -133,6 +141,81 @@ public class MenuItemEntity implements BaseEntity{
 	}
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
+	}
+	public String getPictureURL() {
+		return pictureURL;
+	}
+	public void setPictureURL(String pictureURL) {
+		this.pictureURL = pictureURL;
+	}
+	public Long getDispensaryId() {
+		return null;
+	}
+	public Long getMenuItemCategoryId() {
+		return menuItemCategory.getId();
+	}
+	public String getCategoryName() {
+		return menuItemCategory.getCategoryName();
+	}
+	public boolean isLogicallyEquals(Menu obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MenuItemEntity other = (MenuItemEntity) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (menuItemCategory == null) {
+			if (other.menuItemCategory != null)
+				return false;
+		} else if (!menuItemCategory.equals(other.menuItemCategory))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (pictureURL == null) {
+			if (other.pictureURL != null)
+				return false;
+		} else if (!pictureURL.equals(other.pictureURL))
+			return false;
+		if (priceEighth != other.priceEighth)
+			return false;
+		if (priceGram != other.priceGram)
+			return false;
+		if (priceHalfGram != other.priceHalfGram)
+			return false;
+		if (priceHalfOunce != other.priceHalfOunce)
+			return false;
+		if (priceOunce != other.priceOunce)
+			return false;
+		if (priceQuarter != other.priceQuarter)
+			return false;
+		if (priceUnit != other.priceUnit)
+			return false;
+		if (strainId == null) {
+			if (other.strainId != null)
+				return false;
+		} else if (!strainId.equals(other.strainId))
+			return false;
+		return true;
+	}
+	public DispensaryEntity getDispensary() {
+		return dispensary;
+	}
+	public void setDispensary(BaseEntity dispensary) {
+		this.dispensary = (DispensaryEntity)dispensary;
+	}
+	@Override
+	public String toString() {
+		return "MenuItemEntity [id=" + id + ", name=" + name + ", priceEighth=" + priceEighth + ", priceGram=" + priceGram + ", priceHalfGram=" + priceHalfGram + ", priceHalfOunce=" + priceHalfOunce + ", priceOunce=" + priceOunce + ", priceQuarter=" + priceQuarter
+				+ ", priceUnit=" + priceUnit + ", description=" + description + ", strainId=" + strainId + ", pictureURL=" + pictureURL + ", menuItemCategory=" + menuItemCategory + ", dispensary=" + dispensary + "]";
 	}
 	
 }

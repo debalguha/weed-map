@@ -63,6 +63,10 @@ public class MenuItemCategoryEntity implements BaseEntity{
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
 	}
+	@Override
+	public String toString() {
+		return "MenuItemCategoryEntity [id=" + id + ", categoryName=" + categoryName + "]";
+	}
 	
 	
 }

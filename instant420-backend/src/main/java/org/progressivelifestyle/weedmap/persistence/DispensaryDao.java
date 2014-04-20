@@ -1,11 +1,14 @@
 package org.progressivelifestyle.weedmap.persistence;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.progressivelifestyle.weedmap.persistence.domain.BaseEntity;
+import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -33,5 +36,16 @@ public class DispensaryDao {
 		Date nowDate = new Date();
 		model.setLastUpdateDate(nowDate);
 		entityManager.merge(model);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Object getEntityByPrimaryKey(Object primaryKey, Class clazz) {
+		return entityManager.find(clazz, primaryKey);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<DispensaryEntity> loadAllDispensaries() {
+		Query query = entityManager.createQuery("select d from DispensaryEntity d");
+		return query.getResultList();
 	}
 }

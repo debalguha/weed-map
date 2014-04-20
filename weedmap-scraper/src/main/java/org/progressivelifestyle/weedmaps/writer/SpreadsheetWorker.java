@@ -7,27 +7,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
+import org.progressivelifestyle.weedmap.persistence.domain.Dispensary;
+import org.progressivelifestyle.weedmap.persistence.domain.Menu;
 import org.progressivelifestyle.weedmaps.objects.Address;
-import org.progressivelifestyle.weedmaps.objects.ChangeIndicatingDispensaryObject;
-import org.progressivelifestyle.weedmaps.objects.Dispensary;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
 import org.progressivelifestyle.weedmaps.objects.MenuItem;
 import org.progressivelifestyle.weedmaps.objects.Picture;
 import org.progressivelifestyle.weedmaps.objects.PictureImage;
-import org.progressivelifestyle.weedmaps.processor.WeedmapScraperCache;
 
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
 import com.google.gdata.data.spreadsheet.ListEntry;
@@ -38,45 +35,8 @@ import com.google.gdata.data.spreadsheet.WorksheetEntry;
 import com.google.gdata.util.ServiceException;
 
 public class SpreadsheetWorker {
-	public static DispensaryEntity convertDispensaryIntoPersistenceObject(Dispensary dispensary){
-		DispensaryEntity dispensaryEntity = new DispensaryEntity();
-		dispensaryEntity.setCity(dispensary.getAddress().getCity());
-		dispensaryEntity.
-	}
-	public static void updateDispensariesAndMenuItemsInSpreadsheet(String spreadsheetName, Collection<Dispensary> dispensaries) throws Exception{
-	    SpreadsheetService service = new SpreadsheetService(spreadsheetName);
-	    WorksheetEntry[] worksheetEntries = assignStoresheetAndMenusheet(spreadsheetName, service);
-	    WorksheetEntry storeSheet = worksheetEntries[0];
-	    WorksheetEntry menuSheet = worksheetEntries[1];
-	    URL listFeedUrlForStore = storeSheet.getListFeedUrl();
-	    URL listFeedUrlForMenu = menuSheet.getListFeedUrl();
-	    ListFeed listFeedOfStore = service.getFeed(listFeedUrlForStore, ListFeed.class);
-	    ListFeed listFeedOfMenu = service.getFeed(listFeedUrlForMenu, ListFeed.class);
-	    filterListEntriesMatchingDispensaries(dispensaries, listFeedOfStore);
-	    updateStoreSheetForDispensaries(dispensaries, listFeedOfStore, listFeedOfMenu, listFeedUrlForMenu, service);
-	    
-	}
-	private static void updateStoreSheetForDispensaries(Collection<Dispensary> dispensaries, ListFeed listFeedOfStore, ListFeed listFeedOfMenu, URL listFeedUrlForMenu, SpreadsheetService service) throws Exception{
-		final Map<Long, Dispensary> indexedDispensaries = WeedmapScraperCache.indexDispensaryObjects(dispensaries);
-		for (ListEntry row : listFeedOfStore.getEntries()) {
-			Dispensary dispensary = indexedDispensaries.get(Long.parseLong(row.getCustomElements().getValue("dispensaryid")));
-			populateDispensaryInRow(row, dispensary);
-			row.update();
-			List<ListEntry> listEntriesForRemove = new ArrayList<ListEntry>();
-			listEntriesForRemove.addAll(listFeedOfMenu.getEntries());
-			addMenuItemsIntoSheet(((ChangeIndicatingDispensaryObject)dispensary).getMenuItemsToBeAdded(), listFeedUrlForMenu, dispensary, service);
-			filterListEntriesMatchingMenuItems(listEntriesForRemove, WeedmapScraperCache.indexMenuItems(((ChangeIndicatingDispensaryObject)dispensary).getMenuItemsToBeRemoved()));
-		    for(ListEntry listEntry : listFeedOfMenu.getEntries())
-		    	listEntry.delete();
-		    Map<Long, MenuItem> indexedMenuItmesToBeUpdated = WeedmapScraperCache.indexMenuItems(((ChangeIndicatingDispensaryObject)dispensary).getMenuItemstobeUpdated());
-		    filterListEntriesMatchingMenuItems(listFeedOfMenu.getEntries(), indexedMenuItmesToBeUpdated);
-		    for(ListEntry menuRow : listFeedOfMenu.getEntries()){
-		    	populateMenuItemInRow(menuRow, indexedMenuItmesToBeUpdated.get(menuRow.getCustomElements().getValue("menuitemid")), dispensary);
-		    	menuRow.update();
-		    }
-		}
-	}
-
+	private static Set<Long> menuItemIdsCached = new HashSet<Long>();
+	private static Set<Long> dispensaryIdsCached = new HashSet<Long>();
 	public static Collection<DispensaryObject> readSpreadsheetFromGoogleDrive(String spreadsheetName) throws Exception {
 		Collection<DispensaryObject> dispensaries = new TreeSet<DispensaryObject>();
 	    SpreadsheetService service = new SpreadsheetService(spreadsheetName);
@@ -97,72 +57,6 @@ public class SpreadsheetWorker {
 			storeSheetMap.put(dispensary.getDispensaryId(), dispensary);
 	    }
 		return storeSheetMap;
-	}
-	public static void removeDispensariesAndMenuItemsFromSpreadsheet(String spreadsheetName, Collection<Dispensary> dispensaries) throws Exception{
-	    SpreadsheetService service = new SpreadsheetService(spreadsheetName);
-	    WorksheetEntry[] worksheetEntries = assignStoresheetAndMenusheet(spreadsheetName, service);
-	    WorksheetEntry storeSheet = worksheetEntries[0];
-	    WorksheetEntry menuSheet = worksheetEntries[1];
-	    URL listFeedUrlOFStore = storeSheet.getListFeedUrl();
-	    List<ListEntry> listEntriesToBeRemoved = new ArrayList<ListEntry>();
-	    ListFeed listFeedOfStore = service.getFeed(listFeedUrlOFStore, ListFeed.class);
-	    filterListEntriesMatchingDispensaries(dispensaries, listFeedOfStore);
-	    listEntriesToBeRemoved.addAll(listFeedOfStore.getEntries());
-	    URL listFeedUrlOFMenu = menuSheet.getListFeedUrl();
-	    System.out.println("Hello");
-	    ListFeed listFeedOfMenu = service.getFeed(listFeedUrlOFMenu, ListFeed.class);
-	    filterListEntriesMatchingMenuItemsForDispensaries(listFeedOfMenu, dispensaries);
-	    listEntriesToBeRemoved.addAll(listFeedOfMenu.getEntries());
-	    for(ListEntry listEntry : listEntriesToBeRemoved)
-	    	listEntry.delete();
-	}
-	private static void filterListEntriesMatchingDispensaries(Collection<Dispensary> dispensaries, ListFeed listFeedOfStore){
-		final Map<Long, Dispensary> indexedDispensaries = WeedmapScraperCache.indexDispensaryObjects(dispensaries);
-	    CollectionUtils.filter(listFeedOfStore.getEntries(), new Predicate() {
-			public boolean evaluate(Object listEntry) {
-				Long dispensaryId = Long.parseLong(((ListEntry)listEntry).getCustomElements().getValue("dispensaryid"));
-				return indexedDispensaries.containsKey(dispensaryId);
-			}
-		});
-	}
-	private static void filterListEntriesMatchingMenuItemsForDispensaries(ListFeed listFeedOfMenu, Collection<Dispensary> dispensaries){
-		final Map<Long, MenuItem> indexedMenuItems = new HashMap<Long, MenuItem>();
-	    for(Dispensary dispensary : dispensaries)
-	    	indexedMenuItems.putAll(WeedmapScraperCache.indexMenuItems(dispensary.getMenuItems()));
-	    filterListEntriesMatchingMenuItems(listFeedOfMenu.getEntries(), indexedMenuItems);
-	}
-	private static void filterListEntriesMatchingMenuItems(List<ListEntry> listEntries, final Map<Long, MenuItem> indexedMenuItems){
-	    CollectionUtils.filter(listEntries, new Predicate() {
-			public boolean evaluate(Object listEntry) {
-				Long dispensaryId = Long.parseLong(((ListEntry)listEntry).getCustomElements().getValue("dispensaryid"));
-				return indexedMenuItems.containsKey(dispensaryId);
-			}
-		});
-	}
-	public static void addDispensariesToSpreadsheetInGoogleDrive(String spreadsheetName, Collection<Dispensary> dispensaries) throws Exception {
-	    SpreadsheetService service = new SpreadsheetService(spreadsheetName);
-	    WorksheetEntry[] worksheetEntries = assignStoresheetAndMenusheet(spreadsheetName, service);
-	    WorksheetEntry storeSheet = worksheetEntries[0];
-	    WorksheetEntry menuSheet = worksheetEntries[1];
-	    int menuCounts = 0;
-	    for(Dispensary dispensary : dispensaries)
-	    	menuCounts+=dispensary.getMenuItems().size();
-	    menuSheet.setRowCount(menuCounts);
-	    URL listFeedUrlOFStore = storeSheet.getListFeedUrl();
-	    URL listFeedUrlOFMenu = menuSheet.getListFeedUrl();
-	    for(Dispensary dispensary : dispensaries){
-	    	ListEntry row = new ListEntry();
-	    	populateDispensaryInRow(row, dispensary);
-	    	service.insert(listFeedUrlOFStore, row);
-	    	addMenuItemsIntoSheet(dispensary.getMenuItems(), listFeedUrlOFMenu, dispensary, service);
-	    }
-	}
-	private static void addMenuItemsIntoSheet(Set<MenuItem> menuItemsToBeAdded, URL listFeedUrlOFMenu, Dispensary dispensary, SpreadsheetService service) throws Exception{
-		for(MenuItem item : menuItemsToBeAdded){
-    		ListEntry rowMenu = new ListEntry();
-    		populateMenuItemInRow(rowMenu, item, dispensary);
-    		service.insert(listFeedUrlOFMenu, rowMenu);
-    	}
 	}
 	private static WorksheetEntry[] assignStoresheetAndMenusheet(String spreadsheetName, SpreadsheetService service) throws Exception{
 		WorksheetEntry[] worksheetEntries = new WorksheetEntry[2];
@@ -243,11 +137,11 @@ public class SpreadsheetWorker {
     	row.getCustomElements().setValueLocal("phone", dispensary.getPhone());
     	row.getCustomElements().setValueLocal("website", dispensary.getWebsite());
     	row.getCustomElements().setValueLocal("email", dispensary.getEmail());
-    	row.getCustomElements().setValueLocal("street", dispensary.getAddress().getStreetAddress());
+    	row.getCustomElements().setValueLocal("street", ((DispensaryObject)dispensary).getAddress().getStreetAddress());
     	row.getCustomElements().setValueLocal("street2", "");
-    	row.getCustomElements().setValueLocal("city", dispensary.getAddress().getCity());
-    	row.getCustomElements().setValueLocal("state", dispensary.getAddress().getState());
-    	row.getCustomElements().setValueLocal("zipcode", dispensary.getAddress().getZip());
+    	row.getCustomElements().setValueLocal("city", ((DispensaryObject)dispensary).getAddress().getCity());
+    	row.getCustomElements().setValueLocal("state", ((DispensaryObject)dispensary).getAddress().getState());
+    	row.getCustomElements().setValueLocal("zipcode", ((DispensaryObject)dispensary).getAddress().getZip());
     	row.getCustomElements().setValueLocal("logo", "");
     	row.getCustomElements().setValueLocal("promoimage", "");
     	row.getCustomElements().setValueLocal("facebook", dispensary.getFacebookURL());
@@ -281,13 +175,13 @@ public class SpreadsheetWorker {
     	row.getCustomElements().setValueLocal("weedmapsurl", dispensary.getSundayClose());
     	row.getCustomElements().setValueLocal("dispensaryid", String.valueOf(dispensary.getDispensaryId()));
 	}
-	private static void populateMenuItemInRow(ListEntry rowMenu, MenuItem item, Dispensary dispensary){
+	private static void populateMenuItemInRow(ListEntry rowMenu, Menu item, Dispensary dispensary){
 		rowMenu.getCustomElements().setValueLocal("dispensary", dispensary.getName());
 		rowMenu.getCustomElements().setValueLocal("name", item.getName());
 		rowMenu.getCustomElements().setValueLocal("strainid", item.getStrainId()==null?"":item.getStrainId());
 		rowMenu.getCustomElements().setValueLocal("instock", "X");
 		rowMenu.getCustomElements().setValueLocal("soldout", "");
-		rowMenu.getCustomElements().setValueLocal("image", item.getPictures()!=null && !item.getPictures().isEmpty() && item.getPictures().iterator().next().getImage()!=null?item.getPictures().iterator().next().getImage().getUrl():"");
+		rowMenu.getCustomElements().setValueLocal("image", ((MenuItem)item).getPictures()!=null && !((MenuItem)item).getPictures().isEmpty() && ((MenuItem)item).getPictures().iterator().next().getImage()!=null?((MenuItem)item).getPictures().iterator().next().getImage().getUrl():"");
 		rowMenu.getCustomElements().setValueLocal("flowers", item.getMenuItemCategoryId()==1 || item.getMenuItemCategoryId()==2 ? "X":"");
 
 		rowMenu.getCustomElements().setValueLocal("indica", item.getMenuItemCategoryId()==1?"X":"");
@@ -401,11 +295,11 @@ public class SpreadsheetWorker {
 			phoneCell = storeSheetRow.createCell(storeSheetCellNum++); phoneCell.setCellValue(obj.getPhone());
 			websiteCell = storeSheetRow.createCell(storeSheetCellNum++); websiteCell.setCellValue(obj.getWebsite());
 			emailCell = storeSheetRow.createCell(storeSheetCellNum++); emailCell.setCellValue(obj.getEmail());
-			streetCell = storeSheetRow.createCell(storeSheetCellNum++); streetCell.setCellValue(obj.getAddress().getStreetAddress());
+			streetCell = storeSheetRow.createCell(storeSheetCellNum++); streetCell.setCellValue(((DispensaryObject)obj).getAddress().getStreetAddress());
 			street2Cell = storeSheetRow.createCell(storeSheetCellNum++); street2Cell.setCellValue("");
-			cityCell = storeSheetRow.createCell(storeSheetCellNum++); cityCell.setCellValue(obj.getAddress().getCity());
-			stateCell = storeSheetRow.createCell(storeSheetCellNum++); stateCell.setCellValue(obj.getAddress().getState());
-			zipCell = storeSheetRow.createCell(storeSheetCellNum++); zipCell.setCellValue(obj.getAddress().getZip());
+			cityCell = storeSheetRow.createCell(storeSheetCellNum++); cityCell.setCellValue(((DispensaryObject)obj).getAddress().getCity());
+			stateCell = storeSheetRow.createCell(storeSheetCellNum++); stateCell.setCellValue(((DispensaryObject)obj).getAddress().getState());
+			zipCell = storeSheetRow.createCell(storeSheetCellNum++); zipCell.setCellValue(((DispensaryObject)obj).getAddress().getZip());
 			facebookCell = storeSheetRow.createCell(storeSheetCellNum++); facebookCell.setCellValue(obj.getFacebookURL());
 			twitterCell = storeSheetRow.createCell(storeSheetCellNum++); twitterCell.setCellValue(obj.getTwitterURL());
 			instagramCell = storeSheetRow.createCell(storeSheetCellNum++); instagramCell.setCellValue(obj.getInstagramURL());
@@ -434,7 +328,7 @@ public class SpreadsheetWorker {
 //			int numberOfRows = findMaximumCollectionSize(obj.getMenuItems());
 //			int rowCounter=1;
 			
-			for(MenuItem menuItem : obj.getMenuItems()){
+			for(Menu menuItem : ((DispensaryObject)obj).getMenuItems()){
 				if(menuItem.getName().equals("Vape Pen WHITE DIESEL"))
 					System.out.println("Gotcha");
 				menuSheetCellNum = 0;
@@ -444,7 +338,7 @@ public class SpreadsheetWorker {
 				menuSheetNameCell = menuSheetRow.createCell(menuSheetCellNum++); menuSheetNameCell.setCellValue(menuItem.getName());
 				inStockCell = menuSheetRow.createCell(menuSheetCellNum++); inStockCell.setCellValue("X");
 				soldOutCell = menuSheetRow.createCell(menuSheetCellNum++); soldOutCell.setCellValue("");
-				imageCell = menuSheetRow.createCell(menuSheetCellNum++); imageCell.setCellValue(menuItem.getPictures()!=null && !menuItem.getPictures().isEmpty() ? menuItem.getPictures().iterator().next().getImage().getUrl():"");
+				imageCell = menuSheetRow.createCell(menuSheetCellNum++); imageCell.setCellValue(((MenuItem)menuItem).getPictures()!=null && !((MenuItem)menuItem).getPictures().isEmpty() ? ((MenuItem)menuItem).getPictures().iterator().next().getImage().getUrl():"");
 				flowersCell = menuSheetRow.createCell(menuSheetCellNum++); flowersCell.setCellValue(menuItem.getMenuItemCategoryId()==1 || menuItem.getMenuItemCategoryId()==2 ? "X":"");
 				
 				indicaCell = menuSheetRow.createCell(menuSheetCellNum++); indicaCell.setCellValue(menuItem.getMenuItemCategoryId()==1?"X":"");

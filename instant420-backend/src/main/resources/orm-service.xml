@@ -1,7 +1,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
@@ -10,19 +9,21 @@
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.rosepetals.careermgmt.model"/>
+		<property name="packagesToScan"
+			value="org.progressivelifestyle.weedmap.persistence.domain" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="showSql" value="${hibernate.show_sql}" />
 				<property name="generateDdl" value="${hibernate.hbm2ddl}" />
 				<property name="databasePlatform" value="${hibernate.dialect}" />
+				<property name="hibernate.cache.use_second_level_cache" value="true"/>
+				<property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory"/>
 			</bean>
 		</property>
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<bean id="transactionManager"
-		class="org.springframework.orm.jpa.JpaTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -82,5 +83,5 @@
 		<property name="testConnectionOnCheckin">
 			<value>false</value>
 		</property>
-	</bean>	
+	</bean>
 </beans>

@@ -7,4 +7,5 @@ public interface BaseEntity {
 	public Date getLastUpdateDate();
 	public void setCreationDate(Date creationDate);
 	public void setLastUpdateDate(Date lastUpdateDate);
+	public Long getId();
 }

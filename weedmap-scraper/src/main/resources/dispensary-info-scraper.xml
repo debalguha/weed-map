@@ -185,5 +185,10 @@
 		<xpath expression="//div[@class='menu_item']/@data-json">
 			<var name="webpage"/>
 		</xpath>
-	</var-def>												
+	</var-def>		
+	<var-def name="data-listing">
+		<xpath expression="//div[@id='wm_globals']/@data-listing">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
 </config>
