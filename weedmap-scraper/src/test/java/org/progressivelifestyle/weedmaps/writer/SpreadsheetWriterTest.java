@@ -3,19 +3,14 @@ package org.progressivelifestyle.weedmaps.writer;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.progressivelifestyle.weedmap.persistence.domain.Dispensary;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
-import org.progressivelifestyle.weedmaps.scraper.DispensaryDetailScraper;
-import org.progressivelifestyle.weedmaps.scraper.DispensaryDetailScraperTest;
 
 public class SpreadsheetWriterTest {
-	@Test
+	/*@Test
 	public void shouldBeAbleToScrapeAndWriteToSpreadsheet() throws Exception {
 		String scraperConfigContent = DispensaryDetailScraperTest.readFile("dispensary-info-scraper.xml");
 		DispensaryDetailScraper scraper = new DispensaryDetailScraper(null, scraperConfigContent);
@@ -25,14 +20,14 @@ public class SpreadsheetWriterTest {
 		//SpreadsheetWorker.writeSpreadSheet("C:/logs/test-sheet.xls", dispensaries);
 		//SpreadsheetWorker.addDispensariesToSpreadsheetInGoogleDrive("instant420", dispensaries);
 	}
-	
-	@Test
+	*/
+/*	@Test
 	@Ignore
 	public void shouldBeAbleToReadSpreadsheetFromGoogleDrive() throws Exception{
 		Collection<DispensaryObject> readSpreadsheetFromGoogleDrive = SpreadsheetWorker.readSpreadsheetFromGoogleDrive("instant420");
 		assertNotNull(readSpreadsheetFromGoogleDrive);
 		assertFalse(readSpreadsheetFromGoogleDrive.isEmpty());
-	}
+	}*/
 	
 	
 }

@@ -1,0 +1,9 @@
+<ehcache>
+	<diskStore path="c:/ehcache" />
+
+	<defaultCache eternal="false" overflowToDisk="false"
+		maxElementsInMemory="50000" timeToIdleSeconds="30" timeToLiveSeconds="6000"
+		memoryStoreEvictionPolicy="LRU" />
+	<cache name="dispensary" maxElementsInMemory="5000"
+		eternal="false" overflowToDisk="true" memoryStoreEvictionPolicy="LFU" />
+</ehcache>            

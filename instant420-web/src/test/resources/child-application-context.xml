@@ -18,7 +18,6 @@
 		</property>
 	</bean>	
     <context:component-scan base-package="org.instant420.web"/>
-    <mvc:annotation-driven/>
 	<bean id="solrServerCombined" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
 		<constructor-arg index="0" value="${solr.combined.core.url}"/>
 	</bean>

@@ -1,19 +1,24 @@
 package org.instant420.web.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class ResultMeta {
-	private final int numFound;
-	private final int start;
+	private final long numFound;
+	private final long start;
 	private final int quantity;
-	public ResultMeta(int numFound, int start, int quantity) {
+	private final Collection<SearchObject> searchResults;
+	public ResultMeta(long numFound, long start, int quantity) {
 		super();
 		this.numFound = numFound;
 		this.start = start;
 		this.quantity = quantity;
+		searchResults = new ArrayList<SearchObject>();
 	}
-	public int getNumFound() {
+	public long getNumFound() {
 		return numFound;
 	}
-	public int getStart() {
+	public long getStart() {
 		return start;
 	}
 	public int getQuantity() {
@@ -22,5 +27,8 @@ public class ResultMeta {
 	@Override
 	public String toString() {
 		return "ResultMeta [numFound=" + numFound + ", start=" + start + ", quantity=" + quantity + "]";
+	}
+	public Collection<SearchObject> getSearchResults() {
+		return searchResults;
 	}
 }

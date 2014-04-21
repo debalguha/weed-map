@@ -32,7 +32,6 @@ import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryDetailScraper;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryLocationScraper;
-import org.progressivelifestyle.weedmaps.writer.SpreadsheetWorker;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -263,7 +262,7 @@ public class WeedmapProcessor {
 
 		private void persistDispensaries() throws Exception {
 			logger.info("Proceeding to write into DB.");
-			Set<DispensaryEntity> entities = new HashSet<DispensaryEntity>(dispensariesToPersist.size());
+			//Set<DispensaryEntity> entities = new HashSet<DispensaryEntity>(dispensariesToPersist.size());
 			for (Dispensary dispensary : dispensariesToPersist) {
 				DispensaryEntity dispensaryToPersist = ScrapingUtility.convertDispensaryIntoPersistenceObject(dispensary, service);
 				if (dispensaryToPersist != null){
