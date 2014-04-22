@@ -1,6 +1,8 @@
 package org.instant420.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -14,7 +16,9 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.CommonParams;
 import org.instant420.web.domain.DispensarySearchObject;
 import org.instant420.web.domain.MenuItemSearchObject;
+import org.instant420.web.domain.PopularSearchTermObject;
 import org.instant420.web.domain.ResultMeta;
+import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -103,7 +107,16 @@ public class Instant420SearchController {
 		
 	}
 	
-	@RequestMapping(value = "/suggest", method = RequestMethod.GET)
+	@RequestMapping(value = "/popular", method = RequestMethod.GET)
+	public @ResponseBody Collection<PopularSearchTermObject> findPopularSearchTerms(@RequestParam(value = "recordNum", required = false) int recordNum){
+		List<SearchQueryEntity> mostPopularSearchTerms = service.findMostPopularSearchTerms(recordNum==0?10:recordNum);
+		Collection<PopularSearchTermObject> terms = new ArrayList<PopularSearchTermObject>();
+		for(SearchQueryEntity entity : mostPopularSearchTerms)
+			terms.add(new PopularSearchTermObject(entity.getQueryStr(), String.valueOf(entity.getCount())));
+		return terms;
+	}
+	
+/*	@RequestMapping(value = "/suggest", method = RequestMethod.GET)
 	public @ResponseBody Map<String, Collection<String>> getSuggestion(@RequestParam(value="searchText", required=true) String searchText){
 		SolrQuery query = new SolrQuery();
 		query.setRequestHandler("/suggest");
@@ -121,7 +134,9 @@ public class Instant420SearchController {
 			resp.put(originalToken, suggestion.getAlternatives());
 		}
 		return resp;
-	}
+	}*/
+	
+	
 
 	public void setSolrServerForDispensary(SolrServer solrServerForDispensary) {
 		this.solrServerForDispensary = solrServerForDispensary;

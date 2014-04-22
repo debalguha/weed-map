@@ -74,4 +74,11 @@ public class DispensaryDao {
 		Query query = entityManager.createNamedQuery("mostSearchedText", SearchQueryEntity.class);
 		return query.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers) {
+		Query query = entityManager.createNamedQuery("mostSearchedText", SearchQueryEntity.class);
+		query.setMaxResults(numbers);
+		return query.getResultList();
+	}
 }

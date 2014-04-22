@@ -31,14 +31,18 @@ public class DispensaryAdministration extends AdministrationConfiguration<Dispen
 
     public FieldSetConfigurationUnit listView(final FieldSetConfigurationUnitBuilder fragmentBuilder) {
         return fragmentBuilder
-                .field("name").caption("Name")
-                .field("phone").caption("Phone")
-                .field("email").caption("Email Address")
-                .field("website").caption("Website")
-                .field("street").caption("Street")
-                .field("city").caption("City")
-                .field("state").caption("State")
-                .field("zip").caption("Zip").build();
+        		.field("name").caption("Name")
+        		.field("phone").caption("Phone")
+        		.field("email").caption("Email Address")
+        		.field("website").caption("Website")
+        		.field("street").caption("Street")
+        		.field("city").caption("City")
+        		.field("state").caption("State")
+        		.field("zip").caption("Zip")
+        		.field("facebookURL").caption("Facebook URL")
+        		.field("twitterURL").caption("Twitter URL")
+        		.field("instagramURL").caption("Instagram URL").build();
+        
     }
 
     public FieldSetConfigurationUnit quickView(final FieldSetConfigurationUnitBuilder fragmentBuilder) {
@@ -62,7 +66,32 @@ public class DispensaryAdministration extends AdministrationConfiguration<Dispen
                 .field("street").caption("Street")
                 .field("city").caption("City")
                 .field("state").caption("State")
-                .field("zip").caption("Zip").build();
+                .field("zip").caption("Zip")
+                .field("facebookURL").caption("Facebook URL")
+        		.field("twitterURL").caption("Twitter URL")
+        		.field("instagramURL").caption("Instagram URL")
+        		.field("creditCardSupport").caption("Credit card Support")
+        		.field("handicapSupport").caption("Handicap Support")
+        		.field("securityGuardSupport").caption("Security Guard")
+        		.field("photoAvailable").caption("Photo available")
+        		.field("labTested").caption("Lab tested")
+        		.field("forAdult").caption("18+")
+        		.field("deliverySupport").caption("Delivery")
+        		.field("sundayOpen").caption("Sunday open")
+        		.field("sundayClose").caption("Sunday close")
+        		.field("mondayOpen").caption("Monday open")
+        		.field("mondayClose").caption("Monday close")
+        		.field("tuesdayOpen").caption("Tuesday open")
+        		.field("tuesdayClose").caption("Tuesday close")
+        		.field("wednesdayOpen").caption("Wednesday open")
+        		.field("wednesdayClose").caption("Wednesday close")
+        		.field("thursdayOpen").caption("Thursday open")
+        		.field("thursdayClose").caption("Thursday close")
+        		.field("fridayOpen").caption("Friday open")
+        		.field("fridayClose").caption("Friday close")
+        		.field("saturdayOpen").caption("Saturday open")
+        		.field("saturdayClose").caption("Saturday close")
+        		.field("dispensaryURL").caption("Dispensary URL").build();
     }
 
     public FieldSetConfigurationUnit formView(final PersistentFieldSetConfigurationUnitBuilder fragmentBuilder) {
@@ -74,7 +103,32 @@ public class DispensaryAdministration extends AdministrationConfiguration<Dispen
                 .field("street").caption("Street")
                 .field("city").caption("City")
                 .field("state").caption("State")
-                .field("zip").caption("Zip").build();
+                .field("zip").caption("Zip")
+        		.field("facebookURL").caption("Facebook URL")
+        		.field("twitterURL").caption("Twitter URL")
+        		.field("instagramURL").caption("Instagram URL")
+        		.field("creditCardSupport").caption("Credit card Support")
+        		.field("handicapSupport").caption("Handicap Support")
+        		.field("securityGuardSupport").caption("Security Guard")
+        		.field("photoAvailable").caption("Photo available")
+        		.field("labTested").caption("Lab tested")
+        		.field("forAdult").caption("18+")
+        		.field("deliverySupport").caption("Delivery")
+        		.field("sundayOpen").caption("Sunday open")
+        		.field("sundayClose").caption("Sunday close")
+        		.field("mondayOpen").caption("Monday open")
+        		.field("mondayClose").caption("Monday close")
+        		.field("tuesdayOpen").caption("Tuesday open")
+        		.field("tuesdayClose").caption("Tuesday close")
+        		.field("wednesdayOpen").caption("Wednesday open")
+        		.field("wednesdayClose").caption("Wednesday close")
+        		.field("thursdayOpen").caption("Thursday open")
+        		.field("thursdayClose").caption("Thursday close")
+        		.field("fridayOpen").caption("Friday open")
+        		.field("fridayClose").caption("Friday close")
+        		.field("saturdayOpen").caption("Saturday open")
+        		.field("saturdayClose").caption("Saturday close")
+        		.field("dispensaryURL").caption("Dispensary URL").build();                
     }
 
     public ScopesConfigurationUnit scopes(final ScopesConfigurationUnitBuilder scopeBuilder) {
@@ -92,7 +146,10 @@ public class DispensaryAdministration extends AdministrationConfiguration<Dispen
                 filter().field("street").caption("Street").build(),
                 filter().field("city").caption("City").build(),
                 filter().field("state").caption("State").build(),
-                filter().field("zip").caption("Zip").build()
+                filter().field("zip").caption("Zip").build(),
+                filter().field("facebookURL").caption("Facebook URL").build(),
+                filter().field("twitterURL").caption("Twitter URL").build(),
+                filter().field("instagramURL").caption("Instagram URL")  .build()              
         ).build();
     }
 }

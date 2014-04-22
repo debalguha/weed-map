@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class MenuItemCategoryEntity implements BaseEntity{
+public class MenuItemCategoryEntity {
 	@Id
 	private Long id;
 	@Column(nullable=false, unique = true)

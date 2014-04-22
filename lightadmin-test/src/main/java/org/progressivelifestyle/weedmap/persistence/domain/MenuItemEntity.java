@@ -4,15 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
-public class MenuItemEntity implements BaseEntity, Menu{
+public class MenuItemEntity{
 	@Id
 	private long id;
 	private String name;
@@ -29,15 +25,12 @@ public class MenuItemEntity implements BaseEntity, Menu{
 	private String strainId;
 	private String pictureURL;
 	
+	private long dispensaryId;
+	private long menuItemCategoryId;
+	
 	private Date creationDate;
 	private Date lastUpdateDate;
 	
-	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="menuItemCategoryId")
-	private MenuItemCategoryEntity menuItemCategory;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	private DispensaryEntity dispensary;
 	public Long getId() {
 		return id;
 	}
@@ -124,12 +117,6 @@ public class MenuItemEntity implements BaseEntity, Menu{
 			return false;
 		return true;
 	}*/
-	public MenuItemCategoryEntity getMenuItemCategory() {
-		return menuItemCategory;
-	}
-	public void setMenuItemCategory(MenuItemCategoryEntity menuItemCategory) {
-		this.menuItemCategory = menuItemCategory;
-	}
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -149,15 +136,9 @@ public class MenuItemEntity implements BaseEntity, Menu{
 		this.pictureURL = pictureURL;
 	}
 	public Long getDispensaryId() {
-		return null;
+		return dispensaryId;
 	}
-	public Long getMenuItemCategoryId() {
-		return menuItemCategory.getId();
-	}
-	public String getCategoryName() {
-		return menuItemCategory.getCategoryName();
-	}
-	public boolean isLogicallyEquals(Menu obj) {
+	public boolean isLogicallyEquals(MenuItemEntity obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -169,11 +150,6 @@ public class MenuItemEntity implements BaseEntity, Menu{
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
-			return false;
-		if (menuItemCategory == null) {
-			if (other.menuItemCategory != null)
-				return false;
-		} else if (!menuItemCategory.equals(other.menuItemCategory))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -206,16 +182,19 @@ public class MenuItemEntity implements BaseEntity, Menu{
 			return false;
 		return true;
 	}
-	public DispensaryEntity getDispensary() {
-		return dispensary;
-	}
-	public void setDispensary(BaseEntity dispensary) {
-		this.dispensary = (DispensaryEntity)dispensary;
-	}
 	@Override
 	public String toString() {
 		return "MenuItemEntity [id=" + id + ", name=" + name + ", priceEighth=" + priceEighth + ", priceGram=" + priceGram + ", priceHalfGram=" + priceHalfGram + ", priceHalfOunce=" + priceHalfOunce + ", priceOunce=" + priceOunce + ", priceQuarter=" + priceQuarter
-				+ ", priceUnit=" + priceUnit + ", description=" + description + ", strainId=" + strainId + ", pictureURL=" + pictureURL + ", menuItemCategory=" + menuItemCategory + ", dispensary=" + dispensary + "]";
+				+ ", priceUnit=" + priceUnit + ", description=" + description + ", strainId=" + strainId + ", pictureURL=" + pictureURL +"]";
+	}
+	public long getMenuItemCategoryId() {
+		return menuItemCategoryId;
+	}
+	public void setMenuItemCategoryId(long menuItemCategoryId) {
+		this.menuItemCategoryId = menuItemCategoryId;
+	}
+	public void setDispensaryId(long dispensaryId) {
+		this.dispensaryId = dispensaryId;
 	}
 	
 }

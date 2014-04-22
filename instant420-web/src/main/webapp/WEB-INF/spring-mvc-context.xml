@@ -25,13 +25,22 @@
     		<bean class="org.instant420.web.KeywordScoringInterceptor"/>
     	</mvc:interceptor>
     </mvc:interceptors>
-	<bean id="solrServerCombined" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-		<constructor-arg index="0" value="${solr.combined.core.url}"/>
-	</bean>
+    <bean id="httpClientForDispensary" class="org.instant420.web.httpclient.PreemptiveHttpClient">
+    	<constructor-arg index="0" value="${solr.username}"/>
+		<constructor-arg index="1" value="${solr.password}"/>
+		<constructor-arg index="2" value="${solr.timeout}"/>
+    </bean>
+    <bean id="httpClientForMedicine" class="org.instant420.web.httpclient.PreemptiveHttpClient">
+    	<constructor-arg index="0" value="${solr.username}"/>
+		<constructor-arg index="1" value="${solr.password}"/>
+		<constructor-arg index="2" value="${solr.timeout}"/>
+    </bean>    
 	<bean id="solrServerForDispensary" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
 		<constructor-arg index="0" value="${solr.combined.dispensary.url}"/>
+		<constructor-arg index="1" ref="httpClientForDispensary"/>
 	</bean>	
 	<bean id="solrServerForMedicines" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
 		<constructor-arg index="0" value="${solr.combined.medicine.url}"/>
+		<constructor-arg index="1" ref="httpClientForMedicine"/>
 	</bean>		
 </beans>

@@ -1,22 +1,14 @@
 package org.progressivelifestyle.weedmap.persistence.domain;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 
 @Entity
 //@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class DispensaryEntity implements BaseEntity, Dispensary{
+public class DispensaryEntity implements Comparable<DispensaryEntity>{
 	@Id
 	private Long id;
 	private String name;
@@ -56,11 +48,6 @@ public class DispensaryEntity implements BaseEntity, Dispensary{
 	
 	private Date creationDate;
 	private Date lastUpdateDate;
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	@Cascade(value={CascadeType.ALL})
-	@JoinColumn(name="dispensaryId", referencedColumnName="id")
-	private Set<MenuItemEntity> menuItems;
 	
 	public Long getId() {
 		return id;
@@ -295,20 +282,6 @@ public class DispensaryEntity implements BaseEntity, Dispensary{
 			return false;
 		return true;
 	}
-	public Set<Menu> getMenuItems() {
-		Set<Menu> menus = new HashSet<Menu>();
-		if(menuItems!=null)
-			menus.addAll(menuItems);
-		return menus;
-	}
-	public void setMenuItems(Set<Menu> menuItems) {
-		Set<MenuItemEntity> menuItemEntitySet = new HashSet<MenuItemEntity>();
-		if(menuItems!=null){
-			for(Menu menu : menuItems)
-				menuItemEntitySet.add((MenuItemEntity)menu);
-		}
-		this.menuItems = menuItemEntitySet;
-	}
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -321,7 +294,7 @@ public class DispensaryEntity implements BaseEntity, Dispensary{
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
 	}
-	public int compareTo(Dispensary o) {
+	public int compareTo(DispensaryEntity o) {
 		return this.id.compareTo(o.getDispensaryId());
 	}
 	public Long getDispensaryId() {

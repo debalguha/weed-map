@@ -92,4 +92,9 @@ public class DispensaryService {
 		return dispensaryDao.findMostPopularSearchTerms();
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers){
+		return dispensaryDao.findMostPopularSearchTerms(numbers);
+	}
+	
 }
