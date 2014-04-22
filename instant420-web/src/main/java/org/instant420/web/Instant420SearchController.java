@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.common.collect.Maps;
 
 @Controller
-//@RequestMapping("/search")
+@RequestMapping("/search")
 public class Instant420SearchController {
 	@Autowired
 	@Qualifier("solrServerForDispensary")

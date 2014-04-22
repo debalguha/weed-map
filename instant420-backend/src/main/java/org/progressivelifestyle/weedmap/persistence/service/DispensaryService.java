@@ -13,6 +13,7 @@ import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.Menu;
 import org.progressivelifestyle.weedmap.persistence.domain.MenuItemCategoryEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.MenuItemEntity;
+import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -79,6 +80,16 @@ public class DispensaryService {
 	@Transactional(propagation=Propagation.SUPPORTS)
 	public List<DispensaryEntity> loadAllDispensaryForCache(){
 		return dispensaryDao.loadAllDispensaries();
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public void createOrUpdateScore(String searchText, Boolean hasFound) {
+		dispensaryDao.createOrUpdateScore(searchText, hasFound);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public List<SearchQueryEntity> findMostPopularSearchTerms(){
+		return dispensaryDao.findMostPopularSearchTerms();
 	}
 	
 }

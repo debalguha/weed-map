@@ -17,7 +17,7 @@ import org.hibernate.annotations.CascadeType;
 
 
 @Entity
-@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="dispensary")
+//@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="dispensary")
 public class DispensaryEntity implements BaseEntity, Dispensary{
 	@Id
 	private Long id;

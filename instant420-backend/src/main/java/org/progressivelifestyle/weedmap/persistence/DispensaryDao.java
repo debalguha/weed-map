@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.progressivelifestyle.weedmap.persistence.domain.BaseEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
+import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -46,6 +47,31 @@ public class DispensaryDao {
 	@SuppressWarnings("unchecked")
 	public List<DispensaryEntity> loadAllDispensaries() {
 		Query query = entityManager.createQuery("select d from DispensaryEntity d");
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public void createOrUpdateScore(String searchText, Boolean hasFound) {
+		Query query = entityManager.createNamedQuery("findSearchText", SearchQueryEntity.class);
+		query.setParameter("queryStr", searchText);
+		List<SearchQueryEntity> resultList = query.getResultList();
+		SearchQueryEntity entity = null;
+		if(!resultList.isEmpty()){
+			entity = resultList.iterator().next();
+			entity.setCount(entity.getCount()+1);
+			updateEntity(entity);
+		}else{
+			entity = new SearchQueryEntity();
+			entity.setQueryStr(searchText);
+			entity.setCount(1);
+			entity.setHasResult(hasFound.booleanValue());
+			saveEntity(entity);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<SearchQueryEntity> findMostPopularSearchTerms() {
+		Query query = entityManager.createNamedQuery("mostSearchedText", SearchQueryEntity.class);
 		return query.getResultList();
 	}
 }
