@@ -3,14 +3,10 @@ package org.instant420.web;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.SpellCheckResponse;
-import org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.CommonParams;
@@ -28,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.collect.Maps;
-
 @Controller
 @RequestMapping("/search")
 public class Instant420SearchController {
@@ -41,9 +35,9 @@ public class Instant420SearchController {
 	@Qualifier("solrServerForMedicines")
 	private SolrServer solrServerForMedicines;
 	
-	@Autowired
+	/*@Autowired
 	@Qualifier("solrServerCombined")
-	private SolrServer solrServerCombined;
+	private SolrServer solrServerCombined;*/
 	
 	@Autowired
 	private DispensaryService service;
@@ -144,10 +138,6 @@ public class Instant420SearchController {
 
 	public void setSolrServerForMedicines(SolrServer solrServerForMedicines) {
 		this.solrServerForMedicines = solrServerForMedicines;
-	}
-
-	public void setSolrServerCombined(SolrServer solrServerCombined) {
-		this.solrServerCombined = solrServerCombined;
 	}
 
 	public void setService(DispensaryService service) {

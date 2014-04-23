@@ -36,7 +36,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Instant 420 Search API</web-resource-name>
-			<url-pattern>/non-rest</url-pattern>
+			<url-pattern>/rest/*</url-pattern>
 			<http-method>DELETE</http-method>
 			<http-method>PUT</http-method>
 			<http-method>HEAD</http-method>
@@ -69,7 +69,7 @@
 	</security-role>		
 	<login-config>
 		<auth-method>BASIC</auth-method>
-		<realm-name>OpenDS</realm-name>
+		<realm-name>Instant 420 REST</realm-name>
 	</login-config>
 	
 </web-app>
