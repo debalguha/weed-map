@@ -5,11 +5,10 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="menuitemcategoryentity")
 //@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="dispensary")
 public class MenuItemCategoryEntity implements BaseEntity{
 	@Id

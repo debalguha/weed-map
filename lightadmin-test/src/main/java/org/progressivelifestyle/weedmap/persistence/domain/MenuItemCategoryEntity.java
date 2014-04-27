@@ -5,8 +5,10 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="menuitemcategoryentity")
 public class MenuItemCategoryEntity {
 	@Id
 	private Long id;

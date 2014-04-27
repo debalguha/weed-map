@@ -1,5 +1,7 @@
 package org.progressivelifestyle.weedmap.persistence.domain;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 public interface Dispensary extends Comparable<Dispensary>{
@@ -69,5 +71,12 @@ public interface Dispensary extends Comparable<Dispensary>{
 	public abstract Long getDispensaryId();
 	
 	public void setMenuItems(Set<Menu> menus);
-
+	
+	public List<String> getImages();
+	
+	public BigDecimal getLat();
+	
+	public BigDecimal getLang();
+	
+	public String getDispensaryImageURL();
 }

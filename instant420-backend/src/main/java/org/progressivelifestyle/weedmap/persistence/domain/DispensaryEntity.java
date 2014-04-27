@@ -1,24 +1,29 @@
 package org.progressivelifestyle.weedmap.persistence.domain;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-
 @Entity
-//@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="dispensary")
-public class DispensaryEntity implements BaseEntity, Dispensary{
+@Table(name = "dispensaryentity")
+// @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+// region="dispensary")
+public class DispensaryEntity implements BaseEntity, Dispensary {
 	@Id
 	private Long id;
 	private String name;
@@ -55,225 +60,306 @@ public class DispensaryEntity implements BaseEntity, Dispensary{
 	private String saturdayOpen;
 	private String saturdayClose;
 	private String dispensaryURL;
-	
+	private String dispensaryImageURL;
+
 	private Date creationDate;
 	private Date lastUpdateDate;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	@Cascade(value={CascadeType.ALL})
-	@JoinColumn(name="dispensaryId", referencedColumnName="id")
+	@Column(nullable = true)
+	private BigDecimal lat;
+	@Column(nullable = true)
+	private BigDecimal lang;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@Cascade(value = { CascadeType.ALL })
+	@JoinColumn(name = "dispensaryId", referencedColumnName = "id")
 	private Set<MenuItemEntity> menuItems;
-	
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@Cascade(value = { CascadeType.ALL })
+	@JoinColumn(name = "dispensaryId", referencedColumnName = "id")
+	private Set<DispensaryPictureEntity> pictures;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long dispensaryId) {
 		this.id = dispensaryId;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getWebsite() {
 		return website;
 	}
+
 	public void setWebsite(String website) {
 		this.website = website;
 	}
+
 	public String getStreet() {
 		return street;
 	}
+
 	public void setStreet(String street) {
 		this.street = street;
 	}
+
 	public String getStreet2() {
 		return street2;
 	}
+
 	public void setStreet2(String street2) {
 		this.street2 = street2;
 	}
+
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getState() {
 		return state;
 	}
+
 	public void setState(String state) {
 		this.state = state;
 	}
+
 	public String getZip() {
 		return zip;
 	}
+
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
+
 	public String getFacebookURL() {
 		return facebookURL;
 	}
+
 	public void setFacebookURL(String facebookURL) {
 		this.facebookURL = facebookURL;
 	}
+
 	public String getTwitterURL() {
 		return twitterURL;
 	}
+
 	public void setTwitterURL(String twitterURL) {
 		this.twitterURL = twitterURL;
 	}
+
 	public String getInstagramURL() {
 		return instagramURL;
 	}
+
 	public void setInstagramURL(String instagramURL) {
 		this.instagramURL = instagramURL;
 	}
+
 	public boolean isCreditCardSupport() {
 		return creditCardSupport;
 	}
+
 	public void setCreditCardSupport(boolean creditCardSupport) {
 		this.creditCardSupport = creditCardSupport;
 	}
+
 	public boolean isHandicapSupport() {
 		return handicapSupport;
 	}
+
 	public void setHandicapSupport(boolean handicapSupport) {
 		this.handicapSupport = handicapSupport;
 	}
+
 	public boolean isSecurityGuardSupport() {
 		return securityGuardSupport;
 	}
+
 	public void setSecurityGuardSupport(boolean securityGuardSupport) {
 		this.securityGuardSupport = securityGuardSupport;
 	}
+
 	public boolean isPhotoAvailable() {
 		return photoAvailable;
 	}
+
 	public void setPhotoAvailable(boolean photoAvailable) {
 		this.photoAvailable = photoAvailable;
 	}
+
 	public boolean isLabTested() {
 		return labTested;
 	}
+
 	public void setLabTested(boolean labTested) {
 		this.labTested = labTested;
 	}
+
 	public boolean isForAdult() {
 		return forAdult;
 	}
+
 	public void setForAdult(boolean forAdult) {
 		this.forAdult = forAdult;
 	}
+
 	public boolean isDeliverySupport() {
 		return deliverySupport;
 	}
+
 	public void setDeliverySupport(boolean deliverySupport) {
 		this.deliverySupport = deliverySupport;
 	}
+
 	public String getSundayOpen() {
 		return sundayOpen;
 	}
+
 	public void setSundayOpen(String sundayOpen) {
 		this.sundayOpen = sundayOpen;
 	}
+
 	public String getSundayClose() {
 		return sundayClose;
 	}
+
 	public void setSundayClose(String sundayClose) {
 		this.sundayClose = sundayClose;
 	}
+
 	public String getMondayOpen() {
 		return mondayOpen;
 	}
+
 	public void setMondayOpen(String mondayOpen) {
 		this.mondayOpen = mondayOpen;
 	}
+
 	public String getMondayClose() {
 		return mondayClose;
 	}
+
 	public void setMondayClose(String mondayClose) {
 		this.mondayClose = mondayClose;
 	}
+
 	public String getTuesdayOpen() {
 		return tuesdayOpen;
 	}
+
 	public void setTuesdayOpen(String tuesdayOpen) {
 		this.tuesdayOpen = tuesdayOpen;
 	}
+
 	public String getTuesdayClose() {
 		return tuesdayClose;
 	}
+
 	public void setTuesdayClose(String tuesdayClose) {
 		this.tuesdayClose = tuesdayClose;
 	}
+
 	public String getWednesdayOpen() {
 		return wednesdayOpen;
 	}
+
 	public void setWednesdayOpen(String wednesdayOpen) {
 		this.wednesdayOpen = wednesdayOpen;
 	}
+
 	public String getWednesdayClose() {
 		return wednesdayClose;
 	}
+
 	public void setWednesdayClose(String wednesdayClose) {
 		this.wednesdayClose = wednesdayClose;
 	}
+
 	public String getThursdayOpen() {
 		return thursdayOpen;
 	}
+
 	public void setThursdayOpen(String thursdayOpen) {
 		this.thursdayOpen = thursdayOpen;
 	}
+
 	public String getThursdayClose() {
 		return thursdayClose;
 	}
+
 	public void setThursdayClose(String thursdayClose) {
 		this.thursdayClose = thursdayClose;
 	}
+
 	public String getFridayOpen() {
 		return fridayOpen;
 	}
+
 	public void setFridayOpen(String fridayOpen) {
 		this.fridayOpen = fridayOpen;
 	}
+
 	public String getFridayClose() {
 		return fridayClose;
 	}
+
 	public void setFridayClose(String fridayClose) {
 		this.fridayClose = fridayClose;
 	}
+
 	public String getSaturdayOpen() {
 		return saturdayOpen;
 	}
+
 	public void setSaturdayOpen(String saturdayOpen) {
 		this.saturdayOpen = saturdayOpen;
 	}
+
 	public String getSaturdayClose() {
 		return saturdayClose;
 	}
+
 	public void setSaturdayClose(String saturdayClose) {
 		this.saturdayClose = saturdayClose;
 	}
+
 	public String getDispensaryURL() {
 		return dispensaryURL;
 	}
+
 	public void setDispensaryURL(String dispensaryURL) {
 		this.dispensaryURL = dispensaryURL;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -281,6 +367,7 @@ public class DispensaryEntity implements BaseEntity, Dispensary{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -297,38 +384,47 @@ public class DispensaryEntity implements BaseEntity, Dispensary{
 			return false;
 		return true;
 	}
+
 	public Set<Menu> getMenuItems() {
 		Set<Menu> menus = new HashSet<Menu>();
-		if(menuItems!=null)
+		if (menuItems != null)
 			menus.addAll(menuItems);
 		return menus;
 	}
+
 	public void setMenuItems(Set<Menu> menuItems) {
 		Set<MenuItemEntity> menuItemEntitySet = new HashSet<MenuItemEntity>();
-		if(menuItems!=null){
-			for(Menu menu : menuItems)
-				menuItemEntitySet.add((MenuItemEntity)menu);
+		if (menuItems != null) {
+			for (Menu menu : menuItems)
+				menuItemEntitySet.add((MenuItemEntity) menu);
 		}
 		this.menuItems = menuItemEntitySet;
 	}
+
 	public Date getCreationDate() {
 		return creationDate;
 	}
+
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
+
 	public Date getLastUpdateDate() {
 		return lastUpdateDate;
 	}
+
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
 	}
+
 	public int compareTo(Dispensary o) {
 		return this.id.compareTo(o.getDispensaryId());
 	}
+
 	public Long getDispensaryId() {
 		return getId();
 	}
+
 	public boolean isLogicallyEquals(Object obj) {
 		if (this == obj)
 			return true;
@@ -487,5 +583,46 @@ public class DispensaryEntity implements BaseEntity, Dispensary{
 		} else if (!zip.equals(other.zip))
 			return false;
 		return true;
+	}
+
+	public Set<DispensaryPictureEntity> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(Set<DispensaryPictureEntity> pictures) {
+		this.pictures = pictures;
+	}
+
+	public List<String> getImages() {
+		List<String> imageUrls = new ArrayList<String>();
+		if (pictures != null) {
+			for (DispensaryPictureEntity pictureEntities : pictures)
+				imageUrls.add(pictureEntities.getPictureURL());
+		}
+		return Collections.unmodifiableList(imageUrls);
+	}
+
+	public BigDecimal getLat() {
+		return lat;
+	}
+
+	public void setLat(BigDecimal lat) {
+		this.lat = lat;
+	}
+
+	public BigDecimal getLang() {
+		return lang;
+	}
+
+	public void setLang(BigDecimal lang) {
+		this.lang = lang;
+	}
+
+	public String getDispensaryImageURL() {
+		return dispensaryImageURL;
+	}
+
+	public void setDispensaryImageURL(String dispensaryImageURL) {
+		this.dispensaryImageURL = dispensaryImageURL;
 	}
 }

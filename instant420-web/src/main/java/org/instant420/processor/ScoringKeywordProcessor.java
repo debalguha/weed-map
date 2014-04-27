@@ -7,7 +7,7 @@ public class ScoringKeywordProcessor implements Runnable{
 	private String searchText;
 	private boolean hasFound;
 	
-	public ScoringKeywordProcessor(DispensaryService service, String searchText, boolean hasFound) {
+	public ScoringKeywordProcessor(DispensaryService service, String searchText, Boolean hasFound) {
 		super();
 		this.service = service;
 		this.searchText = searchText;

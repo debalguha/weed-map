@@ -1,6 +1,9 @@
 package org.progressivelifestyle.weedmaps.objects;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.progressivelifestyle.weedmap.persistence.domain.Menu;
@@ -37,7 +40,12 @@ public class DispensaryObject implements org.progressivelifestyle.weedmap.persis
 	private  String saturdayOpen;
 	private  String saturdayClose;
 	private  String dispensaryURL;
+	private String dispensaryImageURL;
 	
+	private BigDecimal lat;
+	private BigDecimal lang;
+	
+	private List<String> images;
 	//private Map<String, Collection<MenuItem>> menuItems;
 	private Set<Menu> menuItems;
 	public DispensaryObject(){
@@ -45,7 +53,7 @@ public class DispensaryObject implements org.progressivelifestyle.weedmap.persis
 	}
 	public DispensaryObject(Long dispensaryId,String name, String phone, String email, String website, Address address, String facebookURL, String twitterURL, String instagramURL, boolean creditCardSupport, boolean handicapSupport, boolean securityGuardSupport, boolean photoAvailable,
 			boolean labTested, boolean forAdult, boolean deliverySupport, String sundayOpen, String sundayClose, String mondayOpen, String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen,
-			String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose, String dispensaryURL) {
+			String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose, String dispensaryURL, String lat, String lang, String dispensaryImageURL) {
 		super();
 		this.dispensaryId = dispensaryId;
 		this.name = name;
@@ -78,8 +86,11 @@ public class DispensaryObject implements org.progressivelifestyle.weedmap.persis
 		this.saturdayOpen = saturdayOpen;
 		this.saturdayClose = saturdayClose;
 		this.dispensaryURL = dispensaryURL;
-		//this.menuItems = new HashMap<String, Collection<MenuItem>>();
 		this.menuItems = new HashSet<Menu>();
+		this.images = new ArrayList<String>();
+		this.lat = lat==null?null:new BigDecimal(lat);
+		this.lang = lang==null?null:new BigDecimal(lang);
+		this.dispensaryImageURL = dispensaryImageURL;
 	}
 
 	public String getName() {
@@ -376,6 +387,18 @@ public class DispensaryObject implements org.progressivelifestyle.weedmap.persis
 	}
 	public void setDispensaryURL(String dispensaryURL) {
 		this.dispensaryURL = dispensaryURL;
+	}
+	public List<String> getImages() {
+		return images;
+	}
+	public BigDecimal getLat() {
+		return lat;
+	}
+	public BigDecimal getLang() {
+		return lang;
+	}
+	public String getDispensaryImageURL() {
+		return dispensaryImageURL;
 	}
 	
 }

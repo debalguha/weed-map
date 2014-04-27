@@ -9,12 +9,14 @@ import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.progressivelifestyle.weedmap.persistence.domain.Dispensary;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
+import org.progressivelifestyle.weedmap.persistence.domain.DispensaryPictureEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.Menu;
 import org.progressivelifestyle.weedmap.persistence.domain.MenuItemCategoryEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.MenuItemEntity;
 import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
 import org.progressivelifestyle.weedmaps.objects.MenuItem;
+import org.progressivelifestyle.weedmaps.objects.Picture;
 
 public class ScrapingUtility {
 	public static void serializeToDisk(Collection<String> lines) throws IOException {
@@ -57,6 +59,14 @@ public class ScrapingUtility {
 		dispensaryEntity.setWednesdayClose(dispensary.getWednesdayClose());
 		dispensaryEntity.setWednesdayOpen(dispensary.getWednesdayOpen());
 		dispensaryEntity.setZip(((DispensaryObject)dispensary).getAddress().getZip());
+		
+		Set<DispensaryPictureEntity> pictureEntities = new HashSet<DispensaryPictureEntity>(); 
+		for(String picture : dispensary.getImages()){
+			DispensaryPictureEntity pictureEntity = new DispensaryPictureEntity();
+			pictureEntity.setPictureURL(picture);
+			pictureEntities.add(pictureEntity);
+		}
+		dispensaryEntity.setPictures(pictureEntities);
 		
 		Set<Menu> menuItems = new HashSet<Menu>();
 		Set<Menu> menuItemsFromUI = ((DispensaryObject)dispensary).getMenuItems();

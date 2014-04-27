@@ -7,7 +7,30 @@ public class DispensarySearchObject extends SearchObject{
 	private final String city;
 	private final String state;
 	private final String zip;
-	public DispensarySearchObject(String id, String name, String street, String city, String state, String zip) {
+	private final String phone;
+	private final String email;
+	private final String website;
+	private final String facebookURL;
+	private final String twitterURL;
+	private final String instagramURL;
+	private final String sundayOpen;
+	private final String sundayClose;
+	private final String mondayOpen;
+	private final String mondayClose;
+	private final String tuesdayOpen;
+	private final String tuesdayClose;
+	private final String wednesdayOpen;
+	private final String wednesdayClose;
+	private final String thursdayOpen;
+	private final String thursdayClose;
+	private final String fridayOpen;
+	private final String fridayClose;
+	private final String saturdayOpen;
+	private final String saturdayClose;
+	private final String dispensaryURL;
+	private String dispensaryImageURL;
+	public DispensarySearchObject(String id, String name, String street, String city, String state, String zip, String phone, String email, String website, String facebookURL, String twitterURL, String instagramURL, String sundayOpen, String sundayClose, String mondayOpen,
+			String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen, String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose, String dispensaryURL) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -15,6 +38,27 @@ public class DispensarySearchObject extends SearchObject{
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
+		this.phone = phone;
+		this.email = email;
+		this.website = website;
+		this.facebookURL = facebookURL;
+		this.twitterURL = twitterURL;
+		this.instagramURL = instagramURL;
+		this.sundayOpen = sundayOpen;
+		this.sundayClose = sundayClose;
+		this.mondayOpen = mondayOpen;
+		this.mondayClose = mondayClose;
+		this.tuesdayOpen = tuesdayOpen;
+		this.tuesdayClose = tuesdayClose;
+		this.wednesdayOpen = wednesdayOpen;
+		this.wednesdayClose = wednesdayClose;
+		this.thursdayOpen = thursdayOpen;
+		this.thursdayClose = thursdayClose;
+		this.fridayOpen = fridayOpen;
+		this.fridayClose = fridayClose;
+		this.saturdayOpen = saturdayOpen;
+		this.saturdayClose = saturdayClose;
+		this.dispensaryURL = dispensaryURL;
 	}
 	public String getId() {
 		return id;
@@ -34,4 +78,68 @@ public class DispensarySearchObject extends SearchObject{
 	public String getZip() {
 		return zip;
 	}
+	public String getPhone() {
+		return phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public String getWebsite() {
+		return website;
+	}
+	public String getFacebookURL() {
+		return facebookURL;
+	}
+	public String getTwitterURL() {
+		return twitterURL;
+	}
+	public String getInstagramURL() {
+		return instagramURL;
+	}
+	public String getSundayOpen() {
+		return sundayOpen;
+	}
+	public String getSundayClose() {
+		return sundayClose;
+	}
+	public String getMondayOpen() {
+		return mondayOpen;
+	}
+	public String getMondayClose() {
+		return mondayClose;
+	}
+	public String getTuesdayOpen() {
+		return tuesdayOpen;
+	}
+	public String getTuesdayClose() {
+		return tuesdayClose;
+	}
+	public String getWednesdayOpen() {
+		return wednesdayOpen;
+	}
+	public String getWednesdayClose() {
+		return wednesdayClose;
+	}
+	public String getThursdayOpen() {
+		return thursdayOpen;
+	}
+	public String getThursdayClose() {
+		return thursdayClose;
+	}
+	public String getFridayOpen() {
+		return fridayOpen;
+	}
+	public String getFridayClose() {
+		return fridayClose;
+	}
+	public String getSaturdayOpen() {
+		return saturdayOpen;
+	}
+	public String getSaturdayClose() {
+		return saturdayClose;
+	}
+	public String getDispensaryURL() {
+		return dispensaryURL;
+	}
+	
 }

@@ -195,5 +195,10 @@
 		<xpath expression="//div[@class='picture deleteable']/a[1]/@href">
 			<var name="webpage"/>
 		</xpath>
-	</var-def>							
+	</var-def>	
+	<var-def name="dispensary-avatar">
+		<xpath expression="//div[@class='company-avatar']/img/@src">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>	
 </config>

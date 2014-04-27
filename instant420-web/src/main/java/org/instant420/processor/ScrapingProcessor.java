@@ -1,5 +1,7 @@
 package org.instant420.processor;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -11,6 +13,7 @@ import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -32,27 +35,45 @@ import org.progressivelifestyle.weedmaps.processor.WeedmapProcessor;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryDetailScraper;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryLocationScraper;
 import org.progressivelifestyle.weedmaps.scraper.DispensaryScraper;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ScrapingProcessor implements InitializingBean{
+public class ScrapingProcessor implements InitializingBean, ApplicationContextAware{
+	private ApplicationContext ctx;
+	@Value("${scraper.base.config}")
 	private String baseScraperFileName;
+	@Value("${scraper.location.config}")
 	private String locationScraperFileName;
+	@Value("${scraper.dispensary.config}")
 	private String dispensaryScraperFileName;
 	@Autowired
 	private DispensaryService dispensaryService;
+	
+	@Value("${scraper.dispensary.finished.file}")
+	private String finishedDispensariesFileName;
+	@Value("${scraper.dispensary.failed.persistence.file}")
+	private String failedInPersistenceDispensariesFileName;
+	@Value("${scraper.dispensary.failed.scraping.file}")
+	private String failedInScrapingDispensariesFileName;
+	
 	private CompletionService<Set<String>> locationService;
 	private CompletionService<DispensaryObject> dispensaryDetailService;
 	private Executor locationExecutor = new ThreadPoolExecutor(10, 20, Long.MAX_VALUE, TimeUnit.NANOSECONDS, new LinkedBlockingQueue<Runnable>());
 	private Executor dispensaryDetailExecutor = new ThreadPoolExecutor(10, 20, Long.MAX_VALUE, TimeUnit.NANOSECONDS, new LinkedBlockingQueue<Runnable>());
-	//private Executor spreadSheetWriterExecutor = Executors.newFixedThreadPool(10);
+	private Executor persistenceThreadExecutor = Executors.newFixedThreadPool(10);
 	private static final Log logger = LogFactory.getLog(ScrapingProcessor.class);
 	private final LinkedBlockingQueue<Dispensary> dispensariesSuccessful = new LinkedBlockingQueue<Dispensary>();
 	private final LinkedBlockingQueue<Dispensary> dispensariesFailedToPersist = new LinkedBlockingQueue<Dispensary>();
 	private final LinkedBlockingQueue<Dispensary> dispensariesFailedToScrape = new LinkedBlockingQueue<Dispensary>();	
-	private AtomicInteger submittedTasks;
+	private AtomicInteger submittedTasks = new AtomicInteger(0);
+	
+	
 	public void loadAllDispensaryInCache(){
 		dispensaryService.loadAllDispensaryForCache();
 	}
@@ -66,8 +87,12 @@ public class ScrapingProcessor implements InitializingBean{
 	}
 	
 	private void scrapeDispensaryDetailsForDispensaries(Collection<String> urlOfDispensaries, String dispensaryDetaisScraperConfig, final DispensaryService service) throws Exception {
+		startThreadForReport(dispensariesSuccessful, finishedDispensariesFileName);
+		startThreadForReport(dispensariesFailedToPersist, failedInPersistenceDispensariesFileName);
+		startThreadForReport(dispensariesFailedToScrape, failedInScrapingDispensariesFileName);
 		final Set<Dispensary> dispensaries = new HashSet<Dispensary>();
 		Queue<Future<DispensaryObject>> dispensaryFutQueue = new LinkedList<Future<DispensaryObject>>();
+		logger.error("Urls:: "+urlOfDispensaries);
 		int counter = 0;
 		for (String dispensaryURL : urlOfDispensaries) {
 			if(dispensaryURL.trim().isEmpty())
@@ -83,10 +108,11 @@ public class ScrapingProcessor implements InitializingBean{
 		}
 
 		if (!dispensaryFutQueue.isEmpty()) {
-			logger.error("Dispensary queue not empty yet");
+			logger.warn("Dispensary queue not empty yet");
 			processDispensary(dispensaryFutQueue, dispensaries, service);
 		}
 		logger.error("All dispensaries processed!!");
+		//ctx.publishEvent(new Instant420ApplicationEvent(this, Instant420ApplicationEvent.Event.START_GEO_CODING));
 	}
 	
 	private void processDispensary(Queue<Future<DispensaryObject>> dispensaryFutQueue, Set<Dispensary> dispensaries, DispensaryService service) throws Exception {
@@ -100,12 +126,13 @@ public class ScrapingProcessor implements InitializingBean{
 				if (obj != null) {
 					obj = dispensaryFutQueue.poll().get();
 					dispensaries.add(obj);
-					if (dispensaries.size() >= 5) {
+					//if (dispensaries.size() >= 4) {
 						final Set<Dispensary> dispensariesToWorkWith = new HashSet<Dispensary>();
 						dispensariesToWorkWith.addAll(dispensaries);
 						dispensaries.clear();
-						compareDispensaryWithCache(dispensariesToWorkWith, service);
-					}
+						//compareDispensaryWithCache(dispensariesToWorkWith, service);
+						persistDispensariesInThread(dispensariesToWorkWith, service);
+					//}
 					System.out.println(obj.getName());
 				}
 			} catch (Exception e) {
@@ -114,10 +141,27 @@ public class ScrapingProcessor implements InitializingBean{
 		}
 	}	
 	
+	private void persistDispensariesInThread(Set<Dispensary> dispensariesToWorkWith, DispensaryService service) throws Exception {
+		while (submittedTasks.intValue() >= 5) {
+			logger.warn("Going to wait as activie count is " + submittedTasks.intValue());
+			try {
+				Thread.sleep(5000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		logger.info("Submitting task " + dispensariesToWorkWith.size());
+		persistenceThreadExecutor.execute(new DispensaryPersister(dispensariesToWorkWith, service));
+	}
+	
 	private void compareDispensaryWithCache(Set<Dispensary> dispensariesToWorkWith, DispensaryService service) throws Exception{
 		for(Dispensary dispensary : dispensariesToWorkWith){
 			DispensaryEntity dispensaryEntity = ScrapingUtility.convertDispensaryIntoPersistenceObject(dispensary, service);
 			DispensaryEntity cachedDispensaryEntity = service.findDispensary(dispensary.getDispensaryId());
+			if(cachedDispensaryEntity==null){
+				service.createDispensary(dispensaryEntity);
+				return;
+			}
 			Set<Menu> menuItems = dispensaryEntity.getMenuItems();
 			Set<Menu> menuItemsFromCachedDispensary = cachedDispensaryEntity.getMenuItems();
 			if(!dispensaryEntity.isLogicallyEquals(cachedDispensaryEntity)){
@@ -204,10 +248,10 @@ public class ScrapingProcessor implements InitializingBean{
 			submittedTasks.incrementAndGet();
 			try {
 				persistDispensaries();
-				//dispensariesSuccessfullyPersisted.addAll(dispensariesToPersist);
+				dispensariesSuccessful.addAll(dispensariesToPersist);
 			} catch (Exception e) {
 				e.printStackTrace();
-				//dispensariesFailedToPersist.addAll(dispensariesToPersist);
+				dispensariesFailedToPersist.addAll(dispensariesToPersist);
 			} finally {
 				submittedTasks.decrementAndGet();
 			}
@@ -215,7 +259,6 @@ public class ScrapingProcessor implements InitializingBean{
 
 		private void persistDispensaries() throws Exception {
 			logger.info("Proceeding to write into DB.");
-			//Set<DispensaryEntity> entities = new HashSet<DispensaryEntity>(dispensariesToPersist.size());
 			for (Dispensary dispensary : dispensariesToPersist) {
 				DispensaryEntity dispensaryToPersist = ScrapingUtility.convertDispensaryIntoPersistenceObject(dispensary, service);
 				if (dispensaryToPersist != null){
@@ -225,12 +268,44 @@ public class ScrapingProcessor implements InitializingBean{
 					} catch (Exception e) {
 						logger.error("Failed to persist dispensary wih id: "+dispensary.getDispensaryId(), e);
 						logger.info("trying persisting dispensary and menu items seperately.");
-						service.createDispensaryAndMenuItemSeperately(dispensary);
+						service.createDispensaryAndMenuItemSeperately(dispensaryToPersist);
 						dispensariesFailedToPersist.addAll(dispensariesToPersist);
 					}
 				}
 			}
 		}
 
+	}
+	
+	private void startThreadForReport(final LinkedBlockingQueue<Dispensary> dispensaryQueue, final String fileName) {
+		new Thread(new Runnable() {
+			public void run() {
+				while (true) {
+					Collection<Dispensary> dispensaries = new ArrayList<Dispensary>();
+					if (!dispensaryQueue.isEmpty()) {
+						((LinkedBlockingQueue<Dispensary>) dispensaryQueue).drainTo(dispensaries);
+						try {writeDispensaryURLsToFile(dispensaries, fileName);} catch (Exception e) {e.printStackTrace();}
+						try {Thread.sleep(10000);} catch (InterruptedException e) {e.printStackTrace();}
+					}
+				}
+			}
+
+		}).start();
+	}
+	
+	private synchronized void writeDispensaryURLsToFile(Collection<Dispensary> dispensaries, String fileName) throws Exception {
+		StringBuilder builder = new StringBuilder(System.getProperty("line.separator"));
+		for (Dispensary dispensary : dispensaries)
+			builder.append(dispensary.getDispensaryURL()).append(System.getProperty("line.separator"));
+		FileWriter writer = new FileWriter(new File(fileName), true);
+		try {writer.append(builder);} catch (Exception e) {throw e;} finally {writer.close();}
+	}
+	
+	public void scrapeDispensaryDetailsForDispensaries(Collection<String> urls) throws Exception {
+		scrapeDispensaryDetailsForDispensaries(urls, WeedmapProcessor.readFile(dispensaryScraperFileName), dispensaryService);
+	}
+
+	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+		this.ctx = ctx;
 	}	
 }

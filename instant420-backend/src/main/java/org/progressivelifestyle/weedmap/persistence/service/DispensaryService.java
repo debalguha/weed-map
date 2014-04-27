@@ -96,5 +96,5 @@ public class DispensaryService {
 	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers){
 		return dispensaryDao.findMostPopularSearchTerms(numbers);
 	}
-	
+
 }

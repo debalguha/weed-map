@@ -1,0 +1,24 @@
+<dataConfig>
+	<dataSource driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/instant420" user="instant420" password="instant420"/>
+    <document name="medicines">
+        <entity name="medicines" pk="id" query="select m.id, m.name, m.description, m.priceEighth, m.priceQuarter, m.priceHalfGram, m.priceGram, m.priceHalfOunce, 
+					m.priceOunce, m.priceUnit, m.pictureUrl, c.categoryName as category from menuitementity m, menuitemcategoryentity c
+					where m.menuItemCategoryId = c.id"
+			deltaImportQuery="select m.id, m.name, m.description, m.priceEighth, m.priceQuarter, m.priceHalfGram, m.priceGram, m.priceHalfOunce, 
+					m.priceOunce, m.priceUnit, m.pictureUrl, c.categoryName as category from menuitementity m, menuitemcategoryentity c
+					where m.menuItemCategoryId = c.id m.id='${dih.delta.id}'"
+			deltaQuery="select id from menuitementity where lastUpdateDate &gt; '${dih.last_index_time}'">
+            <field column="id" name="id" />
+            <field column="name" name="name" />
+			<field column="description" name="description" />
+			<field column="priceEighth" name="priceEighth" />
+			<field column="priceQuarter" name="priceQuarter" />
+			<field column="priceHalfGram" name="priceHalfGram" />
+			<field column="priceGram" name="priceGram" />
+			<field column="priceHalfOunce" name="priceHalfOunce" />
+			<field column="priceOunce" name="priceOunce" />
+			<field column="priceUnit" name="priceUnit" />
+			<field column="pictureUrl" name="pictureUrl" />
+        </entity>
+    </document>
+</dataConfig>

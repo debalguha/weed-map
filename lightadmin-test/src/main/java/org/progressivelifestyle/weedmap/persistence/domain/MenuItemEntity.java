@@ -6,8 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="menuitementity")
 public class MenuItemEntity{
 	@Id
 	private long id;

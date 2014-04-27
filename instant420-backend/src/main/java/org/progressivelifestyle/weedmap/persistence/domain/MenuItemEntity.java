@@ -10,11 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="menuitementity")
 //@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="dispensary")
 public class MenuItemEntity implements BaseEntity, Menu{
 	@Id

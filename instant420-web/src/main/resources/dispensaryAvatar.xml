@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<loop item="dispensary">
+	    <list>
+		    <database connection="jdbc:mysql://localhost:3306/instant420" username="instant420" password="instant420"
+		              jdbcclass="org.gjt.mm.mysql.Driver" >
+		        select id, dispensaryURL from dispensaryentity
+		        
+		    </database>
+	    </list>
+	    <body>
+			<var-def name="webpage">
+				<html-to-xml>
+					<http url='${dispensary.get("dispensaryURL")}'></http>
+				</html-to-xml>
+			</var-def>	    	
+            <var-def name="imgUrl">
+				<xpath expression="//div[@class='company-avatar']/img/@src"><var name="webpage"/></xpath>
+            </var-def>
+            <database connection="jdbc:mysql://localhost:3306/instant420" username="instant420" password="instant420"
+		    	jdbcclass="org.gjt.mm.mysql.Driver">
+		    	<template>
+		    		update dispensaryentity set dispensaryImageURL='${imgUrl}' where id=${dispensary.get("id")}
+		    	</template>
+		    </database>
+	    </body>
+	</loop>	
+</config>

@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="searchqueryentity")
 @NamedQueries({
 	@NamedQuery(
 	name = "findSearchText",
@@ -30,6 +32,10 @@ public class SearchQueryEntity implements BaseEntity{
 	private String queryStr;
 	private boolean hasResult;
 	private long count;
+	private String imageURL;
+	private String instagramURL;
+	private String facebookURL;
+	private String twitterURL;
 	
 	private Date creationDate;
 	private Date lastUpdateDate;
@@ -69,6 +75,30 @@ public class SearchQueryEntity implements BaseEntity{
 	}
 	public void setLastUpdateDate(Date lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
+	}
+	public String getImageURL() {
+		return imageURL;
+	}
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+	public String getInstagramURL() {
+		return instagramURL;
+	}
+	public void setInstagramURL(String instagramURL) {
+		this.instagramURL = instagramURL;
+	}
+	public String getFacebookURL() {
+		return facebookURL;
+	}
+	public void setFacebookURL(String facebookURL) {
+		this.facebookURL = facebookURL;
+	}
+	public String getTwitterURL() {
+		return twitterURL;
+	}
+	public void setTwitterURL(String twitterURL) {
+		this.twitterURL = twitterURL;
 	}
 	
 	

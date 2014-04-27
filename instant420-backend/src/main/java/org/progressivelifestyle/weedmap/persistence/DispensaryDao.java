@@ -81,4 +81,5 @@ public class DispensaryDao {
 		query.setMaxResults(numbers);
 		return query.getResultList();
 	}
+
 }

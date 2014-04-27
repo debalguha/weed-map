@@ -4,9 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name="dispensaryentity")
 //@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class DispensaryEntity implements Comparable<DispensaryEntity>{
 	@Id
