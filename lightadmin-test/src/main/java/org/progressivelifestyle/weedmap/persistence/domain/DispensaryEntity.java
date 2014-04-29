@@ -1,7 +1,9 @@
 package org.progressivelifestyle.weedmap.persistence.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -47,6 +49,11 @@ public class DispensaryEntity implements Comparable<DispensaryEntity>{
 	private String saturdayOpen;
 	private String saturdayClose;
 	private String dispensaryURL;
+	
+	@Column(nullable = true)
+	private BigDecimal lat;
+	@Column(nullable = true)
+	private BigDecimal lang;
 	
 	private Date creationDate;
 	private Date lastUpdateDate;
@@ -460,5 +467,17 @@ public class DispensaryEntity implements Comparable<DispensaryEntity>{
 		} else if (!zip.equals(other.zip))
 			return false;
 		return true;
+	}
+	public BigDecimal getLat() {
+		return lat;
+	}
+	public void setLat(BigDecimal lat) {
+		this.lat = lat;
+	}
+	public BigDecimal getLang() {
+		return lang;
+	}
+	public void setLang(BigDecimal lang) {
+		this.lang = lang;
 	}
 }

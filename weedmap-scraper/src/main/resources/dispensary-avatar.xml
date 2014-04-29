@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<var-def name="webpage">
+		<html-to-xml>
+			<http url="#URL#"></http>
+		</html-to-xml>
+	</var-def>	    	
+          <var-def name="imgUrl">
+		<xpath expression="//div[@class='company-avatar']/img/@src"><var name="webpage"/></xpath>
+       </var-def>
+</config>

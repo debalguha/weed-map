@@ -3,10 +3,10 @@ package org.progressivelifestyle.weedmaps.objects;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonAnyGetter;
-import org.codehaus.jackson.annotate.JsonAnySetter;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties({ "approved_by_admin", "banned_at", "community_post_uuid", "created_at", "deleted_at", "hits_count","image_content_type", "image_file_name", "image_file_size", "image_updated_at", "name", "picturable_id", "picturable_type", "position", "reported_count", "reviews_count", "updated_at", "user_id" })
 public class Picture {

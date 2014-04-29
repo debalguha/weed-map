@@ -7,14 +7,15 @@ import java.io.IOException;
 
 import junit.framework.Assert;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.progressivelifestyle.weedmap.persistence.domain.Menu;
 import org.progressivelifestyle.weedmaps.objects.MenuItem;
 import org.progressivelifestyle.weedmaps.objects.Picture;
 import org.progressivelifestyle.weedmaps.objects.PictureImage;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class TestJsonMapping {

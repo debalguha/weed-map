@@ -11,11 +11,6 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.progressivelifestyle.weedmap.persistence.domain.Menu;
 import org.progressivelifestyle.weedmaps.objects.Address;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
@@ -24,6 +19,12 @@ import org.webharvest.definition.ScraperConfiguration;
 import org.webharvest.runtime.ProxyConfiguration;
 import org.webharvest.runtime.Scraper;
 import org.xml.sax.InputSource;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DispensaryDetailScraper extends BaseScraper implements Callable<DispensaryObject> {
 	private String scraperConfigContent;
@@ -150,7 +151,7 @@ public class DispensaryDetailScraper extends BaseScraper implements Callable<Dis
 
 	private Long parseJsonToRetrieveDispensaryId(String dataListing) throws JsonProcessingException, IOException {
 		JsonNode jsonNode = mapper.readTree(dataListing);
-		return jsonNode.get("id").getLongValue();
+		return jsonNode.get("id").asLong();
 	}
 
 	@SuppressWarnings("unchecked")

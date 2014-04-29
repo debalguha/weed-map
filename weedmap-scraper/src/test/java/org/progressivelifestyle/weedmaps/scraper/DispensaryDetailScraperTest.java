@@ -5,11 +5,12 @@ import static junit.framework.Assert.assertEquals;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.progressivelifestyle.weedmap.persistence.domain.Dispensary;
 import org.progressivelifestyle.weedmap.persistence.domain.Menu;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DispensaryDetailScraperTest {
 	@Test

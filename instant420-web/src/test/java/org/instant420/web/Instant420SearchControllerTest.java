@@ -9,9 +9,6 @@ import java.util.Collection;
 import org.apache.http.client.HttpClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.instant420.web.domain.PopularSearchTermObject;
 import org.instant420.web.domain.ResultMeta;
 import org.instant420.web.httpclient.PreemptiveHttpClient;
@@ -20,6 +17,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Instant420SearchControllerTest {
 

@@ -11,6 +11,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="searchqueryentity")
 @NamedQueries({
@@ -37,7 +39,9 @@ public class SearchQueryEntity implements BaseEntity{
 	private String facebookURL;
 	private String twitterURL;
 	
+	@JsonIgnore
 	private Date creationDate;
+	@JsonIgnore
 	private Date lastUpdateDate;
 	
 	public Long getId() {

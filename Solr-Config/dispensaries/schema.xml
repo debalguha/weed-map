@@ -143,6 +143,7 @@
 	<field name="fridayClose" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	<field name="saturdayOpen" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	<field name="saturdayClose" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
+	<field name="dispensaryImageURL" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	
 	<!--field name="category" type="string" indexed="true" stored="true" required="true" multiValued="false"/-->
  </fields>

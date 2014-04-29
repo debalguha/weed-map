@@ -108,10 +108,10 @@ public class Instant420SearchController {
 				String saturdayOpen = doc.getFieldValue("saturdayOpen").toString();
 				String saturdayClose = doc.getFieldValue("saturdayClose").toString();
 				String dispensaryURL = doc.getFieldValue("dispensaryURL").toString();
-				
+				String dispensaryImageURL = doc.getFieldValue("dispensaryImageURL").toString();
 				result.getSearchResults().add(new DispensarySearchObject(id, name, street, city, state, zip, phone, email, website, facebookURL, twitterURL, instagramURL, 
 						sundayOpen, sundayClose, mondayOpen, mondayClose, tuesdayOpen, tuesdayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, 
-						fridayClose, saturdayOpen, saturdayClose, dispensaryURL));
+						fridayClose, saturdayOpen, saturdayClose, dispensaryURL, dispensaryImageURL));
 			}
 		}
 		return result;		

@@ -30,7 +30,7 @@ public class DispensarySearchObject extends SearchObject{
 	private final String dispensaryURL;
 	private String dispensaryImageURL;
 	public DispensarySearchObject(String id, String name, String street, String city, String state, String zip, String phone, String email, String website, String facebookURL, String twitterURL, String instagramURL, String sundayOpen, String sundayClose, String mondayOpen,
-			String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen, String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose, String dispensaryURL) {
+			String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen, String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose, String dispensaryURL, String dispensaryImageURL) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -59,6 +59,7 @@ public class DispensarySearchObject extends SearchObject{
 		this.saturdayOpen = saturdayOpen;
 		this.saturdayClose = saturdayClose;
 		this.dispensaryURL = dispensaryURL;
+		this.dispensaryImageURL = dispensaryImageURL;
 	}
 	public String getId() {
 		return id;
@@ -140,6 +141,9 @@ public class DispensarySearchObject extends SearchObject{
 	}
 	public String getDispensaryURL() {
 		return dispensaryURL;
+	}
+	public String getDispensaryImageURL() {
+		return dispensaryImageURL;
 	}
 	
 }

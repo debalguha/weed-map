@@ -3,9 +3,9 @@ package org.progressivelifestyle.weedmaps.objects;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.annotate.JsonAnyGetter;
-import org.codehaus.jackson.annotate.JsonAnySetter;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties({"leader", "large_pad", "large", "medium", "medium_fill", "medium_pad", "medium_boxed", "medium_oriented", "square", "square_fill", "square_boxed", "small_wide"})
 public class PictureImage {

@@ -1,5 +1,8 @@
 package org.progressivelifestyle.weedmaps.scraper;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import org.webharvest.definition.ScraperConfiguration;
 import org.webharvest.runtime.ProxyConfiguration;
 import org.webharvest.runtime.Scraper;
@@ -29,4 +32,13 @@ public class BaseScraper {
 		else
 			return new Scraper(config, workingDir);
 	}	
+	public static String readFile(String fileName) throws Exception {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(DispensaryDetailScraper.class.getClassLoader().getResourceAsStream(fileName)));
+		String line = "";
+		StringBuilder builder = new StringBuilder();
+		while ((line = reader.readLine()) != null) {
+			builder.append(line);
+		}
+		return builder.toString();
+	}
 }
