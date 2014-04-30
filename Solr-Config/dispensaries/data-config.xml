@@ -1,8 +1,10 @@
 <dataConfig>
 	<dataSource driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/instant420" user="instant420" password="instant420"/>
     <document name="dispensary">
-        <entity name="dispensary" pk="id" query="select d.id, d.name, street, city, state, zip, sundayOpen, sundayClose, mondayOpen, mondayClose, tuesdayOpen, tuesDayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, fridayClose, saturdayOpen, saturdayClose, dispensaryImageURL from dispensaryentity d"
-			deltaImportQuery="select d.id, d.name, street, city, state, zip, phone, email, website, facebookURL, instagramURL, twitterURL, sundayOpen, sundayClose, mondayOpen, mondayClose, tuesdayOpen, tuesDayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, fridayClose, saturdayOpen, saturdayClose, dispensaryImageURL from dispensaryentity d where d.id='${dih.delta.id}'"
+        <entity name="dispensary" pk="id" query="select d.id, d.name, dispensaryURL, street, city, state, zip, phone, email, website, facebookURL, instagramURL, twitterURL, sundayOpen, sundayClose, mondayOpen, mondayClose, tuesdayOpen, 
+		tuesdayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, fridayClose, saturdayOpen, saturdayClose, dispensaryImageURL from dispensaryentity d"
+			deltaImportQuery="select d.id, d.name, dispensaryURL, street, city, state, zip, phone, email, website, facebookURL, instagramURL, twitterURL, sundayOpen, sundayClose, mondayOpen, mondayClose, tuesdayOpen, 
+		tuesdayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, fridayClose, saturdayOpen, saturdayClose, dispensaryImageURL from dispensaryentity d where d.id='${dih.delta.id}'"
 			deltaQuery="select id from dispensaryentity where lastUpdateDate &gt; '${dih.last_index_time}'">
             <field column="id" name="id" />
             <field column="name" name="name" />
@@ -10,6 +12,28 @@
             <field column="city" name="city" />
             <field column="state" name="state" />
             <field column="zip" name="zip" />
+			
+			<field column="phone" name="phone" />
+            <field column="email" name="email" />
+            <field column="website" name="website" />
+            <field column="facebookURL" name="facebookURL" />
+			<field column="instagramURL" name="instagramURL" />
+			<field column="twitterURL" name="twitterURL" />
+			
+			<field column="sundayOpen" name="sundayOpen" />
+			<field column="sundayClose" name="sundayClose" />
+			<field column="mondayOpen" name="mondayOpen" />
+			<field column="mondayClose" name="mondayClose" />
+			<field column="tuesdayOpen" name="tuesdayOpen" />
+			<field column="tuesdayClose" name="tuesDayClose" />
+			<field column="wednesdayOpen" name="wednesdayOpen" />
+			<field column="wednesdayClose" name="wednesdayClose" />
+			<field column="thursdayOpen" name="thursdayOpen" />
+			<field column="thursdayClose" name="thursdayClose" />
+			<field column="fridayOpen" name="fridayOpen" />
+			<field column="fridayClose" name="fridayClose" />
+			<field column="dispensaryImageURL" name="dispensaryImageURL" />
+			<field column="dispensaryURL" name="dispensaryURL" />
         </entity>
     </document>
 </dataConfig>
