@@ -9,12 +9,12 @@ import java.util.Collection;
 import org.apache.http.client.HttpClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.instant420.web.domain.PopularSearchTermObject;
 import org.instant420.web.domain.ResultMeta;
 import org.instant420.web.httpclient.PreemptiveHttpClient;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -67,7 +67,7 @@ public class Instant420SearchControllerTest {
 		DispensaryService service = (DispensaryService)ctx.getBean(DispensaryService.class);
 		Instant420SearchController controller = new Instant420SearchController();
 		controller.setService(service);
-		Collection<PopularSearchTermObject> popularSearchTerms = controller.findPopularSearchTerms(10);
+		Collection<SearchQueryEntity> popularSearchTerms = controller.findPopularSearchTerms(10);
 		Assert.assertNotNull(popularSearchTerms);
 		Assert.assertTrue(!popularSearchTerms.isEmpty());
 		System.out.println(new ObjectMapper().writeValueAsString(popularSearchTerms));

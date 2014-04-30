@@ -1,8 +1,6 @@
 package org.instant420.web;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -13,7 +11,6 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.CommonParams;
 import org.instant420.web.domain.DispensarySearchObject;
 import org.instant420.web.domain.MenuItemSearchObject;
-import org.instant420.web.domain.PopularSearchTermObject;
 import org.instant420.web.domain.ResultMeta;
 import org.instant420.web.domain.SearchType;
 import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
@@ -47,7 +44,7 @@ public class Instant420SearchController {
 	@RequestMapping(value = "/medicines", method = RequestMethod.GET)
 	public @ResponseBody ResultMeta searchRegularForMedicines(@RequestParam(value="searchText", required=true) String searchText, @RequestParam(value="category", required = false) String categoryParam,
 			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows) throws SolrServerException{
-		SolrDocumentList results = doSearch(solrServerForMedicines, searchText, categoryParam, start, rows, SearchType.MEDICINE);
+		SolrDocumentList results = doSearch(solrServerForMedicines, categoryParam, searchText, start, rows, SearchType.MEDICINE);
 		long numFound = results.getNumFound();
 		long startFromResult = results.getStart();
 		ResultMeta result = new ResultMeta(numFound, startFromResult, rows);
@@ -117,7 +114,7 @@ public class Instant420SearchController {
 		return result;		
 	}	
 	
-	private SolrDocumentList doSearch(SolrServer solrServer, String searchText, String category, int start, int rows, SearchType searchType) throws SolrServerException{
+	private SolrDocumentList doSearch(SolrServer solrServer, String category, String searchText, int start, int rows, SearchType searchType) throws SolrServerException{
 		SolrQuery query = new SolrQuery();
 		query.setRequestHandler("/select");
 		if(searchType.equals(SearchType.DISPENSARY))
@@ -133,12 +130,8 @@ public class Instant420SearchController {
 	}
 	
 	@RequestMapping(value = "/popular", method = RequestMethod.GET)
-	public @ResponseBody Collection<PopularSearchTermObject> findPopularSearchTerms(@RequestParam(value = "recordNum", required = false) int recordNum){
-		List<SearchQueryEntity> mostPopularSearchTerms = service.findMostPopularSearchTerms(recordNum==0?10:recordNum);
-		Collection<PopularSearchTermObject> terms = new ArrayList<PopularSearchTermObject>();
-		for(SearchQueryEntity entity : mostPopularSearchTerms)
-			terms.add(new PopularSearchTermObject(entity.getQueryStr(), String.valueOf(entity.getCount())));
-		return terms;
+	public @ResponseBody Collection<SearchQueryEntity> findPopularSearchTerms(@RequestParam(value = "recordNum", required = false) int recordNum){
+		return service.findMostPopularSearchTerms(recordNum==0?10:recordNum);
 	}
 	
 	@RequestMapping(value = "/GUID", method = RequestMethod.GET)

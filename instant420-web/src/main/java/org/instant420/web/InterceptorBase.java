@@ -23,9 +23,9 @@ public abstract class InterceptorBase implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 		logger.info("Interceptor -->preHandle");
 		String requestURI = request.getRequestURI();
-		if(requestURI.contains("search/dispensary"))
+		if(requestURI.contains("search/dispensaries"))
 			request.setAttribute("searchType", SearchType.DISPENSARY);
-		if(requestURI.contains("search/medicine"))
+		if(requestURI.contains("search/medicines"))
 			request.setAttribute("searchType", SearchType.MEDICINE);
 		if(requestURI.contains("search/popular"))
 			request.setAttribute("searchType", SearchType.POPULAR);		
@@ -35,5 +35,8 @@ public abstract class InterceptorBase implements HandlerInterceptor{
 	public void setService(DispensaryService service) {
 		this.service = service;
 	}
-	
+	public static void main(String args[]) throws Exception{
+		String search = "http://localhost:9080/instant420-web/rest/search/medicines?searchText=me&start=21&rows=10&key=instant420.rest.api";
+		System.out.println(search.contains("search/medicines"));
+	}
 }

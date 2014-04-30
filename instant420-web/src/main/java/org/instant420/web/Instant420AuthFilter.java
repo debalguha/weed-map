@@ -18,9 +18,10 @@ public class Instant420AuthFilter implements Filter{
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		String apiKey = request.getParameter("key");
-		if(apiKey.equals(filterKey))
+		if(apiKey!=null && apiKey.equals(filterKey))
 			chain.doFilter(request, response);
-		((HttpServletResponse)response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unrecognized API Key");
+		else
+			((HttpServletResponse)response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unrecognized API Key");
 	}
 
 	public void init(FilterConfig config) throws ServletException {

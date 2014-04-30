@@ -49,6 +49,7 @@ public class DispensaryEntity implements Comparable<DispensaryEntity>{
 	private String saturdayOpen;
 	private String saturdayClose;
 	private String dispensaryURL;
+	private String dispensaryImageURL;
 	
 	@Column(nullable = true)
 	private BigDecimal lat;
