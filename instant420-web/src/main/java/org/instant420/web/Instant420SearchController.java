@@ -1,5 +1,6 @@
 package org.instant420.web;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -43,7 +44,9 @@ public class Instant420SearchController {
 	
 	@RequestMapping(value = "/medicines", method = RequestMethod.GET)
 	public @ResponseBody ResultMeta searchRegularForMedicines(@RequestParam(value="searchText", required=true) String searchText, @RequestParam(value="category", required = false) String categoryParam,
-			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows) throws SolrServerException{
+			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows, 
+			@RequestParam(value="lat", required = false) BigDecimal lattitude, @RequestParam(value="long", required = false) BigDecimal longitude,
+			@RequestParam(value="region", required = false) String region) throws SolrServerException{
 		SolrDocumentList results = doSearch(solrServerForMedicines, categoryParam, searchText, start, rows, SearchType.MEDICINE);
 		long numFound = results.getNumFound();
 		long startFromResult = results.getStart();
@@ -69,7 +72,9 @@ public class Instant420SearchController {
 	
 	@RequestMapping(value = "/dispensaries", method = RequestMethod.GET)
 	public @ResponseBody ResultMeta searchRegularForDispensary(@RequestParam(value="searchText", required=true) String searchText, 
-			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows) throws SolrServerException{
+			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows,
+			@RequestParam(value="lat", required = false) BigDecimal lattitude, @RequestParam(value="long", required = false) BigDecimal longitude,
+			@RequestParam(value="region", required = false) String region) throws SolrServerException{
 		SolrDocumentList results = doSearch(solrServerForDispensary, null, searchText, start, rows, SearchType.DISPENSARY);
 		long numFound = results.getNumFound();
 		long startFromResult = results.getStart();
