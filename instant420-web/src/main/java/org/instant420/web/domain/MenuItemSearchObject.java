@@ -12,7 +12,8 @@ public class MenuItemSearchObject extends SearchObject{
 	private final String priceUnit;
 	private final String pictureUrl;
 	private final String category;
-	public MenuItemSearchObject(String id, String name, String priceEighth, String priceGram, String priceHalfGram, String priceHalfOunce, String priceOunce, String priceQuarter, String priceUnit, String pictureUrl, String category) {
+	private final String numberOfDispensary;
+	public MenuItemSearchObject(String id, String name, String priceEighth, String priceGram, String priceHalfGram, String priceHalfOunce, String priceOunce, String priceQuarter, String priceUnit, String pictureUrl, String category, String numberOfDispensary) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,6 +26,7 @@ public class MenuItemSearchObject extends SearchObject{
 		this.priceUnit = priceUnit;
 		this.pictureUrl = pictureUrl;
 		this.category = category;
+		this.numberOfDispensary = numberOfDispensary;
 	}
 	public String getId() {
 		return id;
@@ -58,6 +60,9 @@ public class MenuItemSearchObject extends SearchObject{
 	}
 	public String getCategory() {
 		return category;
+	}
+	public String getNumberOfDispensary() {
+		return numberOfDispensary;
 	}
 	
 }

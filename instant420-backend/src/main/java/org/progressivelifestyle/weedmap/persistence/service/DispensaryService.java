@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
+
 @Service
 @Transactional
 public class DispensaryService {
@@ -96,5 +98,13 @@ public class DispensaryService {
 	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers){
 		return dispensaryDao.findMostPopularSearchTerms(numbers);
 	}
-
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public List<String> findDispensariesForMedicine(String name){
+		List<MenuItemEntity> menuItemsForName = dispensaryDao.findMenuItemsForName(name);
+		List<String> dispensaryIds = Lists.newArrayList();
+		for(MenuItemEntity entity : menuItemsForName)
+			dispensaryIds.add(entity.getDispensaryId().toString());
+		return dispensaryIds;
+	}
 }

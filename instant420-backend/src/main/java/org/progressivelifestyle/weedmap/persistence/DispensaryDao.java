@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.progressivelifestyle.weedmap.persistence.domain.BaseEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
+import org.progressivelifestyle.weedmap.persistence.domain.MenuItemEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.springframework.stereotype.Repository;
 
@@ -79,6 +80,12 @@ public class DispensaryDao {
 	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers) {
 		Query query = entityManager.createNamedQuery("mostSearchedText", SearchQueryEntity.class);
 		query.setMaxResults(numbers);
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<MenuItemEntity> findMenuItemsForName(String name){
+		Query query = entityManager.createNamedQuery("findMedicineByName", MenuItemEntity.class);
 		return query.getResultList();
 	}
 

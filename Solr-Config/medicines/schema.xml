@@ -170,6 +170,8 @@
 	 <field name="priceOunce" type="int" indexed="false" stored="true" required="false" multiValued="false"/>
 	 <field name="priceUnit" type="int" indexed="false" stored="true" required="false" multiValued="false"/>
 	 <field name="pictureUrl" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
+	 <field name="dispensaryId" type="int" indexed="false" stored="true" required="true" multiValued="false"/>
+	 <field name="numberOfDispensary" type="int" indexed="false" stored="true" required="true" multiValued="false"/>
 	 
    <!-- Dynamic field definitions allow using convention over configuration
        for fields via the specification of patterns to match field names. 
@@ -1092,3 +1094,4 @@
     -->
 
 </schema>
+

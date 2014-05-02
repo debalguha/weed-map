@@ -29,8 +29,11 @@ public class DispensarySearchObject extends SearchObject{
 	private final String saturdayClose;
 	private final String dispensaryURL;
 	private String dispensaryImageURL;
-	public DispensarySearchObject(String id, String name, String street, String city, String state, String zip, String phone, String email, String website, String facebookURL, String twitterURL, String instagramURL, String sundayOpen, String sundayClose, String mondayOpen,
-			String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen, String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, String saturdayClose, String dispensaryURL, String dispensaryImageURL) {
+	private Double distanceInKM;
+	private double distanceInMiles;
+	public DispensarySearchObject(String id, String name, String street, String city, String state, String zip, String phone, String email, String website, String facebookURL, String twitterURL, String instagramURL, String sundayOpen, String sundayClose, 
+			String mondayOpen, String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen, String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, 
+			String saturdayClose, String dispensaryURL, String dispensaryImageURL, Double distanceInKM, Double distanceInMiles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -144,6 +147,12 @@ public class DispensarySearchObject extends SearchObject{
 	}
 	public String getDispensaryImageURL() {
 		return dispensaryImageURL;
+	}
+	public Double getDistanceInKM() {
+		return distanceInKM;
+	}
+	public double getDistanceInMiles() {
+		return distanceInMiles;
 	}
 	
 }

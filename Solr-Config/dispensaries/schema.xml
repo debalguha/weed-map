@@ -179,6 +179,8 @@
 	<field name="instagramURL" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
 	<field name="twitterURL" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
 	
+	<field name="address" type="string" indexed="true" stored="true" multiValued="true"/>
+	
 	<field name="sundayOpen" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	<field name="sundayClose" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	<field name="mondayOpen" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
@@ -284,6 +286,11 @@
         is added to the index.  It's used either to index the same field differently,
         or to add multiple fields to the same field for easier/faster searching.  -->
 
+   <copyField source="street" dest="address"/>   
+   <copyField source="city" dest="address"/>
+   <copyField source="state" dest="address"/>
+   
+   
    <copyField source="cat" dest="text"/>
    <copyField source="name" dest="text"/>
    <copyField source="manu" dest="text"/>
