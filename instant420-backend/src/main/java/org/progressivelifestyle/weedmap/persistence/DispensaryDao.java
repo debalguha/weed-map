@@ -90,4 +90,12 @@ public class DispensaryDao {
 		return query.getResultList();
 	}
 
+	public Long findMaxDispensaryId() {
+		return entityManager.createNamedQuery("findMaxDispensaryId", Long.class).getSingleResult();
+	}
+	
+	public Long findMaxmenuItemId() {
+		return entityManager.createNamedQuery("findMaxMenuItemId", Long.class).getSingleResult();
+	}
+
 }

@@ -1,7 +1,5 @@
 package org.instant420.web;
 
-import static org.junit.Assert.*;
-
 import org.instant420.processor.GeoCodingHelper;
 import org.instant420.processor.MapPoint;
 import org.junit.Before;

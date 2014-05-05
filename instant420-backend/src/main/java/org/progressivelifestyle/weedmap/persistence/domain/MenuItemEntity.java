@@ -22,12 +22,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "menuitementity")
-@NamedQueries({ @NamedQuery(name = "findMedicineByName", query = "from MenuItemEntity m where m.name=:name") })
+@NamedQueries({ @NamedQuery(name = "findMedicineByName", query = "from MenuItemEntity m where m.name=:name"),
+	@NamedQuery(name = "findMaxMenuItemId", query = "select max(id) from MenuItemEntity ")})
 // @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
 // region="dispensary")
 public class MenuItemEntity extends BaseEntity implements Menu {
 	@Id
-	private long id;
+	private Long id;
 	private String name;
 	private int priceEighth;
 	private int priceGram;
@@ -72,7 +73,7 @@ public class MenuItemEntity extends BaseEntity implements Menu {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

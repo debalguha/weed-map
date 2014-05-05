@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,8 +23,7 @@ import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "dispensaryentity")
-// @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
-// region="dispensary")
+@NamedQueries({ @NamedQuery(name = "findMaxDispensaryId", query = "select max(id) from DispensaryEntity ") })
 public class DispensaryEntity extends BaseEntity implements Dispensary {
 	@Id
 	private Long id;

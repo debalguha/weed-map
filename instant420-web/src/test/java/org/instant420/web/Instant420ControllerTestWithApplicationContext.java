@@ -2,26 +2,14 @@ package org.instant420.web;
 
 import org.instant420.web.domain.ResultMeta;
 import org.instant420.web.domain.SearchType;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class Instant420ControllerTestWithApplicationContext {
-	private static ApplicationContext childCtx;
-	@BeforeClass
-	public static void preProcess(){
-		ClassPathXmlApplicationContext rootCtx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		childCtx = new ClassPathXmlApplicationContext(new String[]{"child-application-context.xml"}, rootCtx);
-	}
-	
-	
+public class Instant420ControllerTestWithApplicationContext extends BaseTestCase{
 	@Test
 	public void shouldBeAbleToSearchMedicines() throws Exception{
 		Instant420SearchController controller =  (Instant420SearchController)childCtx.getBean(Instant420SearchController.class);
@@ -71,10 +59,5 @@ public class Instant420ControllerTestWithApplicationContext {
 		controller.increaseHitCount(SearchType.DISPENSARY.name(), new Long(19231));
 		dispensary = controller.getDispensaryDetails(new Long(19231));
 		Assert.assertEquals(prevHitCount+1, dispensary.getHitCount().intValue());
-	}
-	
-	@AfterClass
-	public static void postProcess(){
-		((ClassPathXmlApplicationContext)childCtx).close();
 	}
 }

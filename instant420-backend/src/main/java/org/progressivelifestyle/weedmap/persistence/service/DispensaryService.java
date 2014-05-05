@@ -3,6 +3,7 @@ package org.progressivelifestyle.weedmap.persistence.service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,6 +27,10 @@ import com.google.common.collect.Lists;
 public class DispensaryService {
 	@Autowired
 	private DispensaryDao dispensaryDao;
+	
+	private AtomicLong lastDispensaryId;
+	private AtomicLong lastMenuItemId;
+	
 	private static final Log logger = LogFactory.getLog(DispensaryService.class);
 	public void setDispensaryDao(DispensaryDao dispensaryDao) {
 		this.dispensaryDao = dispensaryDao;
@@ -40,6 +45,17 @@ public class DispensaryService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void createDispensary(DispensaryEntity entity){
 		dispensaryDao.saveEntity(entity);
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void createMenuItem(MenuItemEntity entity) throws Exception{
+		if(entity.getId() == null){
+			if(lastMenuItemId == null)
+				afterPropertiesSet();
+			entity.setId(lastMenuItemId.incrementAndGet());
+		}
+		dispensaryDao.saveEntity(entity);
+		
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -64,7 +80,9 @@ public class DispensaryService {
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public MenuItemEntity findMenuItem(long menuItemId){
-		return (MenuItemEntity)dispensaryDao.getEntityByPrimaryKey(new Long(menuItemId), MenuItemEntity.class);
+		MenuItemEntity menuItem = (MenuItemEntity)dispensaryDao.getEntityByPrimaryKey(new Long(menuItemId), MenuItemEntity.class);
+		menuItem.getDispensary();
+		return menuItem;
 	}	
 	
 	public void createDispensaryAndMenuItemSeperately(Dispensary dispensary) {
@@ -118,5 +136,24 @@ public class DispensaryService {
 			System.out.println(entity.getDispensary().getRegion());
 		}
 		return dispensaryIds;
+	}
+
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	private Long findMaxDispensaryId(){
+		return dispensaryDao.findMaxDispensaryId();
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	private Long findMaxMenuItemId(){
+		return dispensaryDao.findMaxmenuItemId();
+	}
+	
+	public void afterPropertiesSet() throws Exception {
+		try {
+			lastDispensaryId = new AtomicLong(findMaxDispensaryId());
+			lastMenuItemId = new AtomicLong(findMaxMenuItemId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
