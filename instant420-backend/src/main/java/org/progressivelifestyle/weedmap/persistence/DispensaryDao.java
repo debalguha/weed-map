@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.progressivelifestyle.weedmap.persistence.domain.BaseEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
+import org.progressivelifestyle.weedmap.persistence.domain.MenuItemCategoryEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.MenuItemEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.springframework.stereotype.Repository;
@@ -96,6 +97,10 @@ public class DispensaryDao {
 	
 	public Long findMaxmenuItemId() {
 		return entityManager.createNamedQuery("findMaxMenuItemId", Long.class).getSingleResult();
+	}
+
+	public MenuItemCategoryEntity findMenuItemCategoryByName(String name) {
+		return (MenuItemCategoryEntity)entityManager.createNamedQuery("findCategoryByName").setParameter("name", name).getSingleResult();
 	}
 
 }

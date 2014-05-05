@@ -173,7 +173,11 @@ public class Instant420SearchController {
 		String pictureUrl = doc.getFieldValue("pictureUrl")!=null?doc.getFieldValue("pictureUrl").toString():"";
 		String category = doc.getFieldValue("category").toString();
 		String numberOfDispensary = doc.getFieldValue("numberOfDispensary").toString();
-		return new MenuItemSearchObject(id, name, priceEighth, priceGram, priceHalfGram, priceHalfOunce, priceOunce, priceQuarter, priceUnit, pictureUrl, category, numberOfDispensary);
+		
+		String strainId = doc.getFieldValue("strainId").toString();
+		String description = doc.getFieldValue("description")!=null?doc.getFieldValue("description").toString():"";
+		
+		return new MenuItemSearchObject(id, strainId, name, description, priceEighth, priceGram, priceHalfGram, priceHalfOunce, priceOunce, priceQuarter, priceUnit, pictureUrl, category, numberOfDispensary);
 	}
 	
 	private static DispensarySearchObject convertSolrDocumentToDispensarySearchObject(SolrDocument doc, Double latitude, Double longitude) {

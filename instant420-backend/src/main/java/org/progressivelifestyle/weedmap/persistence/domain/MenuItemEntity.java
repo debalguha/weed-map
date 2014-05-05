@@ -15,9 +15,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -61,7 +58,6 @@ public class MenuItemEntity extends BaseEntity implements Menu {
 	private MenuItemCategoryEntity menuItemCategory;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Cascade(value = { CascadeType.REFRESH })
 	@JoinColumn(name = "dispensaryId", referencedColumnName = "id")
 	@JsonIgnore
 	private DispensaryEntity dispensary;

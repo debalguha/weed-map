@@ -10,10 +10,12 @@ public class MenuItemSearchObject extends SearchObject{
 	private final String priceOunce;
 	private final String priceQuarter;
 	private final String priceUnit;
-	private final String pictureUrl;
+	private final String pictureURL;
 	private final String category;
 	private final String numberOfDispensary;
-	public MenuItemSearchObject(String id, String name, String priceEighth, String priceGram, String priceHalfGram, String priceHalfOunce, String priceOunce, String priceQuarter, String priceUnit, String pictureUrl, String category, String numberOfDispensary) {
+	private final String strainId;
+	private final String description;
+	public MenuItemSearchObject(String id, String strainId, String name, String description, String priceEighth, String priceGram, String priceHalfGram, String priceHalfOunce, String priceOunce, String priceQuarter, String priceUnit, String pictureUrl, String category, String numberOfDispensary) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -24,9 +26,11 @@ public class MenuItemSearchObject extends SearchObject{
 		this.priceOunce = priceOunce;
 		this.priceQuarter = priceQuarter;
 		this.priceUnit = priceUnit;
-		this.pictureUrl = pictureUrl;
+		this.pictureURL = pictureUrl;
 		this.category = category;
 		this.numberOfDispensary = numberOfDispensary;
+		this.strainId = strainId;
+		this.description = description;
 	}
 	public String getId() {
 		return id;
@@ -55,14 +59,20 @@ public class MenuItemSearchObject extends SearchObject{
 	public String getPriceUnit() {
 		return priceUnit;
 	}
-	public String getPictureUrl() {
-		return pictureUrl;
+	public String getPictureURL() {
+		return pictureURL;
 	}
 	public String getCategory() {
 		return category;
 	}
 	public String getNumberOfDispensary() {
 		return numberOfDispensary;
+	}
+	public String getStrainId() {
+		return strainId;
+	}
+	public String getDescription() {
+		return description;
 	}
 	
 }

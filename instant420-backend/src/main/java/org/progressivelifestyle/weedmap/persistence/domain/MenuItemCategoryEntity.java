@@ -5,10 +5,13 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="menuitemcategoryentity")
+@NamedQueries({ @NamedQuery(name = "findCategoryByName", query = "from MenuItemCategoryEntity m where m.categoryName=:name")})
 //@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="dispensary")
 public class MenuItemCategoryEntity extends BaseEntity{
 	@Id

@@ -137,6 +137,11 @@ public class DispensaryService {
 		}
 		return dispensaryIds;
 	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	public MenuItemCategoryEntity findMenuItemCategoryByName(String name){
+		return dispensaryDao.findMenuItemCategoryByName(name);
+	}
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	private Long findMaxDispensaryId(){
@@ -148,6 +153,11 @@ public class DispensaryService {
 		return dispensaryDao.findMaxmenuItemId();
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void updateMenuItem(MenuItemEntity menu) {
+		dispensaryDao.updateEntity(menu);
+	}
+	
 	public void afterPropertiesSet() throws Exception {
 		try {
 			lastDispensaryId = new AtomicLong(findMaxDispensaryId());
@@ -156,4 +166,9 @@ public class DispensaryService {
 			e.printStackTrace();
 		}
 	}
+
+	public AtomicLong getLastMenuItemId() {
+		return lastMenuItemId;
+	}
+	
 }
