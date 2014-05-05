@@ -171,6 +171,7 @@
 	<field name="city" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	<field name="state" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	<field name="zip" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
+	<field name="region" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
 	
 	<field name="phone" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
 	<field name="email" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
@@ -232,7 +233,7 @@
    <dynamicField name="*_ds" type="double" indexed="true"  stored="true"  multiValued="true"/>
 
    <!-- Type used to index the lat and lon components for the "location" FieldType -->
-   <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false" />
+   <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="true" />
 
    <dynamicField name="*_dt"  type="date"    indexed="true"  stored="true"/>
    <dynamicField name="*_dts" type="date"    indexed="true"  stored="true" multiValued="true"/>

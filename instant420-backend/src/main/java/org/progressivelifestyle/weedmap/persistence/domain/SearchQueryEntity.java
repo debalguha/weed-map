@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 	query = "from SearchQueryEntity r where r.hasResult = 1 order by r.count desc"
 	)
 })
-public class SearchQueryEntity implements BaseEntity{
+public class SearchQueryEntity extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
@@ -38,6 +38,12 @@ public class SearchQueryEntity implements BaseEntity{
 	private String instagramURL;
 	private String facebookURL;
 	private String twitterURL;
+	
+	@Column(nullable = true)
+	private Integer hitCount;
+	
+	@Column(nullable = true)
+	private EntityType type;
 	
 	@JsonIgnore
 	private Date creationDate;
@@ -103,6 +109,21 @@ public class SearchQueryEntity implements BaseEntity{
 	}
 	public void setTwitterURL(String twitterURL) {
 		this.twitterURL = twitterURL;
+	}
+	public Integer getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(Integer hitCount) {
+		this.hitCount = hitCount;
+	}
+	public EntityType getType() {
+		return type;
+	}
+	public void setType(EntityType type) {
+		this.type = type;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

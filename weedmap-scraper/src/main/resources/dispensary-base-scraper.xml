@@ -12,7 +12,7 @@
 		</xpath>
 	</var-def> -->		
 	<var-def name="urls">
-		<xpath expression="//div[@class='row']/ul/li/a/@href">
+		<xpath expression="//div[@class='row']/ul/li/a/node()">
 			<var name="webpage"/>
 		</xpath>
 	</var-def>

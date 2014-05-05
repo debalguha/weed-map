@@ -23,7 +23,7 @@ import org.hibernate.annotations.CascadeType;
 @Table(name = "dispensaryentity")
 // @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
 // region="dispensary")
-public class DispensaryEntity implements BaseEntity, Dispensary {
+public class DispensaryEntity extends BaseEntity implements Dispensary {
 	@Id
 	private Long id;
 	private String name;
@@ -35,6 +35,8 @@ public class DispensaryEntity implements BaseEntity, Dispensary {
 	private String city;
 	private String state;
 	private String zip;
+	@Column(nullable = true)
+	private String region;
 	private String facebookURL;
 	private String twitterURL;
 	private String instagramURL;
@@ -66,16 +68,19 @@ public class DispensaryEntity implements BaseEntity, Dispensary {
 	private Date lastUpdateDate;
 	
 	@Column(nullable = true)
+	private Integer hitCount;
+	
+	@Column(nullable = true)
 	private BigDecimal lat;
 	@Column(nullable = true)
 	private BigDecimal lang;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="dispensary", targetEntity=MenuItemEntity.class)
 	@Cascade(value = { CascadeType.ALL })
-	@JoinColumn(name = "dispensaryId", referencedColumnName = "id")
+	//@JoinColumn(name = "dispensaryId", referencedColumnName = "id")
 	private Set<MenuItemEntity> menuItems;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@Cascade(value = { CascadeType.ALL })
 	@JoinColumn(name = "dispensaryId", referencedColumnName = "id")
 	private Set<DispensaryPictureEntity> pictures;
@@ -625,4 +630,21 @@ public class DispensaryEntity implements BaseEntity, Dispensary {
 	public void setDispensaryImageURL(String dispensaryImageURL) {
 		this.dispensaryImageURL = dispensaryImageURL;
 	}
+
+	public Integer getHitCount() {
+		return hitCount;
+	}
+
+	public void setHitCount(Integer hitCount) {
+		this.hitCount = hitCount;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
 }

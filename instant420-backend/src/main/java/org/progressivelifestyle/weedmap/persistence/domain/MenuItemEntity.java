@@ -15,12 +15,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "menuitementity")
 @NamedQueries({ @NamedQuery(name = "findMedicineByName", query = "from MenuItemEntity m where m.name=:name") })
 // @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
 // region="dispensary")
-public class MenuItemEntity implements BaseEntity, Menu {
+public class MenuItemEntity extends BaseEntity implements Menu {
 	@Id
 	private long id;
 	private String name;
@@ -31,6 +36,9 @@ public class MenuItemEntity implements BaseEntity, Menu {
 	private int priceOunce;
 	private int priceQuarter;
 	private int priceUnit;
+	
+	@Column(nullable = true)
+	private Integer hitCount;
 	@Lob
 	@Column(columnDefinition = "TEXT")
 	private String description;
@@ -44,12 +52,17 @@ public class MenuItemEntity implements BaseEntity, Menu {
 
 	private Date creationDate;
 	private Date lastUpdateDate;
+	
+	private String region;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "menuItemCategoryId")
 	private MenuItemCategoryEntity menuItemCategory;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Cascade(value = { CascadeType.REFRESH })
+	@JoinColumn(name = "dispensaryId", referencedColumnName = "id")
+	@JsonIgnore
 	private DispensaryEntity dispensary;
 
 	@Column(nullable = true)
@@ -189,11 +202,11 @@ public class MenuItemEntity implements BaseEntity, Menu {
 	}
 
 	public Long getMenuItemCategoryId() {
-		return menuItemCategory.getId();
+		return menuItemCategory!=null?menuItemCategory.getId():0;
 	}
 
 	public String getCategoryName() {
-		return menuItemCategory.getCategoryName();
+		return menuItemCategory!=null?menuItemCategory.getCategoryName():"";
 	}
 
 	public boolean isLogicallyEquals(Menu obj) {
@@ -274,6 +287,34 @@ public class MenuItemEntity implements BaseEntity, Menu {
 
 	public void setNumberOfDispensary(int numberOfDispensary) {
 		this.numberOfDispensary = numberOfDispensary;
+	}
+
+	public Integer getHitCount() {
+		return hitCount;
+	}
+
+	public void setHitCount(Integer hitCount) {
+		this.hitCount = hitCount;
+	}
+
+	public void setLat(BigDecimal lat) {
+		this.lat = lat;
+	}
+
+	public void setLang(BigDecimal lang) {
+		this.lang = lang;
+	}
+
+	public void setDispensary(DispensaryEntity dispensary) {
+		this.dispensary = dispensary;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
 	}
 
 }

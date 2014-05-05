@@ -44,7 +44,7 @@ public class Instant420SearchControllerTest {
 		Instant420SearchController controller = new Instant420SearchController();
 		HttpClient httpClient = new PreemptiveHttpClient("tomcat", "s3cret", 1000);
 		controller.setSolrServerForDispensary(new HttpSolrServer("http://localhost:8080/solr/dispensary", httpClient));
-		ResultMeta result = controller.searchRegularForDispensary("me", 51, 100);
+		ResultMeta result = controller.searchRegularForDispensary("me", 51, 100, 0d, 0d, "LA");
 		assertNotNull(result);
 		assertTrue(result.getSearchResults().size()==100);
 		System.out.println(new ObjectMapper().writeValueAsString(result));
@@ -55,7 +55,7 @@ public class Instant420SearchControllerTest {
 		Instant420SearchController controller = new Instant420SearchController();
 		HttpClient httpClient = new PreemptiveHttpClient("tomcat", "s3cret", 1000);
 		controller.setSolrServerForMedicines(new HttpSolrServer("http://localhost:8080/solr/medicine", httpClient));
-		ResultMeta result = controller.searchRegularForMedicines("kush", null, 0, 10);
+		ResultMeta result = controller.searchRegularForMedicines("kush", null, 0, 10, 0d, 0d, "LA");
 		assertNotNull(result);
 		assertTrue(result.getSearchResults().size()==10);
 		System.out.println(new ObjectMapper().writeValueAsString(result));

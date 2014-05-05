@@ -30,10 +30,11 @@ public class DispensaryScraper extends BaseScraper {
 		Object []locationURLs = scraper.getContext().getVar("urls").toArray();
 		Set<String> retSet = new HashSet<String>();
 		int counter=0;
-		for(Object locationUrl : locationURLs){
+		for(Object locationUrlNode : locationURLs){
 /*			if(counter==1)
 				break;*/
-			retSet.add(URL.concat(locationUrl.toString()));
+		
+			retSet.add(URL.concat(locationUrlNode.toString()));
 			counter++;
 		}
 		return retSet;

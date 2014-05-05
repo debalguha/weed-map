@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="menuitemcategoryentity")
 //@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="dispensary")
-public class MenuItemCategoryEntity implements BaseEntity{
+public class MenuItemCategoryEntity extends BaseEntity{
 	@Id
 	private Long id;
 	@Column(nullable=false, unique = true)
@@ -69,6 +69,13 @@ public class MenuItemCategoryEntity implements BaseEntity{
 	@Override
 	public String toString() {
 		return "MenuItemCategoryEntity [id=" + id + ", categoryName=" + categoryName + "]";
+	}
+	@Override
+	public void setHitCount(Integer hitCount) {
+	}
+	@Override
+	public Integer getHitCount() {
+		return 0;
 	}
 	
 	

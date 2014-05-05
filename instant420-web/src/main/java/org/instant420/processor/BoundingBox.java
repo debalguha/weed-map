@@ -22,5 +22,8 @@ public class BoundingBox {
 	public void setMaxPoint(MapPoint maxPoint) {
 		this.maxPoint = maxPoint;
 	}
-	
+	@Override
+	public String toString() {
+		return "BoundingBox [minPoint=" + minPoint + ", maxPoint=" + maxPoint + "]";
+	}
 }

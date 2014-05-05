@@ -54,8 +54,18 @@ public class DispensaryService {
 	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public DispensaryEntity findDispensary(long dispensaryId){
-		return (DispensaryEntity)dispensaryDao.getEntityByPrimaryKey(new Long(dispensaryId), DispensaryEntity.class);
+		DispensaryEntity entity = (DispensaryEntity)dispensaryDao.getEntityByPrimaryKey(new Long(dispensaryId), DispensaryEntity.class);
+		/*Set<Menu> menuItems = entity.getMenuItems();
+		for(Menu menu : menuItems)
+			System.out.println("Category:: "+((MenuItemEntity)menu).getMenuItemCategory());
+		System.out.println("Menus ::"+menuItems.size());*/
+		return entity;
 	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public MenuItemEntity findMenuItem(long menuItemId){
+		return (MenuItemEntity)dispensaryDao.getEntityByPrimaryKey(new Long(menuItemId), MenuItemEntity.class);
+	}	
 	
 	public void createDispensaryAndMenuItemSeperately(Dispensary dispensary) {
 		Set<Menu> menuItems = dispensary.getMenuItems();
@@ -103,8 +113,10 @@ public class DispensaryService {
 	public List<String> findDispensariesForMedicine(String name){
 		List<MenuItemEntity> menuItemsForName = dispensaryDao.findMenuItemsForName(name);
 		List<String> dispensaryIds = Lists.newArrayList();
-		for(MenuItemEntity entity : menuItemsForName)
-			dispensaryIds.add(entity.getDispensaryId().toString());
+		for(MenuItemEntity entity : menuItemsForName){
+			dispensaryIds.add(entity.getDispensary().getId().toString());
+			System.out.println(entity.getDispensary().getRegion());
+		}
 		return dispensaryIds;
 	}
 }

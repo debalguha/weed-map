@@ -63,6 +63,8 @@ public class DispensarySearchObject extends SearchObject{
 		this.saturdayClose = saturdayClose;
 		this.dispensaryURL = dispensaryURL;
 		this.dispensaryImageURL = dispensaryImageURL;
+		this.distanceInKM = distanceInKM;
+		this.distanceInMiles = distanceInMiles;
 	}
 	public String getId() {
 		return id;

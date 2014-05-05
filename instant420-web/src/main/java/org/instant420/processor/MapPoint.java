@@ -24,5 +24,9 @@ public class MapPoint {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
+	@Override
+	public String toString() {
+		return "MapPoint [longitude=" + longitude + ", latitude=" + latitude + "]";
+	}
 	
 }

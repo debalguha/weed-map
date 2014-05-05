@@ -86,6 +86,7 @@ public class DispensaryDao {
 	@SuppressWarnings("unchecked")
 	public List<MenuItemEntity> findMenuItemsForName(String name){
 		Query query = entityManager.createNamedQuery("findMedicineByName", MenuItemEntity.class);
+		query.setParameter("name", name);
 		return query.getResultList();
 	}
 

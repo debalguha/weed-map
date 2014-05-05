@@ -32,7 +32,7 @@ public class GeoCodingHelper {
 		double latMax = lat + halfSide / radius;
 		double lonMin = lang - halfSide / pradius;
 		double lonMax = lang + halfSide / pradius;
-		return new BoundingBox(MapPoint.newmapPoint(rad2deg(lonMin), rad2deg(latMin)), MapPoint.newmapPoint(rad2deg(lonMax), rad2deg(latMax)));
+		return new BoundingBox(MapPoint.newmapPoint(rad2deg(latMin), rad2deg(lonMin)), MapPoint.newmapPoint(rad2deg(latMax), rad2deg(lonMax)));
 	}
 
 	private static double WGS84EarthRadius(double lat) {
@@ -52,10 +52,21 @@ public class GeoCodingHelper {
 		dist = dist * 60 * 1.1515;
 		if (unit == 'K') {
 			dist = dist * 1.609344;
-		} else if (unit == 'N') {
+		} else if (unit == 'M') {
 			dist = dist * 0.8684;
 		}
 		return (dist);
+	}
+	
+	public static BoundingBox GetBoundingBox(MapPoint point, double distance, char unit) {
+		double radius = unit=='K'?6371.009:3958.761;
+		double maxLat = point.getLatitude() + rad2deg( distance / radius );
+		double minLat = point.getLatitude() - rad2deg( distance / radius );
+		
+		double maxLong = point.getLongitude() + rad2deg( distance / radius) / Math.cos( deg2rad( point.getLatitude() ) );
+		double minLong = point.getLongitude() - rad2deg( distance / radius) / Math.cos( deg2rad( point.getLatitude() ) );
+		
+		return new BoundingBox(MapPoint.newmapPoint(minLat, minLong), MapPoint.newmapPoint(maxLat, maxLong));
 	}
 
 }

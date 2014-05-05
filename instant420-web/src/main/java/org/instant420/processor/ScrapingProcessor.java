@@ -81,7 +81,7 @@ public class ScrapingProcessor implements InitializingBean, ApplicationContextAw
 	public void startScraping() throws Exception{
 		logger.info("Begining scraping!!");
 		DispensaryScraper l1Scraper = new DispensaryScraper(null, WeedmapProcessor.readFile(baseScraperFileName));
-		Set<String> urlOfDispensaryLocations = l1Scraper.findURLOfDispensaries("https://weedmap.com");
+		Set<String> urlOfDispensaryLocations = l1Scraper.findURLOfDispensaries("https://weedmaps.com");
 		Set<String> urlOfDispensaries = scrapeForDispensaryURLs(urlOfDispensaryLocations,WeedmapProcessor.readFile(locationScraperFileName) );
 		scrapeDispensaryDetailsForDispensaries(urlOfDispensaries, WeedmapProcessor.readFile(dispensaryScraperFileName), dispensaryService);
 	}

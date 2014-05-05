@@ -2,10 +2,13 @@ package org.progressivelifestyle.weedmap.persistence.domain;
 
 import java.util.Date;
 
-public interface BaseEntity {
-	public Date getCreationDate();
-	public Date getLastUpdateDate();
-	public void setCreationDate(Date creationDate);
-	public void setLastUpdateDate(Date lastUpdateDate);
-	public Long getId();
+public abstract class BaseEntity {
+	public abstract Date getCreationDate();
+	public abstract Date getLastUpdateDate();
+	public abstract void setCreationDate(Date creationDate);
+	public abstract void setLastUpdateDate(Date lastUpdateDate);
+	public abstract Long getId();
+	public abstract void setHitCount(Integer hitCount);
+	public abstract Integer getHitCount();
+	
 }
