@@ -42,10 +42,9 @@ public class Instant420ControllerTestWithApplicationContext extends BaseTestCase
 	}
 	
 	@Test
-	
 	public void shouldBeAbleToGetDispensaryDetail() throws Exception{
 		Instant420SearchController controller =  (Instant420SearchController)childCtx.getBean(Instant420SearchController.class);
-		DispensaryEntity dispensaryEntity = controller.getDispensaryDetails(new Long(31645));
+		DispensaryEntity dispensaryEntity = controller.getDispensaryDetails(new Long(31646));
 		System.out.println(new ObjectMapper().writeValueAsString(dispensaryEntity));
 		Assert.assertNotNull(dispensaryEntity);
 		Assert.assertFalse(dispensaryEntity.getMenuItems().isEmpty());

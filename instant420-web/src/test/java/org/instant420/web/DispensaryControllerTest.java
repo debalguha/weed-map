@@ -20,10 +20,30 @@ public class DispensaryControllerTest extends BaseTestCase {
 	}
 	
 	@Test
+	@Ignore
 	public void shouldBeAbleToCreateDispensaryFromJsonWithMenuItems() throws Exception{
 		String dispensaryJson = WeedmapProcessor.readFile("dispensary-with-menuitems.json");
 		DispensaryEntity entity = new ObjectMapper().readValue(dispensaryJson, DispensaryEntity.class);
 		DispensaryController controller = childCtx.getBean(DispensaryController.class);
 		System.out.println(controller.createDispensary(entity));
 	}
+	
+	@Test
+	@Ignore
+	public void shouldBeAbleToUpdateDispensaryWithMenuItems() throws Exception{
+		String dispensaryJson = WeedmapProcessor.readFile("update-dispensary-with-menuitems.json");
+		DispensaryEntity entity = new ObjectMapper().readValue(dispensaryJson, DispensaryEntity.class);
+		DispensaryController controller = childCtx.getBean(DispensaryController.class);
+		System.out.println(controller.updateDispensary(entity));
+	}
+	
+	@Test
+	public void shouldBeAbleToUpdateDispensaryWithoutMenuItems() throws Exception{
+		String dispensaryJson = WeedmapProcessor.readFile("update-dispensary-without-menuitems.json");
+		DispensaryEntity entity = new ObjectMapper().readValue(dispensaryJson, DispensaryEntity.class);
+		DispensaryController controller = childCtx.getBean(DispensaryController.class);
+		entity.setMenuItems(null);
+		entity.setPictures(null);
+		System.out.println(controller.updateDispensaryWithoutAssociations(entity));
+	}	
 }

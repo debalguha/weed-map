@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
 import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,23 +38,33 @@ public class DispensaryController {
 		}
 	}
 	
-	/*@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody APIResponse updateMedicine(@RequestBody MenuItemSearchObject menuSearch){
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public @ResponseBody APIResponse updateDispensary(@RequestBody DispensaryEntity dispensary){
 		try {
-			logger.info("Menu item update request, proceeding to transform");
-			MenuItemEntity menu = buildEntityFromSearchObject(menuSearch);
-			MenuItemEntity retrievedMenu = service.findMenuItem(menu.getId());
-			logger.info("Menu item Obtained: "+(retrievedMenu==null?null:retrievedMenu.getName()));
-			BeanUtils.copyProperties(menu, retrievedMenu, "dispensary", "lat", "lang", "region");
-			logger.info("Proceeding to store using service");
-			service.updateMenuItem(retrievedMenu);
+			logger.info("Dispensary update request");
+			service.updateDispensary(dispensary);
 			logger.info("Successfully stored!");
-			return new APIResponse(menu.getId(), "SUCCESS", null);
+			return new APIResponse(dispensary.getId(), "SUCCESS", null);
 		} catch (Exception e) {
 			logger.error("Unable to update menu item.", e);
 			return new APIResponse(null, "Unable to update medicine", e);
 		}
-	}*/
+	}
+	
+	@RequestMapping(value = "/update/less", method = RequestMethod.POST)
+	public @ResponseBody APIResponse updateDispensaryWithoutAssociations(@RequestBody DispensaryEntity dispensary){
+		try {
+			logger.info("Dispensary update request");
+			DispensaryEntity dispensaryFromDB = service.findDispensary(dispensary.getId());
+			BeanUtils.copyProperties(dispensary, dispensaryFromDB, "pictures", "menus");
+			service.updateDispensary(dispensaryFromDB);
+			logger.info("Successfully stored!");
+			return new APIResponse(dispensary.getId(), "SUCCESS", null);
+		} catch (Exception e) {
+			logger.error("Unable to update menu item.", e);
+			return new APIResponse(null, "Unable to update medicine", e);
+		}
+	}
 	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public @ResponseBody APIResponse deleteDispensary(@PathVariable Long id){

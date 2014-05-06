@@ -431,6 +431,7 @@ public class DispensaryEntity extends BaseEntity implements Dispensary {
 		return this.id.compareTo(o.getDispensaryId());
 	}
 
+	@JsonIgnore
 	public Long getDispensaryId() {
 		return getId();
 	}

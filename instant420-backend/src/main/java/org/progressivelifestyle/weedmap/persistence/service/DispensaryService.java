@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.progressivelifestyle.weedmap.persistence.DispensaryDao;
@@ -50,8 +52,19 @@ public class DispensaryService {
 				afterPropertiesSet();
 			entity.setId(lastDispensaryId.incrementAndGet());
 		}
+		if(entity.getMenus()!=null && !entity.getMenus().isEmpty()){
+			populateMenuItemsWithIdAndAssociateDispensary(entity.getMenus(), entity);
+		}
 		dispensaryDao.saveEntity(entity);
 	}
+	
+	public void updateDispensary(DispensaryEntity entity){
+		if(entity.getMenus()!=null && !entity.getMenus().isEmpty()){
+			populateMenuItemsWithIdAndAssociateDispensary(entity.getMenus(), entity);
+		}
+		dispensaryDao.updateEntity(entity);
+	}
+	
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void createMenuItem(MenuItemEntity entity) {
@@ -188,6 +201,7 @@ public class DispensaryService {
 		dispensaryDao.deleteEntity(dispensary);
 	}
 
+	@PostConstruct
 	public void afterPropertiesSet() {
 		lastDispensaryId = new AtomicLong(findMaxDispensaryId());
 		lastMenuItemId = new AtomicLong(findMaxMenuItemId());
@@ -195,6 +209,15 @@ public class DispensaryService {
 
 	public AtomicLong getLastMenuItemId() {
 		return lastMenuItemId;
+	}
+	
+	private void populateMenuItemsWithIdAndAssociateDispensary(Set<MenuItemEntity> menuItems, DispensaryEntity dispensary){
+		for(MenuItemEntity menu : menuItems){
+			if(menu.getId() == null)
+				menu.setId(lastMenuItemId.incrementAndGet());
+			menu.setDispensary(dispensary);
+		}
+		dispensary.setMenus(menuItems);
 	}
 
 }
