@@ -2,6 +2,7 @@ package org.instant420.web;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.instant420.web.domain.MenuItemSearchObject;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.MenuItemEntity;
 import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
@@ -26,7 +27,7 @@ public class MedicineController {
 	}
 	
 	@RequestMapping(value = "/medicine/create/{dispensaryId}", method = RequestMethod.POST)
-	public @ResponseBody APIResponse createMedicine(@RequestBody MenuItemEntity menu, @PathVariable long dispensaryId){
+	public @ResponseBody APIResponse createMedicine(@RequestBody MenuItemSearchObject menu, @PathVariable long dispensaryId){
 		try {
 			logger.info("Menu item create request");
 			DispensaryEntity dispensary = service.findDispensary(dispensaryId);
@@ -43,13 +44,12 @@ public class MedicineController {
 	}
 	
 	@RequestMapping(value = "/medicine/update/{dispensaryId}", method = RequestMethod.POST)
-	public @ResponseBody APIResponse updateMedicine(@RequestBody MenuItemEntity menu, @PathVariable long dispensaryId){
+	public @ResponseBody APIResponse updateMedicine(@RequestBody MenuItemSearchObject menu, @PathVariable long dispensaryId){
 		try {
 			logger.info("Menu item update request");
-			/*DispensaryEntity dispensary = service.findDispensary(dispensaryId);
-			logger.info("Dispensary Obtained: "+dispensary==null?null:dispensary.getName());*/
 			MenuItemEntity retrievedMenu = service.findMenuItem(menu.getId());
 			logger.info("Menu item Obtained: "+(retrievedMenu==null?null:retrievedMenu.getName()));
+			String categoryName = menu.getCategoryName();
 			BeanUtils.copyProperties(menu, retrievedMenu, "dispensary", "lat", "lang", "region", "menuItemCategory");
 			logger.info("Proceeding to store using service");
 			service.updateMenuItem(retrievedMenu);

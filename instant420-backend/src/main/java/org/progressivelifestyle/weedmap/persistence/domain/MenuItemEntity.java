@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
 @Table(name = "menuitementity")
@@ -55,6 +56,7 @@ public class MenuItemEntity extends BaseEntity implements Menu {
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "menuItemCategoryId")
+	@JsonDeserialize()
 	private MenuItemCategoryEntity menuItemCategory;
 
 	@ManyToOne(fetch = FetchType.LAZY)
