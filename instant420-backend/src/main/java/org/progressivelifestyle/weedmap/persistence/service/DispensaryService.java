@@ -58,6 +58,7 @@ public class DispensaryService {
 		dispensaryDao.saveEntity(entity);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void updateDispensary(DispensaryEntity entity){
 		if(entity.getMenus()!=null && !entity.getMenus().isEmpty()){
 			populateMenuItemsWithIdAndAssociateDispensary(entity.getMenus(), entity);
@@ -65,7 +66,20 @@ public class DispensaryService {
 		dispensaryDao.updateEntity(entity);
 	}
 	
-
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteDispensary(Long dispensaryId){
+		DispensaryEntity dispensary = findDispensary(dispensaryId);
+		Set<MenuItemEntity> menus = dispensary.getMenus();
+		if(menus!=null){
+			for(MenuItemEntity menu : menus){
+				menu.setDispensary(null);
+				dispensaryDao.deleteEntity(menu);
+			}
+		}
+		dispensary.setMenus(null);
+		dispensaryDao.deleteEntity(dispensary);
+	}
+	
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void createMenuItem(MenuItemEntity entity) {
 		if (entity.getId() == null) {
@@ -188,17 +202,6 @@ public class DispensaryService {
 		dispensary.getMenuItems().remove(menuItem);
 		dispensaryDao.updateEntity(dispensary);
 		dispensaryDao.deleteEntity(menuItem);
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void removeDispensary(Long id) {
-		DispensaryEntity dispensary = findDispensary(id);
-		for (Menu menu : dispensary.getMenuItems()) {
-			menu.setDispensary(null);
-			dispensaryDao.deleteEntity((BaseEntity) menu);
-		}
-		dispensary.getMenuItems().clear();
-		dispensaryDao.deleteEntity(dispensary);
 	}
 
 	@PostConstruct

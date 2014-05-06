@@ -70,7 +70,7 @@ public class DispensaryController {
 	public @ResponseBody APIResponse deleteDispensary(@PathVariable Long id){
 		try {
 			logger.info("Menu item delete request: "+id);
-			service.removeDispensary(id);
+			service.deleteDispensary(id);
 			logger.info("Successfully removed!");
 			return new APIResponse(id, "SUCCESS", null);
 		} catch (Exception e) {
