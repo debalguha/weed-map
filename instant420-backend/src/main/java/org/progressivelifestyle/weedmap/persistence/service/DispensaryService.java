@@ -27,148 +27,174 @@ import com.google.common.collect.Lists;
 public class DispensaryService {
 	@Autowired
 	private DispensaryDao dispensaryDao;
-	
+
 	private AtomicLong lastDispensaryId;
 	private AtomicLong lastMenuItemId;
-	
+
 	private static final Log logger = LogFactory.getLog(DispensaryService.class);
+
 	public void setDispensaryDao(DispensaryDao dispensaryDao) {
 		this.dispensaryDao = dispensaryDao;
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void storeDispensaries(Collection<DispensaryEntity> dispensaries){
-		for(DispensaryEntity entity : dispensaries)
+	public void storeDispensaries(Collection<DispensaryEntity> dispensaries) {
+		for (DispensaryEntity entity : dispensaries)
 			createDispensary(entity);
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void createDispensary(DispensaryEntity entity){
+	public void createDispensary(DispensaryEntity entity) {
+		if (entity.getId() == null) {
+			if (lastMenuItemId == null)
+				afterPropertiesSet();
+			entity.setId(lastDispensaryId.incrementAndGet());
+		}
 		dispensaryDao.saveEntity(entity);
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void createMenuItem(MenuItemEntity entity) throws Exception{
-		if(entity.getId() == null){
-			if(lastMenuItemId == null)
+	public void createMenuItem(MenuItemEntity entity) {
+		if (entity.getId() == null) {
+			if (lastMenuItemId == null)
 				afterPropertiesSet();
 			entity.setId(lastMenuItemId.incrementAndGet());
 		}
 		dispensaryDao.saveEntity(entity);
-		
+
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void updateEntity(BaseEntity entity){
+	public void updateEntity(BaseEntity entity) {
 		dispensaryDao.updateEntity(entity);
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
-	public MenuItemCategoryEntity findMenuItemCategory(long categoryId){
-		return (MenuItemCategoryEntity)dispensaryDao.getEntityByPrimaryKey(new Long(categoryId), MenuItemCategoryEntity.class);
+	public MenuItemCategoryEntity findMenuItemCategory(long categoryId) {
+		return (MenuItemCategoryEntity) dispensaryDao.getEntityByPrimaryKey(new Long(categoryId), MenuItemCategoryEntity.class);
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
-	public DispensaryEntity findDispensary(long dispensaryId){
-		DispensaryEntity entity = (DispensaryEntity)dispensaryDao.getEntityByPrimaryKey(new Long(dispensaryId), DispensaryEntity.class);
-		/*Set<Menu> menuItems = entity.getMenuItems();
-		for(Menu menu : menuItems)
-			System.out.println("Category:: "+((MenuItemEntity)menu).getMenuItemCategory());
-		System.out.println("Menus ::"+menuItems.size());*/
+	public DispensaryEntity findDispensary(long dispensaryId) {
+		DispensaryEntity entity = (DispensaryEntity) dispensaryDao.getEntityByPrimaryKey(new Long(dispensaryId), DispensaryEntity.class);
+		/*
+		 * Set<Menu> menuItems = entity.getMenuItems(); for(Menu menu :
+		 * menuItems) System.out.println("Category:: "+((MenuItemEntity)menu).
+		 * getMenuItemCategory());
+		 * System.out.println("Menus ::"+menuItems.size());
+		 */
 		return entity;
 	}
-	
+
 	@Transactional(propagation = Propagation.REQUIRED)
-	public MenuItemEntity findMenuItem(long menuItemId){
-		MenuItemEntity menuItem = (MenuItemEntity)dispensaryDao.getEntityByPrimaryKey(new Long(menuItemId), MenuItemEntity.class);
+	public MenuItemEntity findMenuItem(long menuItemId) {
+		MenuItemEntity menuItem = (MenuItemEntity) dispensaryDao.getEntityByPrimaryKey(new Long(menuItemId), MenuItemEntity.class);
 		menuItem.getDispensary();
 		return menuItem;
-	}	
-	
+	}
+
 	public void createDispensaryAndMenuItemSeperately(Dispensary dispensary) {
 		Set<Menu> menuItems = dispensary.getMenuItems();
 		dispensary.setMenuItems(null);
-		for(Menu menu : menuItems){
-			try{
-				menu.setDispensary((DispensaryEntity)dispensary);
-				createEntityWithIndependentTransaction((MenuItemEntity)menu);
-			}catch(Exception e){
-				logger.error("Unable to store menu with id: "+menu.getId(), e);
+		for (Menu menu : menuItems) {
+			try {
+				menu.setDispensary((DispensaryEntity) dispensary);
+				createEntityWithIndependentTransaction((MenuItemEntity) menu);
+			} catch (Exception e) {
+				logger.error("Unable to store menu with id: " + menu.getId(), e);
 			}
 		}
-		try{
-			createEntityWithIndependentTransaction((DispensaryEntity)dispensary);
-		}catch(Exception e){
-			logger.error("Unable to store menu with id: "+dispensary.getDispensaryId(), e);
+		try {
+			createEntityWithIndependentTransaction((DispensaryEntity) dispensary);
+		} catch (Exception e) {
+			logger.error("Unable to store menu with id: " + dispensary.getDispensaryId(), e);
 		}
 	}
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public void createEntityWithIndependentTransaction(BaseEntity entity){
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void createEntityWithIndependentTransaction(BaseEntity entity) {
 		dispensaryDao.saveEntity(entity);
 	}
-	
-	@Transactional(propagation=Propagation.SUPPORTS)
-	public List<DispensaryEntity> loadAllDispensaryForCache(){
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<DispensaryEntity> loadAllDispensaryForCache() {
 		return dispensaryDao.loadAllDispensaries();
 	}
 
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void createOrUpdateScore(String searchText, Boolean hasFound) {
 		dispensaryDao.createOrUpdateScore(searchText, hasFound);
 	}
-	
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public List<SearchQueryEntity> findMostPopularSearchTerms(){
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public List<SearchQueryEntity> findMostPopularSearchTerms() {
 		return dispensaryDao.findMostPopularSearchTerms();
 	}
-	
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers){
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers) {
 		return dispensaryDao.findMostPopularSearchTerms(numbers);
 	}
-	
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public List<String> findDispensariesForMedicine(String name){
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public List<String> findDispensariesForMedicine(String name) {
 		List<MenuItemEntity> menuItemsForName = dispensaryDao.findMenuItemsForName(name);
 		List<String> dispensaryIds = Lists.newArrayList();
-		for(MenuItemEntity entity : menuItemsForName){
+		for (MenuItemEntity entity : menuItemsForName) {
 			dispensaryIds.add(entity.getDispensary().getId().toString());
 			System.out.println(entity.getDispensary().getRegion());
 		}
 		return dispensaryIds;
 	}
-	
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	public MenuItemCategoryEntity findMenuItemCategoryByName(String name){
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public MenuItemCategoryEntity findMenuItemCategoryByName(String name) {
 		return dispensaryDao.findMenuItemCategoryByName(name);
 	}
 
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	private Long findMaxDispensaryId(){
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private Long findMaxDispensaryId() {
 		return dispensaryDao.findMaxDispensaryId();
 	}
-	
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
-	private Long findMaxMenuItemId(){
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	private Long findMaxMenuItemId() {
 		return dispensaryDao.findMaxmenuItemId();
 	}
-	
-	@Transactional(propagation=Propagation.REQUIRED)
+
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void updateMenuItem(MenuItemEntity menu) {
 		dispensaryDao.updateEntity(menu);
 	}
-	
-	public void afterPropertiesSet() throws Exception {
-		try {
-			lastDispensaryId = new AtomicLong(findMaxDispensaryId());
-			lastMenuItemId = new AtomicLong(findMaxMenuItemId());
-		} catch (Exception e) {
-			e.printStackTrace();
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void removeMenuItem(Long id) {
+		MenuItemEntity menuItem = findMenuItem(id);
+		DispensaryEntity dispensary = menuItem.getDispensary();
+		menuItem.setDispensary(null);
+		dispensary.getMenuItems().remove(menuItem);
+		dispensaryDao.updateEntity(dispensary);
+		dispensaryDao.deleteEntity(menuItem);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void removeDispensary(Long id) {
+		DispensaryEntity dispensary = findDispensary(id);
+		for (Menu menu : dispensary.getMenuItems()) {
+			menu.setDispensary(null);
+			dispensaryDao.deleteEntity((BaseEntity) menu);
 		}
+		dispensary.getMenuItems().clear();
+		dispensaryDao.deleteEntity(dispensary);
+	}
+
+	public void afterPropertiesSet() {
+		lastDispensaryId = new AtomicLong(findMaxDispensaryId());
+		lastMenuItemId = new AtomicLong(findMaxMenuItemId());
 	}
 
 	public AtomicLong getLastMenuItemId() {
 		return lastMenuItemId;
 	}
-	
+
 }

@@ -161,23 +161,22 @@ public class Instant420SearchController {
 	}*/
 	
 	private static MenuItemSearchObject convertSolrDocumentToMenuItemSearchObject(SolrDocument doc){
-		String id = doc.getFieldValue("id").toString();
+		Long id = Long.parseLong(doc.getFieldValue("id").toString());
 		String name = doc.getFieldValue("name").toString();
-		String priceEighth = doc.getFieldValue("priceEighth").toString();
-		String priceQuarter = doc.getFieldValue("priceQuarter").toString();
-		String priceHalfGram = doc.getFieldValue("priceHalfGram").toString();
-		String priceGram = doc.getFieldValue("priceGram").toString();
-		String priceHalfOunce = doc.getFieldValue("priceHalfOunce").toString();
-		String priceOunce = doc.getFieldValue("priceOunce").toString();
-		String priceUnit = doc.getFieldValue("priceUnit").toString();
+		int priceEighth = Integer.parseInt(doc.getFieldValue("priceEighth").toString());
+		int priceQuarter = Integer.parseInt(doc.getFieldValue("priceQuarter").toString());
+		int priceHalfGram = Integer.parseInt(doc.getFieldValue("priceHalfGram").toString());
+		int priceGram = Integer.parseInt(doc.getFieldValue("priceGram").toString());
+		int priceHalfOunce = Integer.parseInt(doc.getFieldValue("priceHalfOunce").toString());
+		int priceOunce = Integer.parseInt(doc.getFieldValue("priceOunce").toString());
+		int priceUnit = Integer.parseInt(doc.getFieldValue("priceUnit").toString());
 		String pictureUrl = doc.getFieldValue("pictureUrl")!=null?doc.getFieldValue("pictureUrl").toString():"";
 		String category = doc.getFieldValue("category").toString();
-		String numberOfDispensary = doc.getFieldValue("numberOfDispensary").toString();
+		int numberOfDispensary = Integer.parseInt(doc.getFieldValue("numberOfDispensary").toString());
 		
-		String strainId = doc.getFieldValue("strainId").toString();
+		Long strainId = Long.parseLong(doc.getFieldValue("strainId").toString());
 		String description = doc.getFieldValue("description")!=null?doc.getFieldValue("description").toString():"";
-		
-		return new MenuItemSearchObject(id, strainId, name, description, priceEighth, priceGram, priceHalfGram, priceHalfOunce, priceOunce, priceQuarter, priceUnit, pictureUrl, category, numberOfDispensary);
+		return new MenuItemSearchObject(id, name, priceEighth, priceGram, priceHalfGram, priceHalfOunce, priceOunce, priceQuarter, priceUnit, pictureUrl, category, numberOfDispensary, strainId, description);
 	}
 	
 	private static DispensarySearchObject convertSolrDocumentToDispensarySearchObject(SolrDocument doc, Double latitude, Double longitude) {

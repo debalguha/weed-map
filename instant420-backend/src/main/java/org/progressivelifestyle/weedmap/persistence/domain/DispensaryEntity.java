@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "dispensaryentity")
 @NamedQueries({ @NamedQuery(name = "findMaxDispensaryId", query = "select max(id) from DispensaryEntity ") })
@@ -65,7 +67,9 @@ public class DispensaryEntity extends BaseEntity implements Dispensary {
 	private String dispensaryURL;
 	private String dispensaryImageURL;
 
+	@JsonIgnore
 	private Date creationDate;
+	@JsonIgnore
 	private Date lastUpdateDate;
 	
 	@Column(nullable = true)
@@ -79,7 +83,7 @@ public class DispensaryEntity extends BaseEntity implements Dispensary {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="dispensary", targetEntity=MenuItemEntity.class)
 	@Cascade(value = { CascadeType.ALL })
 	//@JoinColumn(name = "dispensaryId", referencedColumnName = "id")
-	private Set<MenuItemEntity> menuItems;
+	private Set<MenuItemEntity> menus;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@Cascade(value = { CascadeType.ALL })
@@ -390,21 +394,21 @@ public class DispensaryEntity extends BaseEntity implements Dispensary {
 			return false;
 		return true;
 	}
-
+	@JsonIgnore
 	public Set<Menu> getMenuItems() {
-		Set<Menu> menus = new HashSet<Menu>();
-		if (menuItems != null)
-			menus.addAll(menuItems);
-		return menus;
+		Set<Menu> menusToReturn = new HashSet<Menu>();
+		if (menus != null)
+			menusToReturn.addAll(menus);
+		return menusToReturn;
 	}
-
+	@JsonIgnore
 	public void setMenuItems(Set<Menu> menuItems) {
 		Set<MenuItemEntity> menuItemEntitySet = new HashSet<MenuItemEntity>();
 		if (menuItems != null) {
 			for (Menu menu : menuItems)
 				menuItemEntitySet.add((MenuItemEntity) menu);
 		}
-		this.menuItems = menuItemEntitySet;
+		this.menus = menuItemEntitySet;
 	}
 
 	public Date getCreationDate() {
@@ -598,7 +602,7 @@ public class DispensaryEntity extends BaseEntity implements Dispensary {
 	public void setPictures(Set<DispensaryPictureEntity> pictures) {
 		this.pictures = pictures;
 	}
-
+	@JsonIgnore
 	public List<String> getImages() {
 		List<String> imageUrls = new ArrayList<String>();
 		if (pictures != null) {
@@ -646,6 +650,14 @@ public class DispensaryEntity extends BaseEntity implements Dispensary {
 
 	public void setRegion(String region) {
 		this.region = region;
+	}
+
+	public Set<MenuItemEntity> getMenus() {
+		return menus;
+	}
+
+	public void setMenus(Set<MenuItemEntity> menus) {
+		this.menus = menus;
 	}
 
 }

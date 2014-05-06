@@ -49,7 +49,9 @@ public class MenuItemEntity extends BaseEntity implements Menu {
 	@Column(nullable = true)
 	private BigDecimal lang;
 
+	@JsonIgnore
 	private Date creationDate;
+	@JsonIgnore
 	private Date lastUpdateDate;
 	
 	private String region;
@@ -199,11 +201,11 @@ public class MenuItemEntity extends BaseEntity implements Menu {
 	public Long getDispensaryId() {
 		return getDispensary().getId();
 	}
-
+	@JsonIgnore
 	public Long getMenuItemCategoryId() {
 		return menuItemCategory!=null?menuItemCategory.getId():0;
 	}
-
+	@JsonIgnore
 	public String getCategoryName() {
 		return menuItemCategory!=null?menuItemCategory.getCategoryName():"";
 	}

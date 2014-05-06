@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Instant420ControllerTestWithApplicationContext extends BaseTestCase{
 	@Test
+	@Ignore
 	public void shouldBeAbleToSearchMedicines() throws Exception{
 		Instant420SearchController controller =  (Instant420SearchController)childCtx.getBean(Instant420SearchController.class);
 		ResultMeta searchResult = controller.searchRegularForMedicines("rump wax", null, 0, 10, 34.036889d, -118.255182d, "West Hollywood");
@@ -41,13 +42,13 @@ public class Instant420ControllerTestWithApplicationContext extends BaseTestCase
 	}
 	
 	@Test
-	@Ignore
+	
 	public void shouldBeAbleToGetDispensaryDetail() throws Exception{
 		Instant420SearchController controller =  (Instant420SearchController)childCtx.getBean(Instant420SearchController.class);
-		DispensaryEntity dispensaryEntity = controller.getDispensaryDetails(new Long(19231));
+		DispensaryEntity dispensaryEntity = controller.getDispensaryDetails(new Long(31645));
+		System.out.println(new ObjectMapper().writeValueAsString(dispensaryEntity));
 		Assert.assertNotNull(dispensaryEntity);
 		Assert.assertFalse(dispensaryEntity.getMenuItems().isEmpty());
-		System.out.println(new ObjectMapper().writeValueAsString(dispensaryEntity));
 	}
 	
 	@Test

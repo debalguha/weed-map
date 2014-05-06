@@ -1,21 +1,23 @@
 package org.instant420.web.domain;
 
 public class MenuItemSearchObject extends SearchObject{
-	private final String id;
-	private final String name;
-	private final String priceEighth;
-	private final String priceGram;
-	private final String priceHalfGram;
-	private final String priceHalfOunce;
-	private final String priceOunce;
-	private final String priceQuarter;
-	private final String priceUnit;
-	private final String pictureURL;
-	private final String category;
-	private final String numberOfDispensary;
-	private final String strainId;
-	private final String description;
-	public MenuItemSearchObject(String id, String strainId, String name, String description, String priceEighth, String priceGram, String priceHalfGram, String priceHalfOunce, String priceOunce, String priceQuarter, String priceUnit, String pictureUrl, String category, String numberOfDispensary) {
+	private Long id;
+	private String name;
+	private int priceEighth;
+	private int priceGram;
+	private int priceHalfGram;
+	private int priceHalfOunce;
+	private int priceOunce;
+	private int priceQuarter;
+	private int priceUnit;
+	private String pictureURL;
+	private String category;
+	private int numberOfDispensary;
+	private Long strainId;
+	private String description;
+	public MenuItemSearchObject(){
+	}
+	public MenuItemSearchObject(Long id, String name, int priceEighth, int priceGram, int priceHalfGram, int priceHalfOunce, int priceOunce, int priceQuarter, int priceUnit, String pictureURL, String category, int numberOfDispensary, Long strainId, String description) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -26,53 +28,95 @@ public class MenuItemSearchObject extends SearchObject{
 		this.priceOunce = priceOunce;
 		this.priceQuarter = priceQuarter;
 		this.priceUnit = priceUnit;
-		this.pictureURL = pictureUrl;
+		this.pictureURL = pictureURL;
 		this.category = category;
 		this.numberOfDispensary = numberOfDispensary;
 		this.strainId = strainId;
 		this.description = description;
 	}
-	public String getId() {
+	public Long getId() {
 		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
 	}
-	public String getPriceEighth() {
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getPriceEighth() {
 		return priceEighth;
 	}
-	public String getPriceGram() {
+	public void setPriceEighth(int priceEighth) {
+		this.priceEighth = priceEighth;
+	}
+	public int getPriceGram() {
 		return priceGram;
 	}
-	public String getPriceHalfGram() {
+	public void setPriceGram(int priceGram) {
+		this.priceGram = priceGram;
+	}
+	public int getPriceHalfGram() {
 		return priceHalfGram;
 	}
-	public String getPriceHalfOunce() {
+	public void setPriceHalfGram(int priceHalfGram) {
+		this.priceHalfGram = priceHalfGram;
+	}
+	public int getPriceHalfOunce() {
 		return priceHalfOunce;
 	}
-	public String getPriceOunce() {
+	public void setPriceHalfOunce(int priceHalfOunce) {
+		this.priceHalfOunce = priceHalfOunce;
+	}
+	public int getPriceOunce() {
 		return priceOunce;
 	}
-	public String getPriceQuarter() {
+	public void setPriceOunce(int priceOunce) {
+		this.priceOunce = priceOunce;
+	}
+	public int getPriceQuarter() {
 		return priceQuarter;
 	}
-	public String getPriceUnit() {
+	public void setPriceQuarter(int priceQuarter) {
+		this.priceQuarter = priceQuarter;
+	}
+	public int getPriceUnit() {
 		return priceUnit;
+	}
+	public void setPriceUnit(int priceUnit) {
+		this.priceUnit = priceUnit;
 	}
 	public String getPictureURL() {
 		return pictureURL;
 	}
+	public void setPictureURL(String pictureURL) {
+		this.pictureURL = pictureURL;
+	}
 	public String getCategory() {
 		return category;
 	}
-	public String getNumberOfDispensary() {
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public int getNumberOfDispensary() {
 		return numberOfDispensary;
 	}
-	public String getStrainId() {
+	public void setNumberOfDispensary(int numberOfDispensary) {
+		this.numberOfDispensary = numberOfDispensary;
+	}
+	public Long getStrainId() {
 		return strainId;
+	}
+	public void setStrainId(Long strainId) {
+		this.strainId = strainId;
 	}
 	public String getDescription() {
 		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

@@ -40,6 +40,10 @@ public class DispensaryDao {
 		model.setLastUpdateDate(nowDate);
 		entityManager.merge(model);
 	}
+	
+	public void deleteEntity(BaseEntity entity){
+		entityManager.remove(entity);
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Object getEntityByPrimaryKey(Object primaryKey, Class clazz) {
