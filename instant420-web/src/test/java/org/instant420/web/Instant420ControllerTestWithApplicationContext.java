@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class Instant420ControllerTestWithApplicationContext extends BaseTestCase{
 	@Test
@@ -42,6 +43,7 @@ public class Instant420ControllerTestWithApplicationContext extends BaseTestCase
 	}
 	
 	@Test
+	@Ignore
 	public void shouldBeAbleToGetDispensaryDetail() throws Exception{
 		Instant420SearchController controller =  (Instant420SearchController)childCtx.getBean(Instant420SearchController.class);
 		DispensaryEntity dispensaryEntity = controller.getDispensaryDetails(new Long(31646));
@@ -59,5 +61,12 @@ public class Instant420ControllerTestWithApplicationContext extends BaseTestCase
 		controller.increaseHitCount(SearchType.DISPENSARY.name(), new Long(19231));
 		dispensary = controller.getDispensaryDetails(new Long(19231));
 		Assert.assertEquals(prevHitCount+1, dispensary.getHitCount().intValue());
+	}
+	
+	@Test
+	public void shouldBeAbleToDoAdvanceSearch() throws Exception{
+		Instant420SearchController controller =  (Instant420SearchController)childCtx.getBean(Instant420SearchController.class);
+		ArrayNode arrayNode = controller.doAdvancedSearch(0, 10);
+		System.out.println(arrayNode.toString());
 	}
 }

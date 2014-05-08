@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "dispensaryentity")
-@NamedQueries({ @NamedQuery(name = "findMaxDispensaryId", query = "select max(id) from DispensaryEntity ") })
+@NamedQueries({ @NamedQuery(name = "findMaxDispensaryId", query = "select max(id) from DispensaryEntity ")})
 public class DispensaryEntity extends BaseEntity implements Dispensary {
 	@Id
 	private Long id;

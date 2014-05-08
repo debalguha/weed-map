@@ -29,6 +29,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Maps;
 
 @Controller
@@ -48,6 +52,16 @@ public class Instant420SearchController {
 	
 	@Autowired
 	private DispensaryService service;
+	
+	private ObjectMapper mapper  = new ObjectMapper();;
+	
+	@RequestMapping(value = "/advanced/dispensary", method = RequestMethod.GET)
+	public @ResponseBody ArrayNode doAdvancedSearch(@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows) throws SolrServerException{
+		ArrayNode arrNode = JsonNodeFactory.instance.arrayNode();
+		populateArrayNodeFromDispensarySearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", start, rows));
+		populateArrayNodeFromMedicineSearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", start, rows));
+		return arrNode;
+	}
 	
 	@RequestMapping(value = "/medicines", method = RequestMethod.GET)
 	public @ResponseBody ResultMeta searchRegularForMedicines(@RequestParam(value="searchText", required=true) String searchText, @RequestParam(value="category", required = false) String categoryParam,
@@ -234,4 +248,33 @@ public class Instant420SearchController {
 		this.service = service;
 	}
 	
+	private void populateArrayNodeFromDispensarySearchResult(ArrayNode arrNode, SolrDocumentList results) {
+		long numFound = results.getNumFound();
+		if(numFound<=0)
+			return;
+		ObjectNode oNode = null;
+		for(SolrDocument doc : results){
+			oNode = mapper.createObjectNode();
+			oNode.put("id", Integer.parseInt(doc.getFieldValue("id").toString()));
+			oNode.put("name", doc.getFieldValue("name").toString());
+			oNode.put("imageURL", doc.getFieldValue("dispensaryImageURL").toString());
+			oNode.put("type", SearchType.DISPENSARY.name());
+			arrNode.add(oNode);
+		}
+	}
+	
+	private void populateArrayNodeFromMedicineSearchResult(ArrayNode arrNode, SolrDocumentList results) {
+		long numFound = results.getNumFound();
+		if(numFound<=0)
+			return;
+		ObjectNode oNode = null;
+		for(SolrDocument doc : results){
+			oNode = mapper.createObjectNode();
+			oNode.put("id", Integer.parseInt(doc.getFieldValue("id").toString()));
+			oNode.put("name", doc.getFieldValue("name").toString());
+			oNode.put("pictureUrl", doc.getFieldValue("pictureUrl")!=null?doc.getFieldValue("pictureUrl").toString():"");
+			oNode.put("type", SearchType.MEDICINE.name());
+			arrNode.add(oNode);
+		}
+	}	
 }

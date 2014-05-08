@@ -13,9 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class MedicineControllerTest extends BaseTestCase{
 	
 	@Test
-	@Ignore
 	public void testCreateMedicine() throws JsonParseException, JsonMappingException, IOException {
-		String newMedicineJson = "{    \"name\": \"JENNYS DREAM Blue\",    \"priceEighth\": \"35\",    \"priceGram\": \"10\",    \"priceHalfGram\": \"5\",    \"priceHalfOunce\": \"4\",    \"priceOunce\": \"8\",    \"priceQuarter\": \"3\",    \"priceUnit\": \"50\",    \"pictureURL\": \"\",    \"numberOfDispensary\": \"1\",    \"strainId\": 8815883,    \"description\": \"Json Insert Test\",   \"categoryName\": \"Indica\"    }";
+		String newMedicineJson = "{    \"name\": \"JENNYS DREAM Blue\",    \"priceEighth\": \"35\",    \"priceGram\": \"10\",    \"priceHalfGram\": \"5\",    \"priceHalfOunce\": \"4\",    \"priceOunce\": \"8\",    \"priceQuarter\": \"3\",    \"priceUnit\": \"50\",    \"pictureURL\": \"\",    \"numberOfDispensary\": \"1\",    \"strainId\": 8815883,    \"description\": \"Json Insert Test\",   \"category\": \"Indica\"    }";
 		MedicineController controller = childCtx.getBean(MedicineController.class);
 		System.out.println(controller.createMedicine(new ObjectMapper().readValue(newMedicineJson, MenuItemSearchObject.class), 678));
 	}
@@ -30,8 +29,9 @@ public class MedicineControllerTest extends BaseTestCase{
 	}
 
 	@Test
+	@Ignore
 	public void testDeleteMedicine(){
-		Long medicineId = 3887906L;
+		Long medicineId = 3887907L;
 		MedicineController controller = childCtx.getBean(MedicineController.class);
 		System.out.println(controller.deleteMedicine(medicineId));
 	}

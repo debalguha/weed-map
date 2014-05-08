@@ -2,9 +2,9 @@
 	<dataSource driver="org.gjt.mm.mysql.Driver" url="jdbc:mysql://localhost:3306/instant420" user="instant420" password="instant420"/>
     <document name="dispensary">
         <entity name="dispensary" pk="id" query="select d.id, d.name, dispensaryURL, street, city, state, zip, phone, email, website, facebookURL, instagramURL, twitterURL, sundayOpen, sundayClose, mondayOpen, mondayClose, tuesdayOpen, 
-		tuesdayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, fridayClose, saturdayOpen, saturdayClose, dispensaryImageURL, lat as lat_coordinate, lang as lang_coordinate, region from dispensaryentity d"
+		tuesdayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, fridayClose, saturdayOpen, saturdayClose, dispensaryImageURL, lat as lat_coordinate, lang as lang_coordinate, region, hitCount from dispensaryentity d"
 			deltaImportQuery="select d.id, d.name, dispensaryURL, street, city, state, zip, phone, email, website, facebookURL, instagramURL, twitterURL, sundayOpen, sundayClose, mondayOpen, mondayClose, tuesdayOpen, 
-		tuesdayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, fridayClose, saturdayOpen, saturdayClose, dispensaryImageURL, lat as lat_coordinate, lang as lang_coordinate, region from dispensaryentity d where d.id='${dih.delta.id}'"
+		tuesdayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, fridayClose, saturdayOpen, saturdayClose, dispensaryImageURL, lat as lat_coordinate, lang as lang_coordinate, region, hitCount from dispensaryentity d where d.id='${dih.delta.id}'"
 			deltaQuery="select id from dispensaryentity where lastUpdateDate &gt; '${dih.last_index_time}'">
             <field column="id" name="id" />
             <field column="name" name="name" />
@@ -13,6 +13,7 @@
             <field column="state" name="state" />
             <field column="zip" name="zip" />
             <field column="region" name="region" />
+            <field column="hitCount" name="hitCount" />
 			
 			<field column="phone" name="phone" />
             <field column="email" name="email" />

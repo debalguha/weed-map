@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -16,6 +17,16 @@ import org.instant420.processor.MapPoint;
 import org.instant420.web.domain.SearchType;
 
 public class SolrHelper {
+	public static SolrDocumentList simpleSearchWithSorting(SolrServer solrServer, String fieldNameToSortOn, int start, int rows) throws SolrServerException{
+		SolrQuery query = new SolrQuery();
+		query.setRequestHandler("/select");
+		query.setParam(CommonParams.Q, new String[]{"name:*"});
+		query.setParam(CommonParams.START, String.valueOf(start));
+		query.setParam(CommonParams.ROWS, String.valueOf(rows==0?10:rows));
+		query.setParam(CommonParams.WT, "xml");
+		query.addSort(fieldNameToSortOn, ORDER.desc);
+		return solrServer.query(query).getResults();
+	}
 	public static SolrDocumentList doSearch(SolrServer solrServer, String region, String category, String searchText, int start, int rows, MapPoint mapPoint, SearchType searchType) throws SolrServerException, UnsupportedEncodingException{
 		SolrQuery query = new SolrQuery();
 		query.setRequestHandler("/select");
@@ -37,7 +48,6 @@ public class SolrHelper {
 		query.setParam(CommonParams.START, String.valueOf(start));
 		query.setParam(CommonParams.ROWS, String.valueOf(rows==0?10:rows));
 		query.setParam(CommonParams.WT, "xml");
-		query.setParam(CommonParams.START, String.valueOf(start));
 		System.out.println(query.toString());
 		QueryResponse response = solrServer.query(query);
 		if(response.getResults().isEmpty())

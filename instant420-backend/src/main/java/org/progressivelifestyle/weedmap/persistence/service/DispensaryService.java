@@ -203,7 +203,7 @@ public class DispensaryService {
 		dispensaryDao.updateEntity(dispensary);
 		dispensaryDao.deleteEntity(menuItem);
 	}
-
+	
 	@PostConstruct
 	public void afterPropertiesSet() {
 		lastDispensaryId = new AtomicLong(findMaxDispensaryId());
