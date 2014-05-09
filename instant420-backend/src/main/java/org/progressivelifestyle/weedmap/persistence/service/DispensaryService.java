@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
+@SuppressWarnings("restriction")
 @Service
 @Transactional
 public class DispensaryService {
@@ -43,6 +44,11 @@ public class DispensaryService {
 	public void storeDispensaries(Collection<DispensaryEntity> dispensaries) {
 		for (DispensaryEntity entity : dispensaries)
 			createDispensary(entity);
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public List<? extends BaseEntity> findAll(Class<? extends BaseEntity> _clazz){
+		return dispensaryDao.findAll(_clazz);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)

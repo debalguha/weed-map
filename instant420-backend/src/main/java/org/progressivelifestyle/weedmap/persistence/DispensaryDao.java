@@ -27,6 +27,10 @@ public class DispensaryDao {
 		this.entityManager = entityManager;
 	}
 	
+	public List<? extends BaseEntity> findAll(Class<? extends BaseEntity> _clazz) {
+		return entityManager.createQuery("from "+_clazz.getSimpleName(), _clazz).getResultList();
+	}
+	
 	public void saveEntity(BaseEntity model){
 		Date nowDate = new Date();
 		model.setLastUpdateDate(nowDate);
