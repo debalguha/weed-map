@@ -172,7 +172,7 @@
 	 <field name="pictureUrl" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
 	 <field name="dispensaryId" type="int" indexed="false" stored="true" required="true" multiValued="false"/>
 	 <field name="numberOfDispensary" type="int" indexed="false" stored="true" required="true" multiValued="false"/>
-	 <field name="region" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+	 <field name="region" type="text_general" indexed="true" stored="true" required="true" multiValued="false"/>
 	 <field name="hitCount" type="int" indexed="true" stored="true" required="true" multiValued="false"/>
 	 
    <!-- Dynamic field definitions allow using convention over configuration

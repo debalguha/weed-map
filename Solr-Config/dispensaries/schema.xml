@@ -171,7 +171,7 @@
 	<field name="city" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	<field name="state" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
 	<field name="zip" type="string" indexed="false" stored="true" required="true" multiValued="false"/>
-	<field name="region" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+	<field name="region" type="text_general" indexed="true" stored="true" required="true" multiValued="false"/>
 	<field name="hitCount" type="int" indexed="true" stored="true" required="true" multiValued="false"/>
 	
 	<field name="phone" type="string" indexed="false" stored="true" required="false" multiValued="false"/>

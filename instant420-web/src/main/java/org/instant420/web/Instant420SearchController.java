@@ -1,11 +1,14 @@
 package org.instant420.web;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrDocument;
@@ -24,6 +27,7 @@ import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +42,7 @@ import com.google.common.collect.Maps;
 @Controller
 @RequestMapping("/search")
 public class Instant420SearchController {
+	private static final Log logger = LogFactory.getLog(Instant420SearchController.class);
 	@Autowired
 	@Qualifier("solrServerForDispensary")
 	private SolrServer solrServerForDispensary;
@@ -55,12 +60,25 @@ public class Instant420SearchController {
 	
 	private ObjectMapper mapper  = new ObjectMapper();;
 	
-	@RequestMapping(value = "/advanced/dispensary", method = RequestMethod.GET)
-	public @ResponseBody ArrayNode doAdvancedSearch(@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows) throws SolrServerException{
+	@RequestMapping(value = "/popular/{type}", method = RequestMethod.GET)
+	public @ResponseBody ArrayNode doPopularSearch(@RequestParam(value="start", required = false) int start, 
+			@RequestParam(value="rows", required = false) int rows, @PathVariable SearchType type) throws SolrServerException{
 		ArrayNode arrNode = JsonNodeFactory.instance.arrayNode();
-		populateArrayNodeFromDispensarySearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", start, rows));
-		populateArrayNodeFromMedicineSearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", start, rows));
+		if(type.equals(SearchType.DISPENSARY) || type.equals(SearchType.ALL))
+			populateArrayNodeFromDispensarySearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", start, rows, null));
+		if(type.equals(SearchType.MEDICINE) || type.equals(SearchType.ALL))
+			populateArrayNodeFromMedicineSearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", start, rows, null));
 		return arrNode;
+	}
+	
+	public SearchType doesExistSearchTerm(String term) throws SolrServerException{
+		SolrDocumentList searcheResult = SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", 0, 10, term);
+		if(searcheResult.getNumFound()>0)
+			return SearchType.DISPENSARY;
+		searcheResult = SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", 0, 10, term);
+		if(searcheResult.getNumFound()>0)
+			return SearchType.MEDICINE;
+		return null;
 	}
 	
 	@RequestMapping(value = "/medicines", method = RequestMethod.GET)
@@ -97,7 +115,7 @@ public class Instant420SearchController {
 	
 
 
-	@RequestMapping(value = "/popular", method = RequestMethod.GET)
+	@RequestMapping(value = "/advance", method = RequestMethod.GET)
 	public @ResponseBody Collection<SearchQueryEntity> findPopularSearchTerms(@RequestParam(value = "recordNum", required = false) int recordNum){
 		return service.findMostPopularSearchTerms(recordNum==0?10:recordNum);
 	}
@@ -110,9 +128,10 @@ public class Instant420SearchController {
 	public @ResponseBody ResultMeta getDispensaryListForMedicine(@RequestParam(value="name") String medicineName, 
 			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows,
 			@RequestParam(value="lat", required = true) Double latitude, @RequestParam(value="long", required = true) Double longitude,
-			@RequestParam(value="region", required = false) String region) throws SolrServerException{
+			@RequestParam(value="region", required = false) String region) throws SolrServerException, UnsupportedEncodingException{
 		List<String> findDispensariesForMedicine = service.findDispensariesForMedicine(medicineName);
-		SolrDocumentList results = SolrHelper.doSearch(solrServerForDispensary, "id", region.replaceAll("\\s", "-").toLowerCase(), findDispensariesForMedicine, start, rows, MapPoint.newmapPoint(latitude, longitude));
+		logger.info("Dispensaries obtained for "+medicineName+":: "+findDispensariesForMedicine);
+		SolrDocumentList results = SolrHelper.doSearch(solrServerForDispensary, "id", URLEncoder.encode(region, "UTF-8"), findDispensariesForMedicine, start, rows, MapPoint.newmapPoint(latitude, longitude));
 		long numFound = results.getNumFound();
 		long startFromResult = results.getStart();
 		ResultMeta result = new ResultMeta(numFound, startFromResult, rows);
@@ -188,7 +207,7 @@ public class Instant420SearchController {
 		String category = doc.getFieldValue("category").toString();
 		int numberOfDispensary = Integer.parseInt(doc.getFieldValue("numberOfDispensary").toString());
 		
-		Long strainId = Long.parseLong(doc.getFieldValue("strainId").toString());
+		Long strainId = Long.parseLong(doc.getFieldValue("strainId")!=null?doc.getFieldValue("strainId").toString():"0");
 		String description = doc.getFieldValue("description")!=null?doc.getFieldValue("description").toString():"";
 		return new MenuItemSearchObject(id, name, priceEighth, priceGram, priceHalfGram, priceHalfOunce, priceOunce, priceQuarter, priceUnit, pictureUrl, category, numberOfDispensary, strainId, description);
 	}

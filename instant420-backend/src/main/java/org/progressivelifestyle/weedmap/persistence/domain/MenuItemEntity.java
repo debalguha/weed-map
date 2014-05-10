@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @Entity
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 	@NamedQuery(name = "findMaxMenuItemId", query = "select max(id) from MenuItemEntity ")})
 // @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
 // region="dispensary")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MenuItemEntity extends BaseEntity implements Menu {
 	@Id
 	private Long id;
@@ -199,7 +201,7 @@ public class MenuItemEntity extends BaseEntity implements Menu {
 	}
 
 	public Long getDispensaryId() {
-		return getDispensary().getId();
+		return getDispensary()!=null?getDispensary().getId():null;
 	}
 	@JsonIgnore
 	public Long getMenuItemCategoryId() {

@@ -1,9 +1,13 @@
 package org.instant420.web;
 
+
 public class APIResponse {
-	private final String responseString;
-	private final Throwable cause;
-	private final Long id;
+	private String responseString;
+	private Throwable cause;
+	private Long id;
+	public APIResponse(){
+		
+	}
 	public String getResponseString() {
 		return responseString;
 	}
@@ -22,5 +26,14 @@ public class APIResponse {
 	@Override
 	public String toString() {
 		return "APIResponse [responseString=" + responseString + ", cause=" + cause + ", id=" + id + "]";
+	}
+	public void setResponseString(String responseString) {
+		this.responseString = responseString;
+	}
+	public void setCause(Throwable cause) {
+		this.cause = cause;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

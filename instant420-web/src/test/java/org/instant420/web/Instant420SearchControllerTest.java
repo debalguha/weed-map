@@ -1,26 +1,25 @@
 package org.instant420.web;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
-import java.util.Collection;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.http.client.HttpClient;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.instant420.web.domain.ResultMeta;
-import org.instant420.web.httpclient.PreemptiveHttpClient;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
-import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class Instant420SearchControllerTest {
 
@@ -28,50 +27,103 @@ public class Instant420SearchControllerTest {
 	public void setUp() throws Exception {
 	}
 
-	/*@Test
+	@Test
 	@Ignore
-	public void shouldBeAbleToProvideSuggestionFromCombinedIndex() {
-		Instant420SearchController controller = new Instant420SearchController();
-		controller.setSolrServerCombined(new HttpSolrServer("http://localhost:8080/apache-solr-4.0.0/collection1", new PreemptiveHttpClient("tomcat", "s3cret", 1000)));
-		Map<String, Collection<String>> suggestion = controller.getSuggestion("dic");
-		assertNotNull(suggestion);
-		System.out.println(suggestion);
-		
-	}*/
-	
-	@Test
-	public void shouldBeAbleToSearchForDispensaries() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException{
-		Instant420SearchController controller = new Instant420SearchController();
-		HttpClient httpClient = new PreemptiveHttpClient("tomcat", "s3cret", 1000);
-		controller.setSolrServerForDispensary(new HttpSolrServer("http://localhost:8080/solr/dispensary", httpClient));
-		ResultMeta result = controller.searchRegularForDispensary("me", 51, 100, 0d, 0d, "LA");
-		assertNotNull(result);
-		assertTrue(result.getSearchResults().size()==100);
-		System.out.println(new ObjectMapper().writeValueAsString(result));
-	}
-	
-	@Test
-	public void shouldBeAbleToSearchForMedicines() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException{
-		Instant420SearchController controller = new Instant420SearchController();
-		HttpClient httpClient = new PreemptiveHttpClient("tomcat", "s3cret", 1000);
-		controller.setSolrServerForMedicines(new HttpSolrServer("http://localhost:8080/solr/medicine", httpClient));
-		ResultMeta result = controller.searchRegularForMedicines("kush", null, 0, 10, 0d, 0d, "LA");
-		assertNotNull(result);
-		assertTrue(result.getSearchResults().size()==10);
-		System.out.println(new ObjectMapper().writeValueAsString(result));
-	}
-	
-	@Test
-	public void shouldBeAbleToGetPopularSearchTerms() throws JsonGenerationException, JsonMappingException, IOException{
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		DispensaryService service = (DispensaryService)ctx.getBean(DispensaryService.class);
-		Instant420SearchController controller = new Instant420SearchController();
-		controller.setService(service);
-		Collection<SearchQueryEntity> popularSearchTerms = controller.findPopularSearchTerms(10);
-		Assert.assertNotNull(popularSearchTerms);
-		Assert.assertTrue(!popularSearchTerms.isEmpty());
-		System.out.println(new ObjectMapper().writeValueAsString(popularSearchTerms));
-		ctx.close();
+	public void shouldBeAbleToSearchForDispensaries() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
+		RestTemplate template = new RestTemplate();
+		String url = "http://localhost:9080/instant420-web/rest/search/dispensaries?key=instant420.rest.api&searchText=the&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
+		@SuppressWarnings("unchecked")
+		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
+		Assert.assertNotNull(resultMeta);
+		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
 	}
 
+	@Test
+	@Ignore
+	public void shouldBeAbleToSearchForMedicines() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
+		RestTemplate template = new RestTemplate();
+		String url = "http://localhost:9080/instant420-web/rest/search/medicines?key=instant420.rest.api&searchText=dream&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
+		@SuppressWarnings("unchecked")
+		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
+		Assert.assertNotNull(resultMeta);
+		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
+	}
+
+	@Test
+	@Ignore
+	public void shouldBeAbleToGetDispensariesForMedicine() throws Exception {
+		RestTemplate template = new RestTemplate();
+		String url = "http://localhost:9080/instant420-web/rest/search/medicines/byName?key=instant420.rest.api&name=Dream Queen&start=0&rows=10&lat=00.00&long=-00.00&region=West%20Hollywood";
+		@SuppressWarnings("unchecked")
+		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
+		Assert.assertNotNull(resultMeta);
+		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
+	}
+
+	@Test
+	@Ignore
+	public void shouldBeAbleToGetDispensaryDetails() throws JsonGenerationException, JsonMappingException, IOException {
+		RestTemplate template = new RestTemplate();
+		String url = "http://localhost:9080/instant420-web/rest/search/dispensary/byId?key=instant420.rest.api&id=19231";
+		@SuppressWarnings("unchecked")
+		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
+		Assert.assertNotNull(resultMeta);
+		Assert.assertEquals(19231L, Long.parseLong(resultMeta.get("id").toString()));
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	@Test
+	@Ignore
+	public void shouldBeAbleToIncreaseHitCount() throws Exception {
+		RestTemplate template = new RestTemplate();
+		String url = "http://localhost:9080/instant420-web/rest/search/hit?key=instant420.rest.api&id=19231&type=DISPENSARY";
+		Map<String, String> retMap = template.getForObject(url, Map.class);
+		Assert.assertEquals("0", retMap.get("SUCCESS"));
+	}
+
+	@Test
+	@Ignore
+	public void shouldBeAbleToDoPopularSearchForDispensary() throws Exception {
+		RestTemplate template = new RestTemplate();
+		String url = "http://localhost:9080/instant420-web/rest/search/popular/DISPENSARY?key=instant420.rest.api&start=0&rows=10";
+		ArrayNode arrayNode = template.getForObject(url, ArrayNode.class);
+		Assert.assertNotNull(arrayNode);
+		Assert.assertEquals(10, arrayNode.size());
+	}
+
+	@Test
+	@Ignore
+	public void shouldBeAbleToDoPopularSearchForMedicine() throws Exception {
+		RestTemplate template = new RestTemplate();
+		String url = "http://localhost:9080/instant420-web/rest/search/popular/MEDICINE?key=instant420.rest.api&start=0&rows=10";
+		ArrayNode arrayNode = template.getForObject(url, ArrayNode.class);
+		Assert.assertNotNull(arrayNode);
+		Assert.assertEquals(10, arrayNode.size());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	@Ignore
+	public void shouldBeAbleToDoAdvancedSearch() throws Exception {
+		RestTemplate template = new RestTemplate();
+		String url = "http://localhost:9080/instant420-web/rest/search/advance?key=instant420.rest.api&recordNum=10";
+		List<SearchQueryEntity> result = template.getForObject(url, List.class);
+		Assert.assertNotNull(result);
+		Assert.assertEquals(10, result.size());
+	}
+}
+
+class MyJsonMessageConverter extends MappingJackson2HttpMessageConverter {
+	private Class<?> myClass;
+	public MyJsonMessageConverter(Class<?> myClass){
+		this.myClass = myClass;
+	}
+	@Override
+	protected JavaType getJavaType(Type type, Class<?> contextClass) {
+		if (contextClass!=null && List.class.isAssignableFrom(contextClass)) {
+			final TypeFactory typeFactory = getObjectMapper().getTypeFactory();
+			return typeFactory.constructCollectionType(ArrayList.class, this.myClass);
+		}
+		return super.getJavaType(type, contextClass);
+	}
 }

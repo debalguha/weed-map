@@ -33,10 +33,9 @@ public class Instant420ControllerTestWithApplicationContext extends BaseTestCase
 	}
 	
 	@Test
-	@Ignore
 	public void shouldBeAbleToSearchWithinRegion() throws Exception{
 		Instant420SearchController controller =  (Instant420SearchController)childCtx.getBean(Instant420SearchController.class);
-		ResultMeta searchResult = controller.getDispensaryListForMedicine("Blue Dream", 0, 10, 00.00, 00.00, "West Hollywood");
+		ResultMeta searchResult = controller.getDispensaryListForMedicine("Dream Queen", 0, 10, 00.00, 00.00, "West Hollywood");
 		System.out.println(new ObjectMapper().writeValueAsString(searchResult));
 		Assert.assertNotNull(searchResult);
 		Assert.assertFalse(searchResult.getSearchResults().isEmpty());
@@ -64,9 +63,10 @@ public class Instant420ControllerTestWithApplicationContext extends BaseTestCase
 	}
 	
 	@Test
+	@Ignore
 	public void shouldBeAbleToDoAdvanceSearch() throws Exception{
 		Instant420SearchController controller =  (Instant420SearchController)childCtx.getBean(Instant420SearchController.class);
-		ArrayNode arrayNode = controller.doAdvancedSearch(0, 10);
+		ArrayNode arrayNode = controller.doPopularSearch(0, 10, SearchType.DISPENSARY);
 		System.out.println(arrayNode.toString());
 	}
 }

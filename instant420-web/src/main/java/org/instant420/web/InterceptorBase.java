@@ -27,8 +27,6 @@ public abstract class InterceptorBase implements HandlerInterceptor{
 			request.setAttribute("searchType", SearchType.DISPENSARY);
 		if(requestURI.contains("search/medicines"))
 			request.setAttribute("searchType", SearchType.MEDICINE);
-		if(requestURI.contains("search/popular"))
-			request.setAttribute("searchType", SearchType.POPULAR);		
 		return true;
 	}
 	

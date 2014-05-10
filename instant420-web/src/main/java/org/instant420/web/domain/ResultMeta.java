@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class ResultMeta {
-	private final long numFound;
-	private final long start;
-	private final int quantity;
-	private final Collection<SearchObject> searchResults;
+	private long numFound;
+	private long start;
+	private int quantity;
+	private Collection<SearchObject> searchResults;
+	
+	public ResultMeta(){
+		
+	}
+	
 	public ResultMeta(long numFound, long start, int quantity) {
 		super();
 		this.numFound = numFound;
@@ -30,5 +35,17 @@ public class ResultMeta {
 	}
 	public Collection<SearchObject> getSearchResults() {
 		return searchResults;
+	}
+	public void setNumFound(long numFound) {
+		this.numFound = numFound;
+	}
+	public void setStart(long start) {
+		this.start = start;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public void setSearchResults(Collection<SearchObject> searchResults) {
+		this.searchResults = searchResults;
 	}
 }

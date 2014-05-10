@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServer;
@@ -17,10 +19,11 @@ import org.instant420.processor.MapPoint;
 import org.instant420.web.domain.SearchType;
 
 public class SolrHelper {
-	public static SolrDocumentList simpleSearchWithSorting(SolrServer solrServer, String fieldNameToSortOn, int start, int rows) throws SolrServerException{
+	public static final Log logger = LogFactory.getLog(SolrHelper.class);
+	public static SolrDocumentList simpleSearchWithSorting(SolrServer solrServer, String fieldNameToSortOn, int start, int rows, String name) throws SolrServerException{
 		SolrQuery query = new SolrQuery();
 		query.setRequestHandler("/select");
-		query.setParam(CommonParams.Q, new String[]{"name:*"});
+		query.setParam(CommonParams.Q, new String[]{"name:"+(name==null?"*":"*"+name+"*")});
 		query.setParam(CommonParams.START, String.valueOf(start));
 		query.setParam(CommonParams.ROWS, String.valueOf(rows==0?10:rows));
 		query.setParam(CommonParams.WT, "xml");
@@ -103,6 +106,7 @@ public class SolrHelper {
 		query.setParam(CommonParams.ROWS, String.valueOf(rows==0?10:rows));
 		query.setParam(CommonParams.WT, "xml");
 		query.setParam(CommonParams.START, String.valueOf(start));
+		logger.info("Query with lat/long: "+query.toString());
 		QueryResponse response = solrServer.query(query);
 		if(response.getResults().isEmpty())
 			return doSearchWithRegion(solrServer, fieldName, region, searchParam, start, rows);
@@ -130,6 +134,7 @@ public class SolrHelper {
 		query.setParam(CommonParams.ROWS, String.valueOf(rows==0?10:rows));
 		query.setParam(CommonParams.WT, "xml");
 		query.setParam(CommonParams.START, String.valueOf(start));
+		logger.info("Query with region: "+query.toString());
 		return solrServer.query(query).getResults();
 	}
 }

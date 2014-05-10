@@ -22,7 +22,8 @@ public class KeywordScoringInterceptor extends InterceptorBase {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object arg2, Exception arg3) throws Exception {
 		logger.info("Interceptor -->afterCompletion");
 		SearchType searchType = (SearchType)request.getAttribute("searchType");
-		if(searchType.equals(SearchType.POPULAR))
+		if(!searchType.equals(SearchType.MEDICINE) 
+				&& !searchType.equals(SearchType.DISPENSARY))
 			return;
 		String searchText = request.getParameter("searchText");
 		Boolean hasFound = request.getAttribute("hasFound")==null? new Boolean(false):(Boolean)request.getAttribute("hasFound");
