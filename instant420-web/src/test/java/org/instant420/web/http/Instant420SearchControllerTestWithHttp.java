@@ -1,4 +1,4 @@
-package org.instant420.web;
+package org.instant420.web.http;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -9,7 +9,6 @@ import java.util.Map;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -21,17 +20,16 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-public class Instant420SearchControllerTest {
+public class Instant420SearchControllerTestWithHttp extends GenericTest{
 
 	@Before
 	public void setUp() throws Exception {
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToSearchForDispensaries() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
 		RestTemplate template = new RestTemplate();
-		String url = "http://localhost:9080/instant420-web/rest/search/dispensaries?key=instant420.rest.api&searchText=the&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/dispensaries?key=instant420.rest.api&searchText=the&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
 		@SuppressWarnings("unchecked")
 		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
 		Assert.assertNotNull(resultMeta);
@@ -39,10 +37,9 @@ public class Instant420SearchControllerTest {
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToSearchForMedicines() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
 		RestTemplate template = new RestTemplate();
-		String url = "http://localhost:9080/instant420-web/rest/search/medicines?key=instant420.rest.api&searchText=dream&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/medicines?key=instant420.rest.api&searchText=dream&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
 		@SuppressWarnings("unchecked")
 		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
 		Assert.assertNotNull(resultMeta);
@@ -50,10 +47,9 @@ public class Instant420SearchControllerTest {
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToGetDispensariesForMedicine() throws Exception {
 		RestTemplate template = new RestTemplate();
-		String url = "http://localhost:9080/instant420-web/rest/search/medicines/byName?key=instant420.rest.api&name=Dream Queen&start=0&rows=10&lat=00.00&long=-00.00&region=West%20Hollywood";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/medicines/byName?key=instant420.rest.api&name=Dream Queen&start=0&rows=10&lat=00.00&long=-00.00&region=West%20Hollywood";
 		@SuppressWarnings("unchecked")
 		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
 		Assert.assertNotNull(resultMeta);
@@ -61,10 +57,9 @@ public class Instant420SearchControllerTest {
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToGetDispensaryDetails() throws JsonGenerationException, JsonMappingException, IOException {
 		RestTemplate template = new RestTemplate();
-		String url = "http://localhost:9080/instant420-web/rest/search/dispensary/byId?key=instant420.rest.api&id=19231";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/dispensary/byId?key=instant420.rest.api&id=19231";
 		@SuppressWarnings("unchecked")
 		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
 		Assert.assertNotNull(resultMeta);
@@ -73,29 +68,26 @@ public class Instant420SearchControllerTest {
 
 	@SuppressWarnings({ "unchecked" })
 	@Test
-	@Ignore
 	public void shouldBeAbleToIncreaseHitCount() throws Exception {
 		RestTemplate template = new RestTemplate();
-		String url = "http://localhost:9080/instant420-web/rest/search/hit?key=instant420.rest.api&id=19231&type=DISPENSARY";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/hit?key=instant420.rest.api&id=19231&type=DISPENSARY";
 		Map<String, String> retMap = template.getForObject(url, Map.class);
 		Assert.assertEquals("0", retMap.get("SUCCESS"));
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToDoPopularSearchForDispensary() throws Exception {
 		RestTemplate template = new RestTemplate();
-		String url = "http://localhost:9080/instant420-web/rest/search/popular/DISPENSARY?key=instant420.rest.api&start=0&rows=10";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/popular/DISPENSARY?key=instant420.rest.api&start=0&rows=10";
 		ArrayNode arrayNode = template.getForObject(url, ArrayNode.class);
 		Assert.assertNotNull(arrayNode);
 		Assert.assertEquals(10, arrayNode.size());
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToDoPopularSearchForMedicine() throws Exception {
 		RestTemplate template = new RestTemplate();
-		String url = "http://localhost:9080/instant420-web/rest/search/popular/MEDICINE?key=instant420.rest.api&start=0&rows=10";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/popular/MEDICINE?key=instant420.rest.api&start=0&rows=10";
 		ArrayNode arrayNode = template.getForObject(url, ArrayNode.class);
 		Assert.assertNotNull(arrayNode);
 		Assert.assertEquals(10, arrayNode.size());
@@ -103,10 +95,9 @@ public class Instant420SearchControllerTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	@Ignore
 	public void shouldBeAbleToDoAdvancedSearch() throws Exception {
 		RestTemplate template = new RestTemplate();
-		String url = "http://localhost:9080/instant420-web/rest/search/advance?key=instant420.rest.api&recordNum=10";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/advance?key=instant420.rest.api&recordNum=10";
 		List<SearchQueryEntity> result = template.getForObject(url, List.class);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(10, result.size());

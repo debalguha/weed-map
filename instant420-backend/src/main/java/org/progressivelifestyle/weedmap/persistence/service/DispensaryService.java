@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
-@SuppressWarnings("restriction")
 @Service
 @Transactional
 public class DispensaryService {
