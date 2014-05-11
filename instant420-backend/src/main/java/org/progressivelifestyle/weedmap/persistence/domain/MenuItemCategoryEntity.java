@@ -16,8 +16,11 @@ import javax.persistence.Table;
 public class MenuItemCategoryEntity extends BaseEntity{
 	@Id
 	private Long id;
-	@Column(nullable=false, unique = true)
+	@Column(nullable=false, unique = false)
 	private String categoryName;
+	
+	@Column(nullable=true, unique = true)
+	private String subCategoryName;
 	
 	private Date creationDate;
 	private Date lastUpdateDate;
@@ -79,6 +82,12 @@ public class MenuItemCategoryEntity extends BaseEntity{
 	@Override
 	public Integer getHitCount() {
 		return 0;
+	}
+	public String getSubCategoryName() {
+		return subCategoryName;
+	}
+	public void setSubCategoryName(String subCategoryName) {
+		this.subCategoryName = subCategoryName;
 	}
 	
 	
