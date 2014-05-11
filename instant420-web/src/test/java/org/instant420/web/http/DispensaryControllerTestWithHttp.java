@@ -2,6 +2,7 @@ package org.instant420.web.http;
 
 import org.instant420.web.APIResponse;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
 import org.progressivelifestyle.weedmaps.processor.WeedmapProcessor;
@@ -56,6 +57,7 @@ public class DispensaryControllerTestWithHttp extends GenericTest{
 	}		
 	
 	@Test
+	@Ignore
 	public void shouldBeAbletoDeleteDispensary() throws Exception{
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/operation/dispensary/delete/31644?key=instant420.rest.api";
