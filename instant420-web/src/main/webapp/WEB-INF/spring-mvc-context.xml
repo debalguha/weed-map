@@ -22,7 +22,7 @@
     <mvc:annotation-driven/>
     <mvc:interceptors>
     	<mvc:interceptor>
-    		<mvc:mapping path="/search/dispensaries/**"/>
+    		<mvc:mapping path="/search/**"/>
     		<bean class="org.instant420.web.KeywordScoringInterceptor"/>
     	</mvc:interceptor>
     </mvc:interceptors>

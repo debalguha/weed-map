@@ -85,7 +85,7 @@ public class Instant420SearchController {
 			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows, 
 			@RequestParam(value="lat", required = true) Double latitude, @RequestParam(value="long", required = true) Double longitude,
 			@RequestParam(value="region", required = false) String region) throws SolrServerException, UnsupportedEncodingException{
-		SolrDocumentList results = SolrHelper.doSearch(solrServerForMedicines, URLEncoder.encode(region, "UTF-8"), categoryParam, searchText, start, rows, MapPoint.newmapPoint(latitude, longitude), SearchType.DISPENSARY);
+		SolrDocumentList results = SolrHelper.doSearch(solrServerForMedicines, URLEncoder.encode(region, "UTF-8"), categoryParam, searchText, start, rows, MapPoint.newmapPoint(latitude, longitude), SearchType.MEDICINE);
 		long numFound = results.getNumFound();
 		long startFromResult = results.getStart();
 		ResultMeta result = new ResultMeta(numFound, startFromResult, rows);

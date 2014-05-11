@@ -47,6 +47,18 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
 		Assert.assertNotNull(((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("subCategoryName"));
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldBeAbleToSearchForMedicinesWithCategory() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
+		RestTemplate template = new RestTemplate();
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/medicines?key=instant420.rest.api&searchText=dream&category=Edibles&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
+		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
+		Assert.assertNotNull(resultMeta);
+		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
+		Assert.assertNotNull(((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("subCategoryName"));
+		Assert.assertEquals("Edibles", ((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("category"));
+	}
 
 	@Test
 	public void shouldBeAbleToGetDispensariesForMedicine() throws Exception {
