@@ -11,7 +11,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="menuitemcategoryentity")
-@NamedQueries({ @NamedQuery(name = "findCategoryByName", query = "from MenuItemCategoryEntity m where m.categoryName=:name")})
+@NamedQueries({ @NamedQuery(name = "findCategoryByName", query = "from MenuItemCategoryEntity m where m.categoryName=:name"),
+	@NamedQuery(name = "findSubCategoryByName", query = "from MenuItemCategoryEntity m where m.subCategoryName=:name")})
 //@Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="dispensary")
 public class MenuItemCategoryEntity extends BaseEntity{
 	@Id

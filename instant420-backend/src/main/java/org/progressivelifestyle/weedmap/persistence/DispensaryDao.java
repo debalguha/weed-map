@@ -111,4 +111,8 @@ public class DispensaryDao {
 		return (MenuItemCategoryEntity)entityManager.createNamedQuery("findCategoryByName").setParameter("name", name).getSingleResult();
 	}
 
+	public MenuItemCategoryEntity findMenuItemSubCategoryByName(String subCategoryName) {
+		return (MenuItemCategoryEntity)entityManager.createNamedQuery("findSubCategoryByName").setParameter("name", subCategoryName).getSingleResult();
+	}
+
 }

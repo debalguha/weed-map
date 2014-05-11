@@ -81,7 +81,7 @@ public class MedicineController {
 	private MenuItemEntity buildEntityFromSearchObject(MenuItemSearchObject searchObj){
 		MenuItemEntity entity = new MenuItemEntity();
 		BeanUtils.copyProperties(searchObj, entity, "dispensary", "lat", "lang", "region", "menuItemCategory");
-		entity.setMenuItemCategory(service.findMenuItemCategoryByName(searchObj.getCategory()));
+		entity.setMenuItemCategory(service.findMenuItemSubCategoryByName(searchObj.getSubCategoryName()));
 		return entity;
 	}
 }

@@ -109,12 +109,6 @@ public class DispensaryService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public DispensaryEntity findDispensary(long dispensaryId) {
 		DispensaryEntity entity = (DispensaryEntity) dispensaryDao.getEntityByPrimaryKey(new Long(dispensaryId), DispensaryEntity.class);
-		/*
-		 * Set<Menu> menuItems = entity.getMenuItems(); for(Menu menu :
-		 * menuItems) System.out.println("Category:: "+((MenuItemEntity)menu).
-		 * getMenuItemCategory());
-		 * System.out.println("Menus ::"+menuItems.size());
-		 */
 		return entity;
 	}
 
@@ -184,6 +178,10 @@ public class DispensaryService {
 		return dispensaryDao.findMenuItemCategoryByName(name);
 	}
 
+	public MenuItemCategoryEntity findMenuItemSubCategoryByName(String subCategoryName) {
+		return dispensaryDao.findMenuItemSubCategoryByName(subCategoryName);
+	}
+	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	private Long findMaxDispensaryId() {
 		return dispensaryDao.findMaxDispensaryId();

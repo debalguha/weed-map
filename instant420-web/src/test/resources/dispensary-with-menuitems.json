@@ -59,7 +59,8 @@
             "region": "Del Mar",
             "menuItemCategory": {
                 "id": 4,
-                "categoryName": "Edibles",
+            	"categoryName": "Edibles",
+            	"subCategoryName": "Tincture",
                 "hitCount": 0
             },
             "numberOfDispensary": 1,
@@ -90,7 +91,8 @@
             },
             "numberOfDispensary": 4,
             "menuItemCategoryId": 10,
-            "categoryName": "Gear"
+            "categoryName": "Concentrates",
+            "subCategoryName": "Wax"
         }
     ],
    "pictures": [

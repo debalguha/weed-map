@@ -60,64 +60,13 @@
       "menuItemCategory": {
         "id": 4,
         "categoryName": "Edibles",
+        "subCategoryName": "Topicals",
         "creationDate": 1397812848000,
         "lastUpdateDate": 1397812848000,
         "hitCount": 0
       },
       "numberOfDispensary": 1
-    },
-    {
-      "id": 4167747,
-      "name": "Vape Pen Battery",
-      "priceEighth": 0,
-      "priceGram": 0,
-      "priceHalfGram": 0,
-      "priceHalfOunce": 0,
-      "priceOunce": 0,
-      "priceQuarter": 0,
-      "priceUnit": 30,
-      "hitCount": null,
-      "description": "Vape Pen Battery. Comes in a variety of colors.",
-      "strainId": null,
-      "pictureURL": null,
-      "lat": 32.96,
-      "lang": -117.27,
-      "region": "Del Mar",
-      "menuItemCategory": {
-        "id": 10,
-        "categoryName": "Gear",
-        "creationDate": 1397812849000,
-        "lastUpdateDate": 1397812849000,
-        "hitCount": 0
-      },
-      "numberOfDispensary": 4
-    },
-    {
-      "id": null,
-      "name": "Vape Pen Battery - added",
-      "priceEighth": 0,
-      "priceGram": 0,
-      "priceHalfGram": 0,
-      "priceHalfOunce": 0,
-      "priceOunce": 0,
-      "priceQuarter": 0,
-      "priceUnit": 30,
-      "hitCount": null,
-      "description": "Vape Pen Battery. Comes in a variety of colors.",
-      "strainId": null,
-      "pictureURL": null,
-      "lat": 32.96,
-      "lang": -117.27,
-      "region": "Del Mar",
-      "menuItemCategory": {
-        "id": 10,
-        "categoryName": "Gear",
-        "creationDate": 1397812849000,
-        "lastUpdateDate": 1397812849000,
-        "hitCount": 0
-      },
-      "numberOfDispensary": 4
-    }    
+    }
   ],
   "pictures": [
     {

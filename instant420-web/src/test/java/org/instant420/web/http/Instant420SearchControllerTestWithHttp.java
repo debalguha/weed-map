@@ -3,6 +3,7 @@ package org.instant420.web.http;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +37,15 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldBeAbleToSearchForMedicines() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/medicines?key=instant420.rest.api&searchText=dream&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
-		@SuppressWarnings("unchecked")
 		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
 		Assert.assertNotNull(resultMeta);
 		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
+		Assert.assertNotNull(((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("subCategoryName"));
 	}
 
 	@Test

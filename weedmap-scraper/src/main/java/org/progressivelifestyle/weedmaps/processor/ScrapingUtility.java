@@ -16,7 +16,6 @@ import org.progressivelifestyle.weedmap.persistence.domain.MenuItemEntity;
 import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
 import org.progressivelifestyle.weedmaps.objects.DispensaryObject;
 import org.progressivelifestyle.weedmaps.objects.MenuItem;
-import org.progressivelifestyle.weedmaps.objects.Picture;
 
 public class ScrapingUtility {
 	public static void serializeToDisk(Collection<String> lines) throws IOException {
