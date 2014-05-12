@@ -20,17 +20,19 @@ import org.instant420.web.domain.SearchType;
 
 public class SolrHelper {
 	public static final Log logger = LogFactory.getLog(SolrHelper.class);
-	public static SolrDocumentList simpleSearchWithSorting(SolrServer solrServer, String fieldNameToSortOn, int start, int rows, String name) throws SolrServerException{
+	public static SolrDocumentList simpleSearchWithSorting(SolrServer solrServer, String fieldNameToSortOn, int start, int rows, String name, String category, SearchType searchType) throws SolrServerException{
 		SolrQuery query = new SolrQuery();
 		query.setRequestHandler("/select");
 		query.setParam(CommonParams.Q, new String[]{"name:"+(name==null?"*":"*"+name+"*")});
+		if(searchType.equals(SearchType.MEDICINE))
+			query.setFilterQueries("category:".concat(category!=null?category:"*"));
 		query.setParam(CommonParams.START, String.valueOf(start));
 		query.setParam(CommonParams.ROWS, String.valueOf(rows==0?10:rows));
 		query.setParam(CommonParams.WT, "xml");
 		query.addSort(fieldNameToSortOn, ORDER.desc);
 		return solrServer.query(query).getResults();
 	}
-	public static SolrDocumentList doSearch(SolrServer solrServer, String region, String category, String searchText, int start, int rows, MapPoint mapPoint, SearchType searchType) throws SolrServerException, UnsupportedEncodingException{
+	public static SolrDocumentList doSearch(SolrServer solrServer, String region, String searchText, String category, String subCategory, int start, int rows, MapPoint mapPoint, SearchType searchType) throws SolrServerException, UnsupportedEncodingException{
 		SolrQuery query = new SolrQuery();
 		query.setRequestHandler("/select");
 		String qParamVal = convertSearchTextToQParamValue(searchText);
@@ -42,7 +44,7 @@ public class SolrHelper {
 			if(searchType.equals(SearchType.MEDICINE))
 				query.setFilterQueries("lat_coordinate:[".concat(String.valueOf(box.getMinPoint().getLatitude())).concat(" TO ").concat(String.valueOf(box.getMaxPoint().getLatitude()).concat("]")), 
 						"lang_coordinate:[".concat(String.valueOf(box.getMinPoint().getLongitude())).concat(" TO ").concat(String.valueOf(box.getMaxPoint().getLongitude()).concat("]")),
-						"category:".concat(category!=null?category:"*"));
+						"category:".concat(category!=null?category:"*"), "subCategoryName:".concat(subCategory!=null?subCategory:"*"));
 			else
 				query.setFilterQueries("lat_coordinate:[".concat(String.valueOf(box.getMinPoint().getLatitude())).concat(" TO ").concat(String.valueOf(box.getMaxPoint().getLatitude()).concat("]")), 
 					"lang_coordinate:[".concat(String.valueOf(box.getMinPoint().getLongitude())).concat(" TO ").concat(String.valueOf(box.getMaxPoint().getLongitude()).concat("]")));
@@ -54,7 +56,7 @@ public class SolrHelper {
 		System.out.println(query.toString());
 		QueryResponse response = solrServer.query(query);
 		if(response.getResults().isEmpty())
-			return doSearchWithRegionForTextSearch(solrServer, region, category, searchText, start, rows, searchType);
+			return doSearchWithRegionForTextSearch(solrServer, region, category, subCategory,searchText, start, rows, searchType);
 		return response.getResults();
 		
 	}
@@ -73,13 +75,13 @@ public class SolrHelper {
 		return builder.toString();
 	}
 
-	public static SolrDocumentList doSearchWithRegionForTextSearch(SolrServer solrServer, String region, String category, String searchText, int start, int rows, SearchType searchType) throws SolrServerException, UnsupportedEncodingException {
+	public static SolrDocumentList doSearchWithRegionForTextSearch(SolrServer solrServer, String region, String category, String subCategory, String searchText, int start, int rows, SearchType searchType) throws SolrServerException, UnsupportedEncodingException {
 		SolrQuery query = new SolrQuery();
 		String qParamVal = convertSearchTextToQParamValue(searchText);
 		query.setRequestHandler("/select");
 		query.setParam(CommonParams.Q, new String[]{qParamVal});
 		if(searchType.equals(SearchType.MEDICINE))
-			query.setFilterQueries("region:".concat(region), "category:".concat(category!=null?category:"*"));
+			query.setFilterQueries("region:".concat(region), "category:".concat(category!=null?category:"*"), "subCategoryName:".concat(subCategory!=null?subCategory:"*"));
 		else
 			query.setFilterQueries("region:".concat("*").concat(region).concat("*"));
 		query.setParam(CommonParams.START, String.valueOf(start));

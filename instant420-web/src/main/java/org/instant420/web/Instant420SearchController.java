@@ -61,31 +61,35 @@ public class Instant420SearchController {
 	
 	@RequestMapping(value = "/popular/{type}", method = RequestMethod.GET)
 	public @ResponseBody ArrayNode doPopularSearch(@RequestParam(value="start", required = false) int start, 
-			@RequestParam(value="rows", required = false) int rows, @PathVariable SearchType type) throws SolrServerException{
+			@RequestParam(value="rows", required = false) int rows, @PathVariable SearchType type,
+			@RequestParam(value="category", required = false) String categoryParam) throws SolrServerException{
 		ArrayNode arrNode = JsonNodeFactory.instance.arrayNode();
 		if(type.equals(SearchType.DISPENSARY) || type.equals(SearchType.ALL))
-			populateArrayNodeFromDispensarySearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", start, rows, null));
+			populateArrayNodeFromDispensarySearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", start, rows, null, null, SearchType.DISPENSARY));
 		if(type.equals(SearchType.MEDICINE) || type.equals(SearchType.ALL))
-			populateArrayNodeFromMedicineSearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", start, rows, null));
+			populateArrayNodeFromMedicineSearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", start, rows, null, categoryParam, SearchType.MEDICINE));
 		return arrNode;
 	}
 	
 	public SearchType doesExistSearchTerm(String term) throws SolrServerException{
-		SolrDocumentList searcheResult = SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", 0, 10, term);
+		SolrDocumentList searcheResult = SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", 0, 10, term, null, SearchType.DISPENSARY);
 		if(searcheResult.getNumFound()>0)
 			return SearchType.DISPENSARY;
-		searcheResult = SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", 0, 10, term);
+		searcheResult = SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", 0, 10, term, null, SearchType.MEDICINE);
 		if(searcheResult.getNumFound()>0)
 			return SearchType.MEDICINE;
 		return null;
 	}
 	
 	@RequestMapping(value = "/medicines", method = RequestMethod.GET)
-	public @ResponseBody ResultMeta searchRegularForMedicines(@RequestParam(value="searchText", required=true) String searchText, @RequestParam(value="category", required = false) String categoryParam,
+	public @ResponseBody ResultMeta searchRegularForMedicines(@RequestParam(value="searchText", required=true) String searchText, 
+			@RequestParam(value="category", required = false) String categoryParam,
+			@RequestParam(value="subCategory", required = false) String subCategoryParam,
 			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows, 
 			@RequestParam(value="lat", required = true) Double latitude, @RequestParam(value="long", required = true) Double longitude,
 			@RequestParam(value="region", required = false) String region) throws SolrServerException, UnsupportedEncodingException{
-		SolrDocumentList results = SolrHelper.doSearch(solrServerForMedicines, URLEncoder.encode(region, "UTF-8"), categoryParam, searchText, start, rows, MapPoint.newmapPoint(latitude, longitude), SearchType.MEDICINE);
+		
+		SolrDocumentList results = SolrHelper.doSearch(solrServerForMedicines, URLEncoder.encode(region, "UTF-8"), searchText, categoryParam, subCategoryParam, start, rows, MapPoint.newmapPoint(latitude, longitude), SearchType.MEDICINE);
 		long numFound = results.getNumFound();
 		long startFromResult = results.getStart();
 		ResultMeta result = new ResultMeta(numFound, startFromResult, rows);
@@ -101,7 +105,7 @@ public class Instant420SearchController {
 			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows,
 			@RequestParam(value="lat", required = true) Double latitude, @RequestParam(value="long", required = true) Double longitude,
 			@RequestParam(value="region", required = false) String region) throws SolrServerException, UnsupportedEncodingException{
-		SolrDocumentList results = SolrHelper.doSearch(solrServerForDispensary, URLEncoder.encode(region, "UTF-8"), null, searchText, start, rows, MapPoint.newmapPoint(latitude, longitude), SearchType.DISPENSARY);
+		SolrDocumentList results = SolrHelper.doSearch(solrServerForDispensary, URLEncoder.encode(region, "UTF-8"), searchText, null, null, start, rows, MapPoint.newmapPoint(latitude, longitude), SearchType.DISPENSARY);
 		long numFound = results.getNumFound();
 		long startFromResult = results.getStart();
 		ResultMeta result = new ResultMeta(numFound, startFromResult, rows);
@@ -247,11 +251,13 @@ public class Instant420SearchController {
 		String saturdayClose = doc.getFieldValue("saturdayClose").toString();
 		String dispensaryURL = doc.getFieldValue("dispensaryURL").toString();
 		String dispensaryImageURL = doc.getFieldValue("dispensaryImageURL").toString();
+		String lat = doc.getFieldValue("lat_coordinate").toString();
+		String lng = doc.getFieldValue("lang_coordinate").toString();
 		return new DispensarySearchObject(id, name, street, city, state, zip, phone, email, website, facebookURL, twitterURL, instagramURL, 
 				sundayOpen, sundayClose, mondayOpen, mondayClose, tuesdayOpen, tuesdayClose, wednesdayOpen, wednesdayClose, thursdayOpen, thursdayClose, fridayOpen, 
 				fridayClose, saturdayOpen, saturdayClose, dispensaryURL, dispensaryImageURL,
 				GeoCodingHelper.calculateDistanceBetweenTwoPoints(MapPoint.newmapPoint(latOfDispensary, longOfDispensary), MapPoint.newmapPoint(latitude, longitude), 'K'),
-				GeoCodingHelper.calculateDistanceBetweenTwoPoints(MapPoint.newmapPoint(latOfDispensary, longOfDispensary), MapPoint.newmapPoint(latitude, longitude), 'M'));
+				GeoCodingHelper.calculateDistanceBetweenTwoPoints(MapPoint.newmapPoint(latOfDispensary, longOfDispensary), MapPoint.newmapPoint(latitude, longitude), 'M'), lat, lng);
 	}
 
 
@@ -292,6 +298,7 @@ public class Instant420SearchController {
 			oNode.put("id", Integer.parseInt(doc.getFieldValue("id").toString()));
 			oNode.put("name", doc.getFieldValue("name").toString());
 			oNode.put("pictureUrl", doc.getFieldValue("pictureUrl")!=null?doc.getFieldValue("pictureUrl").toString():"");
+			oNode.put("category", doc.getFieldValue("category")!=null?doc.getFieldValue("category").toString():"");
 			oNode.put("type", SearchType.MEDICINE.name());
 			arrNode.add(oNode);
 		}

@@ -1,5 +1,5 @@
 package org.instant420.web.domain;
 
 public enum SearchType {
-	DISPENSARY, MEDICINE, ALL;
+	DISPENSARY, MEDICINE, POPULAR, ADVANCED, HIT, ALL;
 }
