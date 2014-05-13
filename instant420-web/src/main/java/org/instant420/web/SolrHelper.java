@@ -30,6 +30,7 @@ public class SolrHelper {
 		query.setParam(CommonParams.ROWS, String.valueOf(rows==0?10:rows));
 		query.setParam(CommonParams.WT, "xml");
 		query.addSort(fieldNameToSortOn, ORDER.desc);
+		logger.info("Query:: "+query);
 		return solrServer.query(query).getResults();
 	}
 	public static SolrDocumentList doSearch(SolrServer solrServer, String region, String searchText, String category, String subCategory, int start, int rows, MapPoint mapPoint, SearchType searchType) throws SolrServerException, UnsupportedEncodingException{

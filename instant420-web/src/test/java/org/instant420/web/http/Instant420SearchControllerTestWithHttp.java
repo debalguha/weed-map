@@ -123,7 +123,7 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	@Test
 	public void shouldBeAbleToDoPopularSearchForMedicinesWithCategory() throws Exception {
 		RestTemplate template = new RestTemplate();
-		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/popular/MEDICINE?key=instant420.rest.api&start=0&rows=10&catgeory=Edibles";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/popular/MEDICINE?key=instant420.rest.api&start=0&rows=10&category=Edibles";
 		ArrayNode arrayNode = template.getForObject(url, ArrayNode.class);
 		Assert.assertNotNull(arrayNode);
 		Assert.assertEquals(10, arrayNode.size());

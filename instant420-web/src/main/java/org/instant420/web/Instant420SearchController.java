@@ -66,8 +66,10 @@ public class Instant420SearchController {
 		ArrayNode arrNode = JsonNodeFactory.instance.arrayNode();
 		if(type.equals(SearchType.DISPENSARY) || type.equals(SearchType.ALL))
 			populateArrayNodeFromDispensarySearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForDispensary, "hitCount", start, rows, null, null, SearchType.DISPENSARY));
-		if(type.equals(SearchType.MEDICINE) || type.equals(SearchType.ALL))
+		if(type.equals(SearchType.MEDICINE) || type.equals(SearchType.ALL)){
+			logger.info("Search Type Medicine: "+categoryParam);
 			populateArrayNodeFromMedicineSearchResult(arrNode, SolrHelper.simpleSearchWithSorting(solrServerForMedicines, "hitCount", start, rows, null, categoryParam, SearchType.MEDICINE));
+		}
 		return arrNode;
 	}
 	
