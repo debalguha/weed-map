@@ -36,7 +36,7 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 		Assert.assertNotNull(resultMeta);
 		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
 		Assert.assertNotNull(((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("lat"));
-		Assert.assertNotNull(((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("lng"));
+		Assert.assertNotNull(((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("lang"));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -73,14 +73,17 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 		Assert.assertEquals("Drink", ((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("subCategoryName"));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldBeAbleToGetDispensariesForMedicine() throws Exception {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/medicines/byName?key=instant420.rest.api&name=Dream Queen&start=0&rows=10&lat=00.00&long=-00.00&region=West%20Hollywood";
-		@SuppressWarnings("unchecked")
 		Map<String, Object> resultMeta = template.getForObject(url, Map.class);
+		System.out.println(resultMeta);
 		Assert.assertNotNull(resultMeta);
 		Assert.assertTrue(Integer.parseInt(resultMeta.get("numFound").toString()) > 0);
+		Assert.assertNotNull(((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("pictures"));
+		Assert.assertNotNull(((Collection<Map<String, Object>>)resultMeta.get("searchResults")).iterator().next().get("medicines"));
 	}
 
 	@Test

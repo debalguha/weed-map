@@ -1,5 +1,9 @@
 package org.instant420.web.domain;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class DispensarySearchObject extends SearchObject{
 	private final String id;
 	private final String name;
@@ -29,10 +33,12 @@ public class DispensarySearchObject extends SearchObject{
 	private final String saturdayClose;
 	private final String dispensaryURL;
 	private final String lat;
-	private final String lng;
+	private final String lang;
 	private String dispensaryImageURL;
 	private Double distanceInKM;
 	private double distanceInMiles;
+	private List<String> pictures;
+	private List<MenuItemSearchObject> medicines;
 	public DispensarySearchObject(String id, String name, String street, String city, String state, String zip, String phone, String email, String website, String facebookURL, String twitterURL, String instagramURL, String sundayOpen, String sundayClose, 
 			String mondayOpen, String mondayClose, String tuesdayOpen, String tuesdayClose, String wednesdayOpen, String wednesdayClose, String thursdayOpen, String thursdayClose, String fridayOpen, String fridayClose, String saturdayOpen, 
 			String saturdayClose, String dispensaryURL, String dispensaryImageURL, Double distanceInKM, Double distanceInMiles, String lat, String lng) {
@@ -68,7 +74,9 @@ public class DispensarySearchObject extends SearchObject{
 		this.distanceInKM = distanceInKM;
 		this.distanceInMiles = distanceInMiles;
 		this.lat = lat;
-		this.lng = lng;
+		this.lang = lng;
+		medicines = Lists.newArrayList();
+		pictures = Lists.newArrayList();
 	}
 	public String getId() {
 		return id;
@@ -163,8 +171,20 @@ public class DispensarySearchObject extends SearchObject{
 	public String getLat() {
 		return lat;
 	}
-	public String getLng() {
-		return lng;
+	public String getLang() {
+		return lang;
+	}
+	public List<MenuItemSearchObject> getMedicines() {
+		return medicines;
+	}
+	public void setMedicines(List<MenuItemSearchObject> medicines) {
+		this.medicines = medicines;
+	}
+	public List<String> getPictures() {
+		return pictures;
+	}
+	public void setPictures(List<String> pictures) {
+		this.pictures = pictures;
 	}
 	
 }

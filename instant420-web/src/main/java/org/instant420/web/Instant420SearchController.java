@@ -3,7 +3,6 @@ package org.instant420.web;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -21,6 +20,7 @@ import org.instant420.web.domain.SearchType;
 import org.progressivelifestyle.weedmap.persistence.domain.BaseEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.DispensaryEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.EntityType;
+import org.progressivelifestyle.weedmap.persistence.domain.MenuItemEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.progressivelifestyle.weedmap.persistence.service.DispensaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,15 +134,19 @@ public class Instant420SearchController {
 			@RequestParam(value="start", required = false) int start, @RequestParam(value="rows", required = false) int rows,
 			@RequestParam(value="lat", required = true) Double latitude, @RequestParam(value="long", required = true) Double longitude,
 			@RequestParam(value="region", required = false) String region) throws SolrServerException, UnsupportedEncodingException{
-		List<String> findDispensariesForMedicine = service.findDispensariesForMedicine(medicineName);
-		logger.info("Dispensaries obtained for "+medicineName+":: "+findDispensariesForMedicine);
-		SolrDocumentList results = SolrHelper.doSearch(solrServerForDispensary, "id", URLEncoder.encode(region, "UTF-8"), findDispensariesForMedicine, start, rows, MapPoint.newmapPoint(latitude, longitude));
+		Map<String, MenuItemEntity> dispensariesForMedicine = service.findDispensariesForMedicine(medicineName);
+		logger.info("Dispensaries obtained for "+medicineName+":: "+dispensariesForMedicine);
+		SolrDocumentList results = SolrHelper.doSearch(solrServerForDispensary, "id", URLEncoder.encode(region, "UTF-8"), dispensariesForMedicine.keySet(), start, rows, MapPoint.newmapPoint(latitude, longitude));
 		long numFound = results.getNumFound();
 		long startFromResult = results.getStart();
 		ResultMeta result = new ResultMeta(numFound, startFromResult, rows);
 		if(numFound>0){
-			for(SolrDocument doc : results)
-				result.getSearchResults().add(convertSolrDocumentToDispensarySearchObject(doc, latitude, longitude));
+			for(SolrDocument doc : results){
+				DispensarySearchObject dispensarySearchObject = convertSolrDocumentToDispensarySearchObject(doc, latitude, longitude);
+				dispensarySearchObject.getMedicines().add(convertmenuItemEntityToSearchObject(dispensariesForMedicine.get(dispensarySearchObject.getId())));
+				dispensarySearchObject.setPictures(dispensariesForMedicine.get(dispensarySearchObject.getId()).getDispensary().getImages());
+				result.getSearchResults().add(dispensarySearchObject);
+			}
 		}
 		return result;
 	}	
@@ -216,6 +220,12 @@ public class Instant420SearchController {
 		Long strainId = Long.parseLong(doc.getFieldValue("strainId")!=null?doc.getFieldValue("strainId").toString():"0");
 		String description = doc.getFieldValue("description")!=null?doc.getFieldValue("description").toString():"";
 		return new MenuItemSearchObject(id, name, priceEighth, priceGram, priceHalfGram, priceHalfOunce, priceOunce, priceQuarter, priceUnit, pictureUrl, category, subCategory, numberOfDispensary, strainId, description);
+	}
+	
+	private MenuItemSearchObject convertmenuItemEntityToSearchObject(MenuItemEntity menu) {
+		return new MenuItemSearchObject(menu.getId(), menu.getName(), menu.getPriceEighth(), menu.getPriceGram(), menu.getPriceHalfGram(), menu.getPriceHalfOunce(), 
+				menu.getPriceOunce(), menu.getPriceQuarter(), menu.getPriceUnit(), menu.getPictureURL(), menu.getCategoryName(), menu.getMenuItemCategory().getSubCategoryName(), 
+				menu.getNumberOfDispensary(), Long.parseLong(menu.getStrainId()), menu.getDescription());
 	}
 	
 	private static DispensarySearchObject convertSolrDocumentToDispensarySearchObject(SolrDocument doc, Double latitude, Double longitude) {

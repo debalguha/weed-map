@@ -2,6 +2,7 @@ package org.progressivelifestyle.weedmap.persistence.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 @Service
 @Transactional
@@ -162,15 +163,19 @@ public class DispensaryService {
 		return dispensaryDao.findMostPopularSearchTerms(numbers);
 	}
 
+	@Transactional(propagation = Propagation.MANDATORY)
+	public List<MenuItemEntity> findMenuItemsByName(String menuItemName){
+		return dispensaryDao.findMenuItemsForName(menuItemName);
+	}
+	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public List<String> findDispensariesForMedicine(String name) {
-		List<MenuItemEntity> menuItemsForName = dispensaryDao.findMenuItemsForName(name);
-		List<String> dispensaryIds = Lists.newArrayList();
-		for (MenuItemEntity entity : menuItemsForName) {
-			dispensaryIds.add(entity.getDispensary().getId().toString());
-			System.out.println(entity.getDispensary().getRegion());
-		}
-		return dispensaryIds;
+	public Map<String, MenuItemEntity> findDispensariesForMedicine(String name) {
+		List<MenuItemEntity> menuItemsForName = findMenuItemsByName(name);
+		Map<String, MenuItemEntity> dispensaryMenuItem = Maps.newHashMap();
+		for (MenuItemEntity entity : menuItemsForName) 
+			dispensaryMenuItem.put(entity.getDispensary().getId().toString(), entity);
+		
+		return dispensaryMenuItem;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)

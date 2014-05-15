@@ -2,7 +2,8 @@ package org.instant420.web;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.List;
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -92,7 +93,7 @@ public class SolrHelper {
 		return solrServer.query(query).getResults();
 	}
 	
-	public static SolrDocumentList doSearch(SolrServer solrServer, String fieldName, String region, List<String> searchTexts, int start, int rows, MapPoint mapPoint) throws SolrServerException{
+	public static SolrDocumentList doSearch(SolrServer solrServer, String fieldName, String region, Collection<String> searchTexts, int start, int rows, MapPoint mapPoint) throws SolrServerException{
 		SolrQuery query = new SolrQuery();
 		query.setRequestHandler("/select");
 		String searchParam = convertSearhTextsToString(fieldName,searchTexts);
@@ -117,12 +118,13 @@ public class SolrHelper {
 		
 	}
 	
-	public static String convertSearhTextsToString(String fieldName, List<String> searchTexts) {
+	public static String convertSearhTextsToString(String fieldName, Collection<String> searchTexts) {
 		StringBuilder builder = new StringBuilder();
+		Iterator<String> iterator = searchTexts.iterator();
 		for(int i=0;i<searchTexts.size();i++){
 			if(i!=0)
 				builder.append(" OR ");
-			builder.append(fieldName).append(":").append(searchTexts.get(i));
+			builder.append(fieldName).append(":").append(iterator.next());
 			
 		}
 		return builder.toString();
