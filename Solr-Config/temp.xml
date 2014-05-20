@@ -1,0 +1,2273 @@
+
+
+
+
+
+
+
+
+
+<div class='sectionDivStyle' id='RULE_KEY' node_type='MAIN_RULE' node_name='GlobalSearchResults' version='1' objclass='Rule-HTML-Section' pyclassname='Data-Portal' expandRL='' uniqueID='SID1400442148024'>
+	<table style='width:100%' cellspacing='0' cellpadding='0' id='EXPAND-OUTERFRAME' PARAM_NAME="EXPANDEDSubSectionGlobalSearchResultsBB">
+		<tr>
+			<td>
+				<div section_index='2' dataSource='Petitions.pxResults_GlobalSearchResults_2' bRowHovering='false' deferLoadAct='' class="repeatContainer gridDefault  " id='PEGA_GRID' bEditable='true' fixedRow='false' fixedCol='false' bValueList='false' bPageGroup='false' appendAct='' deleteAct='' repeatType='row' editConfig='modal' bGrid='true' bDragDrop='false' bTreegrid='false' bSorting='true' bRefreshLayout='false' bReportDefinition='false' bIsReadOnly=false OAFunc='openWorkByHandle' editAction='ShowDocuments' data-click='[["doGridAction",[":event","EDITITEM"]]]'>
+					<div id='RULE_KEY' node_type='SECTION_BODY' body_type='DEFINE' body_index='1' class='gridActionTop'>
+						<table section_index='2' cellpadding='0' cellspacing='0' ID='' width='100%'>
+							<tr>
+								<td class='dataLabelWrite' style='height:0px;height:100%;width:74%;text-align: left;'>
+								</td>
+								<td class='dataLabelWrite' ColSpan=2 style='height:100%;width:20%;text-align: right;'>
+									<input type='hidden' id='PEGAGADGET' />
+									<div id='RULE_KEY' node_type='MAIN_RULE' node_name='pyGridPaginator' containedSectionID='GID_1400442148025' isAdvParamSection='true' outerGadget='GID_1400442148025' version='1' objclass='Rule-HTML-Section' pyclassname='Data-' insHandle='RULE-HTML-SECTION DATA- PYGRIDPAGINATOR #20120113T000434.923 GMT' expandRL='' uniqueID='SID1400442148026'>
+										<table section_index='3' cellpadding='0' cellspacing='0' ID=''>
+											<tr>
+												<td class='dataLabelWrite' style='height:15px;padding-right:4px;'>
+													<nobr>
+														<label>
+															<a href="javascript:void(0);" onClick="doGridAction(event,'PAGINATE','','previous')" title="Previous Page">Previous</a>
+														</label>
+													</nobr>
+												</td>
+												<td class='dataLabelWrite' style='height:0px;height:15px;padding-right:12px;'>
+													<nobr>
+													</nobr>
+												</td>
+												<td class='dataValueWrite' style='height:15px;padding-left:2px; padding-right:2px;'>
+													<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'1')">1</a>
+
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'2')">2</a>
+
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'3')">3</a>
+
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'4')">4</a>
+
+
+
+
+														<span class="inactiveLink" style="font-weight:700;">5</span>
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'6')">6</a>
+
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'7')">7</a>
+
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'8')">8</a>
+
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'9')">9</a>
+
+
+
+														<a href="javascript:void(0)" onClick="Grids.getActiveGrid(event).gridPaginator(event,'10')">10</a>
+
+
+
+
+
+
+
+
+
+													</nobr>
+												</td>
+												<td class='dataLabelWrite' style='height:15px;padding-left:12px;'>
+													<nobr>
+														<label>
+															<a href="javascript:void(0);" onClick="doGridAction(event,'PAGINATE','','nextbunch')" title="Next Window">...</a>
+														</label>
+													</nobr>
+												</td>
+												<td class='dataLabelWrite' style='height:15px;padding-left:4px;'>
+													<nobr>
+														<label>
+															<a href="javascript:void(0);" onClick="doGridAction(event,'PAGINATE','','next')" title="Next Page">Next</a>
+														</label>
+													</nobr>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+
+					<script>
+						var uniqueSectionID = "";
+					</script>
+					<div id='PEGA_GRID_CONTENT' ParitalRefresh='true' columnList='.TrialNumber .SubmissionDate .GoNoGoDecisionDate .PatentNumber .ApplicationNumber .RepresentedParty .PatentOwner .DisplayStatus .pyStatusWork .TechCenter ' class='yui-skin-sam gPercent' style='width :;height:;' gPropIndex='PetitionsPpxResults2' editRowIndex='' sortProperty='' sortType='' pyTargetSection="" threadProcessing="true" bFiltering="false" bRODetails="true" showExpandedAll="false" focusibleGrid="false" pyPageSize='20' pyPageMode='Numeric' totalRecords='1357' currentPageIndex='5' pySortHandled="false" pyFilterHandled="false">
+						<table id='gridLayoutTable' class='gridTable repeatReadWrite' cellspacing='0' cellpadding='0' id='' summary='Petitions.pxResults' width='100%'>
+							<tr>
+								<td valign='top' class='mainGridTableCell'>
+									<input type="hidden" name="PetitionsPpxResults2colWidthGBL" id="PetitionsPpxResults2colWidthGBL" value="" />
+								</td>
+								<td valign='top' class='mainGridTableCell' width='100.0%'>
+									<input type="hidden" name="PetitionsPpxResults2colWidthGBR" id="PetitionsPpxResults2colWidthGBR" value="" />
+									<div id='gridBody_right' style='' ruleNav="">
+										<table class='gridTable ' frame='box' width='100%' cellspacing=0 cellpadding=0 id='bodyTbl_right' PL_PROP='Petitions.pxResults' PL_PROP_CLASS='USPTO-Patent-PRPS-Work-Petition' PRIM_PAGE='pyDisplayHarness' GRID_REF_PAGE='pyDisplayHarness'>
+											<tr class='cellCont'>
+												<th scope='col' class='dataLabelRead cellCont pointerStyle ' title='Click to sort' bSortable='true' sortField='.TrialNumber' style='height:30px;width:7.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache1" id="PetitionsPpxResults2colWidthCache1" value="" />
+																<nobr>Case Number</nobr>
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont pointerStyle' title='Click to sort' bSortable='true' sortField='.SubmissionDate' style='width:6.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache2" id="PetitionsPpxResults2colWidthCache2" value="" />
+																<nobr>Filing Date</nobr>
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont wrapText pointerStyle' title='Click to sort' bSortable='true' sortField='.GoNoGoDecisionDate' style='width:14.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont wrapHeader'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache3" id="PetitionsPpxResults2colWidthCache3" value="" />
+																Institution Decision Date
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont wrapText pointerStyle' title='Click to sort' bSortable='true' sortField='.PatentNumber' style='width:8.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont wrapHeader'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache4" id="PetitionsPpxResults2colWidthCache4" value="" />
+																Patent Number
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont wrapText pointerStyle' title='Click to sort' bSortable='true' sortField='.ApplicationNumber' style='width:6.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont wrapHeader'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache5" id="PetitionsPpxResults2colWidthCache5" value="" />
+																Application Number
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont pointerStyle' title='Click to sort' bSortable='true' sortField='.RepresentedParty' style='width:21.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache6" id="PetitionsPpxResults2colWidthCache6" value="" />
+																<nobr>Petitioner</nobr>
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont pointerStyle' title='Click to sort' bSortable='true' sortField='.PatentOwner' style='width:9.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache7" id="PetitionsPpxResults2colWidthCache7" value="" />
+																<nobr>Patent Owner</nobr>
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont pointerStyle' title='Click to sort' bSortable='true' sortField='.DisplayStatus' style='width:9.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache8" id="PetitionsPpxResults2colWidthCache8" value="" />
+																<nobr>Status</nobr>
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont pointerStyle' title='Click to sort' bSortable='true' sortField='.pyStatusWork' style='width:7.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache9" id="PetitionsPpxResults2colWidthCache9" value="" />
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+												<th scope='col' class=' cellCont pointerStyle' title='Click to sort' bSortable='true' sortField='.TechCenter' style='width:7.0%;'>
+													<DIV class='oflowDiv' style='height:28px;px;'>
+														<div class='divCont'>
+															<span class='wspan'></span>
+															<div class='cellIn'>
+																<input type="hidden" name="PetitionsPpxResults2colWidthCache10" id="PetitionsPpxResults2colWidthCache10" value="" />
+																<nobr>Tech Center</nobr>
+															</div>
+															<span id='sort' class=' pointerStyle ' title='Click to sort'>&nbsp;
+															</span>
+														</div>
+													</DIV>
+												</th>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-950" id='$PPetitions$ppxResults$l81' PL_INDEX='81'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00029</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/12/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7664701</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>11591696</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>PNC Financial Services Group, Inc. and PNC Bank, N.A.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Intellectual Ventures I LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-951" id='$PPetitions$ppxResults$l82' PL_INDEX='82'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00030</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/12/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7603382</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>10982574</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Bank of America, National Association
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Intellectual Ventures I LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2100
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-952" id='$PPetitions$ppxResults$l83' PL_INDEX='83'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00031</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/12/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>6182894</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>09181734</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>PNC Financial Services Group, Inc. and PNC Bank, N.A.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Intellectual Ventures II LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2800
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-953" id='$PPetitions$ppxResults$l84' PL_INDEX='84'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00032</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/12/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7757298</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>11145125</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>PNC Financial Services Group, Inc. and PNC Bank, N.A.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Intellectual Ventures I LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2400
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-954" id='$PPetitions$ppxResults$l85' PL_INDEX='85'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00033</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/12/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7260587</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>10744537</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Bank of America, National Association
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Intellectual Ventures II LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2100
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-958" id='$PPetitions$ppxResults$l86' PL_INDEX='86'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00034</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/13/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>5/15/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7596784</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>09950559</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Rackspace Hosting, Inc.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Clouding IP, LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2100
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-966" id='$PPetitions$ppxResults$l87' PL_INDEX='87'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00035</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/15/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>4/25/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7051002</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>10459849</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>SecureBuy, LLC
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>CardinalCommerce Corporation</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Not Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-967" id='$PPetitions$ppxResults$l88' PL_INDEX='88'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00036</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/15/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>4/25/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>8140429</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>12720857</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>SecureBuy, LLC
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>CardinalCommerce Corporation</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Not Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-968" id='$PPetitions$ppxResults$l89' PL_INDEX='89'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00037</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/16/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>4/25/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7693783</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>11419829</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>SecureBuy, LLC
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>CARDINALCOMMERCE CORPORATION</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Not Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-972" id='$PPetitions$ppxResults$l90' PL_INDEX='90'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00038</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/22/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>5940510</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>08594975</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>PNC Bank, N.A.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Maxim Integrated Products, INc.</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2700
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-973" id='$PPetitions$ppxResults$l91' PL_INDEX='91'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00039</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/22/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>5949880</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>08978798</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>PNC Bank, N.A.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Maxim Integrated Products, Inc.</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2700
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-974" id='$PPetitions$ppxResults$l92' PL_INDEX='92'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00040</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/22/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>6105013</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>09041190</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>PNC Bank, N.A.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Maxim Integrated Products, Inc.</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-975" id='$PPetitions$ppxResults$l93' PL_INDEX='93'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00041</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															11/22/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>6237095</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>09003541</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>PNC Bank, N.A.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Maxim Integrated Products, Inc.</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2700
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-1009" id='$PPetitions$ppxResults$l94' PL_INDEX='94'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00042</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															12/5/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2/20/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7499872</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>09703562</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Edo Interactive, Inc.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>TuitionFund, LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Not Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-1051" id='$PPetitions$ppxResults$l95' PL_INDEX='95'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00043</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															12/5/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2/18/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7653572</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>12347136</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Edo Interactive, Inc.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>TuitionFund, LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Not Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-1053" id='$PPetitions$ppxResults$l96' PL_INDEX='96'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00044</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															12/5/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2/18/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>7899704</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>12649903</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Edo Interactive, Inc.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>TuitionFund, LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Not Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-1091" id='$PPetitions$ppxResults$l97' PL_INDEX='97'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00047</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															12/18/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>8266000</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>12880110</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>EBAY INC.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Advanced Auctions LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3600
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-1093" id='$PPetitions$ppxResults$l98' PL_INDEX='98'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00048</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															12/19/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>4/3/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>6698759</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>10016436</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>GTECH Corporation
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>SHFL entertainment, Inc.</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Not Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3700
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' oddRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-1095" id='$PPetitions$ppxResults$l99' PL_INDEX='99'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00049</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															12/19/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>4/3/2014</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>6237916</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>09170092</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>GTECH Corporation
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>SHFL entertainment, Inc.</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Not Instituted</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>3700
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+											<tr class=' evenRow cellCont' OAArgs="USPTO-PATENT-PRPS-WORK PET-1099" id='$PPetitions$ppxResults$l100' PL_INDEX='100'>
+												<td style='height:21px;'>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+															<a href='' onclick='return false;' class='' data-ctl data-click='[["doGridAction",[":event","EDITITEM"]]]'>CBM2014-00050</a>
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+															12/19/2013
+
+
+
+
+
+
+
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr></nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>8239451</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>13436957</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>American Express Co.
+														</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead wrapText '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>Metasearch Systems LLC</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>Pending</nobr>
+													</DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'></DIV>
+												</td>
+												<td class='dataValueRead '>
+													<DIV class='oflowDivM' style='max-height: 21px;'>
+														<nobr>2400
+														</nobr>
+													</DIV>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div><!--[if IE 6]><style>div.rowrepeat div#gridBody_right table.gridTable tr.cellCont TD, div.rowrepeat div#gridBody_right table.gridTable tr.cellCont TH,div.rowrepeat div#PEGA_GRID_CONTENT table.gridTable { border: 0 solid white !important;}</style><![endif] -->
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+<table width='100%'>
+	<tr>
+		<td width='100%'>
+
+
+
+
+
+
+
+		</td>
+	</tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<DIV id="PegaOnlyOnce" style="display:none">
+	<script> var oWin = null; if(typeof(showNewAlerts)=="function") showNewAlerts(0); try { var oNewOOnames = null; if (!pega.ui.onlyOnce) { pega.ui.onlyOnce = new pega.ui.OnlyOnceSingleton(); } if(oNewOOnames != null) { pega.ui.onlyOnce._mergeNewNames(oNewOOnames); } } catch(e) {} </script>
+</DIV> 
+
+
