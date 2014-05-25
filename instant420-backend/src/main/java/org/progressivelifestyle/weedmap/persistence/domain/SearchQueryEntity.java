@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +45,11 @@ public class SearchQueryEntity extends BaseEntity{
 	private Integer hitCount;
 	
 	@Column(nullable = true)
+	@Enumerated(EnumType.STRING)
 	private EntityType type;
+	
+	@Column(nullable = true)
+	private Long searchId;
 	
 	@JsonIgnore
 	private Date creationDate;
@@ -124,6 +130,12 @@ public class SearchQueryEntity extends BaseEntity{
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Long getSearchId() {
+		return searchId;
+	}
+	public void setSearchId(Long searchId) {
+		this.searchId = searchId;
 	}
 	
 	

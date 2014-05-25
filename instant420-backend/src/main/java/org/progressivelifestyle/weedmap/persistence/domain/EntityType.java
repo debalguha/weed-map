@@ -1,7 +1,7 @@
 package org.progressivelifestyle.weedmap.persistence.domain;
 
 public enum EntityType {
-	DISPENSARY, MEDICINE, ENTERTAINMENT, ACCESORIES, FLOWER, CONCENTRATE, EDIBLE;
+	DISPENSARY, MEDICINE, ENTERTAINMENT, ACCESORIES, FLOWERS, CONCENTRATES, EDIBLES, UNKNOWN;
 	public static EntityType fromName(String name){
 		if(name.toUpperCase().equals(DISPENSARY.name()))
 			return DISPENSARY;
@@ -11,14 +11,14 @@ public enum EntityType {
 			return ENTERTAINMENT;
 		else if(name.toUpperCase().equals(ACCESORIES.name()))
 			return ACCESORIES;
-		else if(name.toUpperCase().equals(FLOWER.name()))
-			return FLOWER;
-		else if(name.toUpperCase().equals(CONCENTRATE.name()))
-			return CONCENTRATE;
-		else if(name.toUpperCase().equals(EDIBLE.name()))
-			return EDIBLE;
+		else if(name.toUpperCase().equals(FLOWERS.name()))
+			return FLOWERS;
+		else if(name.toUpperCase().equals(CONCENTRATES.name()))
+			return CONCENTRATES;
+		else if(name.toUpperCase().equals(EDIBLES.name()))
+			return EDIBLES;
 		else
-			return null;
+			return UNKNOWN;
 	}
 	
 }
