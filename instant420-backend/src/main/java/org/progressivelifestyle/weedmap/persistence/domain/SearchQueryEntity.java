@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 	),
 	@NamedQuery(
 	name = "mostSearchedText",
-	query = "from SearchQueryEntity r where r.hasResult = 1 order by r.count desc"
+	query = "from SearchQueryEntity r where r.hasResult = 1 and r.queryStr = :queryStr order by r.count desc"
 	)
 })
 public class SearchQueryEntity extends BaseEntity{

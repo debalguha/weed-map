@@ -155,12 +155,12 @@ public class DispensaryService {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public List<SearchQueryEntity> findMostPopularSearchTerms() {
-		return dispensaryDao.findMostPopularSearchTerms();
+		return findMostPopularSearchTerms(10, null);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers) {
-		return dispensaryDao.findMostPopularSearchTerms(numbers);
+	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers, String searchText) {
+		return dispensaryDao.findMostPopularSearchTerms(numbers, searchText);
 	}
 
 	@Transactional(propagation = Propagation.MANDATORY)

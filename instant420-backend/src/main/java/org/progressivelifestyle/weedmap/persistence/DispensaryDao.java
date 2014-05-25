@@ -13,6 +13,7 @@ import org.progressivelifestyle.weedmap.persistence.domain.MenuItemCategoryEntit
 import org.progressivelifestyle.weedmap.persistence.domain.MenuItemEntity;
 import org.progressivelifestyle.weedmap.persistence.domain.SearchQueryEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 @Repository
 public class DispensaryDao {
@@ -80,14 +81,18 @@ public class DispensaryDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SearchQueryEntity> findMostPopularSearchTerms() {
+	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers) {
 		Query query = entityManager.createNamedQuery("mostSearchedText", SearchQueryEntity.class);
+		query.setMaxResults(numbers);
 		return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers) {
+	public List<SearchQueryEntity> findMostPopularSearchTerms(int numbers, String searchText) {
+		if(StringUtils.isEmpty(searchText))
+			return findMostPopularSearchTerms(numbers);
 		Query query = entityManager.createNamedQuery("mostSearchedText", SearchQueryEntity.class);
+		query.setParameter("queryStr", searchText);
 		query.setMaxResults(numbers);
 		return query.getResultList();
 	}
