@@ -146,10 +146,11 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	@Test
 	public void shouldBeAbleToDoAdvancedSearch() throws Exception {
 		RestTemplate template = new RestTemplate();
-		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/advance?key=instant420.rest.api&recordNum=10";
+		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/advance?key=instant420.rest.api&recordNum=10&searchText=beezle";
 		List<SearchQueryEntity> result = template.getForObject(url, List.class);
+		System.out.println(result);
 		Assert.assertNotNull(result);
-		Assert.assertEquals(10, result.size());
+		Assert.assertFalse(result.isEmpty());
 	}
 }
 

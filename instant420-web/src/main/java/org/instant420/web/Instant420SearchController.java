@@ -121,7 +121,7 @@ public class Instant420SearchController {
 
 
 	@RequestMapping(value = "/advance", method = RequestMethod.GET)
-	public @ResponseBody Collection<SearchQueryEntity> findPopularSearchTerms(@RequestParam(value = "recordNum", required = false) int recordNum,
+	public @ResponseBody Collection<SearchQueryEntity> findAdvancedSearchTerms(@RequestParam(value = "recordNum", required = false) int recordNum,
 			@RequestParam(value="searchText", required=true) String searchText){
 		return service.findMostPopularSearchTerms(recordNum==0?10:recordNum, "%".concat(searchText).concat("%"));
 	}
