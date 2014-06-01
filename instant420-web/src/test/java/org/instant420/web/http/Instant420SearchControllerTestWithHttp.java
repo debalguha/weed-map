@@ -30,7 +30,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 
 	@SuppressWarnings("unchecked")
 	@Test
-	@Ignore
 	public void shouldBeAbleToSearchForDispensaries() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/dispensaries?key=instant420.rest.api&searchText=the&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
@@ -43,7 +42,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 
 	@SuppressWarnings("unchecked")
 	@Test
-	@Ignore
 	public void shouldBeAbleToSearchForMedicines() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/medicines?key=instant420.rest.api&searchText=dream&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
@@ -55,7 +53,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	@Ignore
 	public void shouldBeAbleToSearchForMedicinesWithCategory() throws JsonGenerationException, JsonMappingException, IOException, SolrServerException {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/medicines?key=instant420.rest.api&searchText=dream&category=Edibles&start=0&rows=10&lat=34.036889&long=-118.255182&region=CA";
@@ -80,7 +77,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	@Ignore
 	public void shouldBeAbleToGetDispensariesForMedicine() throws Exception {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/medicines/byName?key=instant420.rest.api&name=Dream Queen&start=0&rows=10&lat=00.00&long=-00.00&region=West%20Hollywood";
@@ -93,7 +89,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToGetDispensaryDetails() throws JsonGenerationException, JsonMappingException, IOException {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/dispensary/byId?key=instant420.rest.api&id=19231";
@@ -105,7 +100,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 
 	@SuppressWarnings({ "unchecked" })
 	@Test
-	@Ignore
 	public void shouldBeAbleToIncreaseHitCount() throws Exception {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/hit?key=instant420.rest.api&id=19231&type=DISPENSARY";
@@ -114,7 +108,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToDoPopularSearchForDispensary() throws Exception {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/popular/DISPENSARY?key=instant420.rest.api&start=0&rows=10";
@@ -124,7 +117,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	}
 
 	@Test
-	@Ignore
 	public void shouldBeAbleToDoPopularSearchForMedicines() throws Exception {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/popular/MEDICINE?key=instant420.rest.api&start=0&rows=10";
@@ -134,7 +126,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	}
 	
 	@Test
-	@Ignore
 	public void shouldBeAbleToDoPopularSearchForMedicinesWithCategory() throws Exception {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/popular/MEDICINE?key=instant420.rest.api&start=0&rows=10&category=Edibles";
@@ -145,7 +136,6 @@ public class Instant420SearchControllerTestWithHttp extends GenericTest{
 	}
 	
 	@Test
-	@Ignore
 	public void shouldBeAbleToDoPopularSearchForAll() throws Exception {
 		RestTemplate template = new RestTemplate();
 		String url = "http://"+getTargetHost()+":9080/instant420-web/rest/search/popular/ALL?key=instant420.rest.api&start=0&rows=10&catgeory=Edibles";
