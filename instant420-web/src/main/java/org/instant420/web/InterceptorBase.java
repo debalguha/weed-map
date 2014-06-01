@@ -22,17 +22,21 @@ public abstract class InterceptorBase implements HandlerInterceptor{
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
 		logger.info("Interceptor -->preHandle-->"+request.getRequestURI());
+		SearchType searchType = null;
 		String requestURI = request.getRequestURI();
+		logger.info("Request URI:: "+requestURI);
 		if(requestURI.contains("search/dispensaries"))
-			request.setAttribute("searchType", SearchType.DISPENSARY);
+			searchType =  SearchType.DISPENSARY;
 		if(requestURI.contains("search/medicines"))
-			request.setAttribute("searchType", SearchType.MEDICINE);
+			searchType = SearchType.MEDICINE;
 		if(requestURI.contains("search/popular"))
-			request.setAttribute("searchType", SearchType.POPULAR);
+			searchType =  SearchType.POPULAR;
 		if(requestURI.contains("search/hit"))
-			request.setAttribute("searchType", SearchType.HIT);
-		if(requestURI.contains("search/advance"))
-			request.setAttribute("searchType", SearchType.ADVANCED);		
+			searchType = SearchType.HIT;
+//		if(requestURI.contains("search/advance"))
+			searchType = SearchType.ADVANCED;	
+		request.setAttribute("searchType", searchType);
+		logger.info("Search Type:: "+searchType);
 		return true;
 	}
 	
