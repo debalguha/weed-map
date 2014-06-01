@@ -94,7 +94,8 @@ public class DispensaryService {
 			entity.setId(lastMenuItemId.incrementAndGet());
 		}
 		dispensaryDao.saveEntity(entity);
-
+		/*for(Menu menu : entity.getMenuItems())
+			dispensaryDao.saveEntity((MenuItemEntity)menu);*/
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
