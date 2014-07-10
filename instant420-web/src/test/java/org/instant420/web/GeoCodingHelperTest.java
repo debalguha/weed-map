@@ -13,7 +13,7 @@ public class GeoCodingHelperTest {
 
 	@Test
 	public void testGetBoundingBoxMapPointDouble() {
-		MapPoint point = MapPoint.newmapPoint(34.091007d, -118.337699d);
+		MapPoint point = MapPoint.newmapPoint(40.719394d, -73.955314d);
 		System.out.println(GeoCodingHelper.GetBoundingBox(point, 10));
 	}
 
@@ -26,7 +26,7 @@ public class GeoCodingHelperTest {
 
 	@Test
 	public void testGetBoundingBoxMapPointDoubleChar() {
-		MapPoint point = MapPoint.newmapPoint(34.091007d, -118.337699d);
+		MapPoint point = MapPoint.newmapPoint(40.719394d, -73.955314d);
 		System.out.println(GeoCodingHelper.GetBoundingBox(point, 10, 'K'));
 	}
 
